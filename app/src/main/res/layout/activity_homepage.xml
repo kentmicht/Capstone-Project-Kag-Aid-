@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homepageBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Homepage">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="415dp"
+        android:layout_height="311dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/patientlogo"
+        android:layout_width="119dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/doctorlogo"
+        android:layout_marginStart="49dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605"
+        app:srcCompat="@drawable/patient_logo" />
+
+    <ImageView
+        android:id="@+id/doctorlogo"
+        android:layout_width="114dp"
+        android:layout_height="130dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="51dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.758"
+        app:layout_constraintStart_toEndOf="@+id/patientlogo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605"
+        app:srcCompat="@drawable/doctor_logo" />
+
+    <ImageView
+        android:id="@+id/nearbyDoctorlogo"
+        android:onClick = "map"
+        android:layout_width="117dp"
+        android:layout_height="129dp"
+        android:layout_alignStart="@+id/patientlogo"
+        android:layout_alignTop="@+id/illnesstreatmentlogo"
+        app:layout_constraintBottom_toTopOf="@+id/loginUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.758"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605"
+        app:srcCompat="@drawable/nearby_doctors_logo" />
+
+    <TextView
+        android:id="@+id/nearbydoctor"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nearbyDoctorlogo"
+        android:layout_marginStart="41dp"
+        android:text="Nearby Doctor"
+        android:gravity="center"
+        android:textColor="@color/textHomepage1"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/illnesstreatmentlogo"
+        android:layout_width="112dp"
+        android:layout_height="129dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/doctorlogo"
+        android:layout_marginBottom="162dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.758"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605"
+        app:srcCompat="@drawable/treatment_illness_logo" />
+
+    <TextView
+        android:id="@+id/illnesstreatment"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/nearbyDoctorlogo"
+        android:layout_marginEnd="39dp"
+        android:gravity="center"
+        android:text="Skin Illness and Treatment"
+        android:textColor="@color/textHomepage1"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/copyright"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="© 2018 Kag-Aid"
+        android:textColor="@color/textHomepage1"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/doctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/patientlogo"
+        android:layout_marginEnd="87dp"
+        android:text="Doctor"
+        android:textColor="@color/textHomepage"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/patient"
+        app:layout_constraintTop_toTopOf="@+id/doctorlogo" />
+
+    <TextView
+        android:id="@+id/patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/patientlogo"
+        android:layout_marginStart="85dp"
+        android:text="Patient"
+        android:textColor="@color/textHomepage"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/patientlogo" />
+
+    <Button
+        android:id="@+id/homepageLogOut"
+        android:onClick = "logOut"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/homepageLogs"
+        android:layout_marginEnd="22dp"
+        android:background="@drawable/loginshape"
+        android:text="Log Out"
+        android:textColor="@color/textHomepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="307dp" />
+
+    <Button
+        android:id="@+id/homepageLogs"
+        android:layout_width="75dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/loginshape"
+        android:text="Logs"
+        android:textColor="@color/textHomepage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/homepageLogOut"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013" />
+</RelativeLayout>
