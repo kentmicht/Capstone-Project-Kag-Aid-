@@ -54,5 +54,15 @@ public class Homepage extends AppCompatActivity {
         startActivity(mapNav);
     }
 
+    public void openPatientRecord(View view){
+        Intent patientRec = new Intent(this, PatientRecords.class);
+        startActivity(patientRec);
+    }
+
+    public void openSkinIllness(View view){
+        Intent skinIllness = new Intent(this, SkinIllness.class);
+        startActivity(skinIllness);
+    }
+
 
 }

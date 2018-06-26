@@ -20,6 +20,7 @@
 
     <ImageView
         android:id="@+id/patientlogo"
+        android:onClick = "openPatientRecord"
         android:layout_width="119dp"
         android:layout_height="130dp"
         android:layout_alignParentStart="true"
@@ -31,7 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.605"
-        app:srcCompat="@drawable/patient_logo" />
+        app:srcCompat="@drawable/patient_logo"
+        />
 
     <ImageView
         android:id="@+id/doctorlogo"
@@ -78,6 +80,7 @@
 
     <ImageView
         android:id="@+id/illnesstreatmentlogo"
+        android:onClick="openSkinIllness"
         android:layout_width="112dp"
         android:layout_height="129dp"
         android:layout_alignParentBottom="true"
@@ -113,7 +116,8 @@
         android:gravity="center"
         android:text="© 2018 Kag-Aid"
         android:textColor="@color/textHomepage1"
-        android:textSize="10dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

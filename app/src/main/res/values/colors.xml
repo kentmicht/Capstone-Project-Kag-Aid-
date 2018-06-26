@@ -5,4 +5,5 @@
     <color name="colorAccent">#008C98</color>
     <color name="textHomepage">#008C98</color>
     <color name="textHomepage1">#ffff</color>
+    <color name="backgroundAddPatient">#f3f3f3</color>
 </resources>
