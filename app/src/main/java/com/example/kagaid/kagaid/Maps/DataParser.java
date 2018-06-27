@@ -1,5 +1,7 @@
 package com.example.kagaid.kagaid.Maps;
-
+/**
+ * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
+ **/
 import android.util.Log;
 
 import org.json.JSONArray;

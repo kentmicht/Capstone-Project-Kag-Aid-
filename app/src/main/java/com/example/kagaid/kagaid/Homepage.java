@@ -1,5 +1,7 @@
 package com.example.kagaid.kagaid;
-
+/**
+ * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
+ **/
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;

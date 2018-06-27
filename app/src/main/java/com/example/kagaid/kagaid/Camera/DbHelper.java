@@ -1,5 +1,7 @@
 package com.example.kagaid.kagaid.Camera;
-
+/**
+ * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
+ **/
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,5 +1,7 @@
 package com.example.kagaid.kagaid.Patient;
-
+/**
+ * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
+ **/
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
