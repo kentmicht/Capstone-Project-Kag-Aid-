@@ -1,13 +1,15 @@
-package com.example.kagaid.kagaid;
+package com.example.kagaid.kagaid.Patient;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SkinIllnessPage extends AppCompatActivity {
+import com.example.kagaid.kagaid.R;
+
+public class AddPatientRecord extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skin_illness_page);
+        setContentView(R.layout.activity_add_patient_record);
     }
 }

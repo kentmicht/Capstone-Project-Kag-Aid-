@@ -1,4 +1,4 @@
-package com.example.kagaid.kagaid;
+package com.example.kagaid.kagaid.Maps;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,8 +8,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;

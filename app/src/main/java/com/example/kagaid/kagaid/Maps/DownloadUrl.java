@@ -1,4 +1,4 @@
-package com.example.kagaid.kagaid;
+package com.example.kagaid.kagaid.Maps;
 
 import android.util.Log;
 

@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kagaid.kagaid.Maps.MapsActivity;
+import com.example.kagaid.kagaid.Patient.PatientRecords;
+import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
+
 public class Homepage extends AppCompatActivity {
 
     public Button logoutBtn;
