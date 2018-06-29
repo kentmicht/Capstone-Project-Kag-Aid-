@@ -18,19 +18,17 @@
         android:layout_height="648dp"
         android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/btnHospital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="end|bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="14dp"
-            android:backgroundTint="@color/textHomepage1"
-            android:src="@drawable/nearby_doctors_logo_maps"
-            app:fabSize="normal" />
-
+            android:layout_marginBottom="49dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/nearby_doctors_logo"
+            android:padding="15dp"
+            android:elevation="5dp"/>
     </RelativeLayout>
 
 </FrameLayout>

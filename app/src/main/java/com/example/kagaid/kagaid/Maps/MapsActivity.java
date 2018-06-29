@@ -3,6 +3,7 @@ package com.example.kagaid.kagaid.Maps;
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
 import android.Manifest;
+import android.view.View;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Homepage;
