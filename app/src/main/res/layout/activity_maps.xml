@@ -15,32 +15,21 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="648dp"
         android:orientation="vertical">
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnHospital"
-            android:layout_width="158dp"
-            android:layout_height="37dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/loginBtn"
-            android:layout_marginEnd="77dp"
-            android:background="@drawable/loginshape"
-            android:text="Nearby Hospitals"
-            android:textColor="@color/textHomepage" />
-
-        <Button
-            android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="11dp"
-            android:background="@drawable/loginshape"
-            android:onClick="goToHomepage"
-            android:text="Back"
-            android:textColor="@color/textHomepage" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="14dp"
+            android:backgroundTint="@color/textHomepage1"
+            android:src="@drawable/nearby_doctors_logo_maps"
+            app:fabSize="normal" />
 
     </RelativeLayout>
 

@@ -2,19 +2,18 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LogIn extends AppCompatActivity {
+import com.example.kagaid.kagaid.Database.DatabaseHelperLogin;
 
+public class LogIn extends AppCompatActivity {
+    DatabaseHelperLogin usersDb;
     //public Button loginBtn = (Button)findViewById(R.id.loginBtn);
     EditText username;
     EditText password;
@@ -23,7 +22,7 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        //initLoginBtn();
+        usersDb = new DatabaseHelperLogin(this);
     }
 
     public void goToHomepage(View view) {
