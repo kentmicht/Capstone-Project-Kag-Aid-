@@ -3,6 +3,7 @@ package com.example.kagaid.kagaid;
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,8 +26,6 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         mDatabaseHelper = new DatabaseHelperLogin(this);
 
-        mDatabaseHelper = new DatabaseHelperLogin (this);
-
     }
 
     public void AddData(String username, String password) {
@@ -46,18 +45,19 @@ public class LogIn extends AppCompatActivity {
     public void goToHomepage(View view) {
         username = (EditText) findViewById(R.id.loginUser);
         password = (EditText) findViewById(R.id.loginPwd);
-        //AddData("admin", "12345");
+        //AddData("Kent", "004323");
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true){
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
-        }else {
-//        }else if (mDatabaseHelper.getUser(username.getText().toString())) {
+        //}else {
+        }else if (mDatabaseHelper.checkUser(username.getText().toString(), password.getText().toString())) {
 //                toastMessage("Successfully Logged In");
                 Intent homepage = new Intent(this, Homepage.class);
                 homepage.putExtra("USERNAME", username.getText().toString());
                 startActivity(homepage);
-//        }else {
-//            toastMessage("Invalid Username/Password");
-//        }
+                startActivity(homepage);
+        }else {
+            toastMessage("Invalid Username/Password");
+        }
 //        mDatabaseHelper.close();
 
     }
