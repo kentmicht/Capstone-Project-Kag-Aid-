@@ -2,13 +2,21 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
@@ -17,14 +25,25 @@ import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
 public class Homepage extends AppCompatActivity {
 
     public Button logoutBtn;
+    private SensorManager sm;
+    private float acelVal;  //CURRENT ACCELERATION AND GRAVITY
+    private float acelLast; //LAST ACCELERATION AND GRAVITY
+    private float shake;    //ACCELERATION VALUE differ FROM GRAVITY
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        //initLogoutBtn();
+        String userName = (String) getIntent().getStringExtra("USERNAME");
+
+        TextView name = (TextView)findViewById(R.id.header);
+        name.setText("Welcome "+userName+"!");
     }
 
+
+    public void userName(String username){
+
+    }
     public void logOut(View view) {
         alertLogout();
     }

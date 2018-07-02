@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.example.kagaid.kagaid.Database.DatabaseHelperLogin;
 
 public class LogIn extends AppCompatActivity {
-    DatabaseHelperLogin usersDb;
+    private static final String TAG = "Login";
+    DatabaseHelperLogin mDatabaseHelper;
     //public Button loginBtn = (Button)findViewById(R.id.loginBtn);
     EditText username;
     EditText password;
@@ -22,35 +23,45 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        usersDb = new DatabaseHelperLogin(this);
+        mDatabaseHelper = new DatabaseHelperLogin(this);
+
+        mDatabaseHelper = new DatabaseHelperLogin (this);
+
+    }
+
+    public void AddData(String username, String password) {
+        boolean insertData = mDatabaseHelper.addData(username, password);
+
+        if (insertData) {
+            toastMessage("Data Successfully Inserted!");
+        } else {
+            toastMessage("Something went wrong");
+        }
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
     public void goToHomepage(View view) {
         username = (EditText) findViewById(R.id.loginUser);
         password = (EditText) findViewById(R.id.loginPwd);
+        //AddData("admin", "12345");
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true){
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
-        }else{
-            Intent homepage = new Intent(this, Homepage.class);
-            startActivity(homepage);
-        }
+        }else {
+//        }else if (mDatabaseHelper.getUser(username.getText().toString())) {
+//                toastMessage("Successfully Logged In");
+                Intent homepage = new Intent(this, Homepage.class);
+                homepage.putExtra("USERNAME", username.getText().toString());
+                startActivity(homepage);
+//        }else {
+//            toastMessage("Invalid Username/Password");
+//        }
+//        mDatabaseHelper.close();
 
     }
 
-
-//    public void initLoginBtn(){
-//        loginBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-////                if(username.getText().toString().isEmpty() == true && password.getText().toString().isEmpty() == true){
-////                    Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
-//////                    //emptyText();
-////                }else{
-//                    startActivity(new Intent(LogIn.this, Homepage.class));
-////                }
-////
-//            }
-//        });
 
 
 
