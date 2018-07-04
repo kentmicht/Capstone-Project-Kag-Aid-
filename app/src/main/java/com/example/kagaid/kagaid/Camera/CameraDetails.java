@@ -60,7 +60,7 @@ public class CameraDetails extends AppCompatActivity {
             new GalleryDbHelper(this).addMemory(new GalleryImg(titleEditText.getText().toString(), image));
             finish();
         }catch (Exception e) {
-            Toast.makeText(this, "No image uploaded.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No image uploaded", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -76,10 +76,10 @@ public class CameraDetails extends AppCompatActivity {
                 selectedImageView.setImageBitmap(BitmapFactory.decodeStream(imageStream));
             } catch (IOException exception) {
                 exception.printStackTrace();
-                Toast.makeText(this, "Something went wrong.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Haven't picked an image", Toast.LENGTH_LONG).show();
         }
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
