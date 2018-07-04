@@ -15,7 +15,7 @@
 
     <EditText
         android:id="@+id/new_memory_title"
-        android:layout_width="313dp"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/new_memory_selected_image"
         android:layout_centerHorizontal="true"
