@@ -9,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,17 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Camera.CameraDetails;
+import com.example.kagaid.kagaid.Camera.Gallery;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
 import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
 
 public class Homepage extends AppCompatActivity {
-
-    public Button logoutBtn;
-    private SensorManager sm;
-    private float acelVal;  //CURRENT ACCELERATION AND GRAVITY
-    private float acelLast; //LAST ACCELERATION AND GRAVITY
-    private float shake;    //ACCELERATION VALUE differ FROM GRAVITY
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +85,23 @@ public class Homepage extends AppCompatActivity {
         Intent skinIllness = new Intent(this, SkinIllness.class);
         startActivity(skinIllness);
     }
+
+    @Override
+    public void onBackPressed() {
+        alertLogout();
+    }
+
+    public void openCamera(View view){
+        Intent intent = new Intent(this, CameraDetails.class);
+        startActivity(intent);
+    }
+
+    public void openGallery(View view){
+        Intent intent = new Intent(this, Gallery.class);
+        startActivity(intent);
+    }
+
+
 
 
 }

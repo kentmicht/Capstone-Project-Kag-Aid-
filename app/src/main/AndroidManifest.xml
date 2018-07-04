@@ -8,9 +8,10 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -47,7 +48,15 @@
         <activity android:name=".Patient.PatientRecords" />
         <activity android:name=".Patient.AddPatientRecord" />
         <activity android:name=".SkinIllness.SkinIllness" />
-        <activity android:name=".SkinIllness.SkinIllnessPage"></activity>
+        <activity android:name=".SkinIllness.SkinIllnessPage" />
+        <activity
+            android:name=".Camera.CameraDetails"
+            android:label="@string/title_activity_camera_details"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Camera.Gallery"
+            android:label="@string/title_activity_gallery"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
