@@ -36,7 +36,7 @@
     <string name="new_memory_title_hint">Title of Image</string>
     <string name="new_memory_btn_cancel">Cancel</string>
     <string name="new_memory_btn_save">Save</string>
-    <string name="activity_main_empty_view_text">No photos skin illness photos yet.</string>
+    <string name="activity_main_empty_view_text">No photos of skin illness photos yet.</string>
     <string name="new_memory_btn_gallery">Upload from gallery</string>
     <string name="new_memory_btn_camera">Use camera</string>
     <string name="title_activity_gallery">Gallery</string>

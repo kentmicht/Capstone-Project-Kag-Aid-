@@ -24,7 +24,6 @@
         android:layout_alignStart="@+id/copyright"
         android:layout_alignTop="@+id/nearbyDoctorlogo"
         android:onClick="openPatientRecord"
-        app:layout_constraintBottom_toTopOf="@+id/loginUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,6 +139,7 @@
         android:layout_alignStart="@+id/illnesstreatment"
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="15dp"
+        android:onClick="openGallery"
         android:backgroundTint="@color/textHomepage1"
         android:src="@drawable/ic_panorama_black_24dp"
         app:fabSize="normal" />
@@ -196,5 +196,14 @@
         android:text="Patient"
         android:textColor="@color/textHomepage"
         android:textSize="15dp" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/illnesstreatment"
+        android:layout_alignTop="@+id/copyright"
+        android:onClick="goPrivacyPolicy"
+        app:srcCompat="@drawable/ic_phonelink_lock_black_24dp_white" />
 
 </RelativeLayout>
