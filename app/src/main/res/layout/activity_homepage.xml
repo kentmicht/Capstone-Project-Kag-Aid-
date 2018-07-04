@@ -134,22 +134,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/patientlogo" />
 
-    <Button
-        android:id="@+id/homepageLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="23dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/loginshape"
-        android:onClick="logOut"
-        android:text="Log Out"
-        android:textColor="@color/textHomepage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="307dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/gallery"
@@ -166,13 +150,14 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/camera"
-        android:onClick="openCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/copyright"
-        android:layout_alignEnd="@+id/homepageLogOut"
+        android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
+        android:layout_marginEnd="21dp"
         android:backgroundTint="@color/textHomepage1"
+        android:onClick="openCamera"
         android:src="@drawable/ic_camera_black_24dp"
         app:fabSize="normal" />
 
@@ -200,4 +185,26 @@
         android:text="Welcome Kent!"
         android:textColor="@color/textHomepage"
         android:textSize="25dp" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="-49dp"
+        android:layout_marginTop="11dp"
+        android:layout_toStartOf="@+id/patientlogo"
+        android:background="@null"
+        android:onClick="goPrivacyPolicy"
+        app:srcCompat="@drawable/ic_phonelink_lock_black_24dp" />
+
+    <ImageView
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView11"
+        android:layout_toEndOf="@+id/illnesstreatmentlogo"
+        android:background="@null"
+        android:onClick="logOut"
+        app:srcCompat="@drawable/ic_forward_black_24dp" />
 </RelativeLayout>

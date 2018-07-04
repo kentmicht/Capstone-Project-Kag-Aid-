@@ -9,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -98,6 +99,12 @@ public class Homepage extends AppCompatActivity {
 
     public void openGallery(View view){
         Intent intent = new Intent(this, Gallery.class);
+        startActivity(intent);
+    }
+
+    public void goPrivacyPolicy (View view) {
+        Uri uri = Uri.parse("https://www.freeprivacypolicy.com/privacy/view/71a0efb9e219bb3cdfc6e2a10832d112"); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
 
