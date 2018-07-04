@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-public class Memory {
+public class GalleryImg {
     private static final float PREFERRED_WIDTH = 250;
     private static final float PREFERRED_HEIGHT = 250;
     private String title;
@@ -21,12 +21,12 @@ public class Memory {
     public static final int COL_TITLE = 1;
     public static final int COL_IMAGE = 2;
 
-    public Memory(Cursor cursor) {
+    public GalleryImg(Cursor cursor) {
         this.title = cursor.getString(COL_TITLE);
         this.image = cursor.getString(COL_IMAGE);
     }
 
-    public Memory(String title, Bitmap image) {
+    public GalleryImg(String title, Bitmap image) {
         this.title = title;
         this.image = bitmapToString(resizeBitmap(image));
     }

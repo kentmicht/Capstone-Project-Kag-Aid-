@@ -2,17 +2,13 @@ package com.example.kagaid.kagaid.Camera;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import static android.provider.BaseColumns._ID;
-
-public class MemoryDbHelper extends SQLiteOpenHelper{
+public class GalleryDbHelper extends SQLiteOpenHelper{
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
@@ -20,12 +16,12 @@ public class MemoryDbHelper extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + MemoryContract.MemoryEntry.TABLE_NAME + " (" +
-                    MemoryContract.MemoryEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
-                    MemoryContract.MemoryEntry.COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
-                    MemoryContract.MemoryEntry.COLUMN_IMAGE + TEXT_TYPE + " )";
+            "CREATE TABLE " + GalleryContract.MemoryEntry.TABLE_NAME + " (" +
+                    GalleryContract.MemoryEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
+                    GalleryContract.MemoryEntry.COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
+                    GalleryContract.MemoryEntry.COLUMN_IMAGE + TEXT_TYPE + " )";
 
-    public MemoryDbHelper(Context context) {
+    public GalleryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -43,7 +39,7 @@ public class MemoryDbHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
 
         return db.query(
-                MemoryContract.MemoryEntry.TABLE_NAME,
+                GalleryContract.MemoryEntry.TABLE_NAME,
                 null,
                 null,
                 null,
@@ -53,13 +49,13 @@ public class MemoryDbHelper extends SQLiteOpenHelper{
         );
     }
 
-    public boolean addMemory(Memory memory) {
+    public boolean addMemory(GalleryImg galleryImg) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(MemoryContract.MemoryEntry.COLUMN_TITLE, memory.getTitle());
-        values.put(MemoryContract.MemoryEntry.COLUMN_IMAGE, memory.getImageAsString());
+        values.put(GalleryContract.MemoryEntry.COLUMN_TITLE, galleryImg.getTitle());
+        values.put(GalleryContract.MemoryEntry.COLUMN_IMAGE, galleryImg.getImageAsString());
 
-        return db.insert(MemoryContract.MemoryEntry.TABLE_NAME, null, values) != -1;
+        return db.insert(GalleryContract.MemoryEntry.TABLE_NAME, null, values) != -1;
     }
 }

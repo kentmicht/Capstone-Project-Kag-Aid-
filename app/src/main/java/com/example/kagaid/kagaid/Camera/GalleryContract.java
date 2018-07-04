@@ -5,8 +5,8 @@ import android.provider.BaseColumns;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-public class MemoryContract {
-    private MemoryContract() {}
+public class GalleryContract {
+    private GalleryContract() {}
 
     public static final class MemoryEntry implements BaseColumns {
         public static final String TABLE_NAME = "memories";

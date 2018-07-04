@@ -8,14 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.kagaid.kagaid.LogIn;
 import com.example.kagaid.kagaid.R;
 
 import java.io.IOException;
@@ -56,9 +55,14 @@ public class CameraDetails extends AppCompatActivity {
     }
 
     public void save(View view) {
-        Bitmap image = ((BitmapDrawable)selectedImageView.getDrawable()).getBitmap();
-        new MemoryDbHelper(this).addMemory(new Memory(titleEditText.getText().toString(), image));
-        finish();
+        try {
+            Bitmap image = ((BitmapDrawable) selectedImageView.getDrawable()).getBitmap();
+            new GalleryDbHelper(this).addMemory(new GalleryImg(titleEditText.getText().toString(), image));
+            finish();
+        }catch (Exception e) {
+            Toast.makeText(this, "No image uploaded.", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -72,7 +76,10 @@ public class CameraDetails extends AppCompatActivity {
                 selectedImageView.setImageBitmap(BitmapFactory.decodeStream(imageStream));
             } catch (IOException exception) {
                 exception.printStackTrace();
+                Toast.makeText(this, "Something went wrong.", Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -80,6 +87,7 @@ public class CameraDetails extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             selectedImageView.setImageBitmap(imageBitmap);
         }
+
     }
 
 }

@@ -70,8 +70,9 @@
         android:id="@+id/imageButton"
         android:layout_width="76dp"
         android:layout_height="77dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/imageButton4"
-        android:layout_toEndOf="@+id/textView8"
+        android:layout_marginEnd="97dp"
         android:background="@drawable/buttonshape"
         android:onClick="openCamera"
         app:srcCompat="@drawable/ic_camera_enhance_black_24dp" />
@@ -81,8 +82,9 @@
         android:layout_width="77dp"
         android:layout_height="76dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="263dp"
-        android:layout_toStartOf="@+id/textView8"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="261dp"
+        android:layout_marginStart="93dp"
         android:background="@drawable/buttonshape"
         android:onClick="openGallery"
         app:srcCompat="@drawable/ic_photo_library_black_24dp" />

@@ -14,9 +14,9 @@ import com.example.kagaid.kagaid.R;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-public class MemoriesAdapter extends CursorAdapter {
+public class GalleryAdapter extends CursorAdapter {
 
-    public MemoriesAdapter(Context context, Cursor cursor, boolean autoRequery) {
+    public GalleryAdapter(Context context, Cursor cursor, boolean autoRequery) {
         super(context, cursor, autoRequery);
     }
 
@@ -31,10 +31,10 @@ public class MemoriesAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder)view.getTag();
 
-        Memory memory = new Memory(cursor);
+        GalleryImg galleryImg = new GalleryImg(cursor);
 
-        holder.titleTextView.setText(memory.getTitle());
-        holder.imageView.setImageBitmap(memory.getImage());
+        holder.titleTextView.setText(galleryImg.getTitle());
+        holder.imageView.setImageBitmap(galleryImg.getImage());
     }
 
     private class ViewHolder {
