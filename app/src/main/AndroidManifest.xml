@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -43,8 +44,9 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".Patient.PatientRecords" />
         <activity android:name=".Patient.AddPatientRecord" />
-        <activity android:name=".SkinIllness.SkinIllness" />
-        <activity android:name=".SkinIllness.SkinIllnessPage"></activity>
+        <activity android:name=".SkinIllness.SkinIllnessActivity" />
+        <activity android:name=".SkinIllness.SkinIllnessPage" />
+        <activity android:name=".SkinIllness.TreatmentsPage"></activity>
     </application>
 
 </manifest>

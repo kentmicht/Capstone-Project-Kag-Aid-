@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
-import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
+import com.example.kagaid.kagaid.SkinIllness.SkinIllnessActivity;
 
 public class Homepage extends AppCompatActivity {
 
@@ -66,7 +66,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void openSkinIllness(View view){
-        Intent skinIllness = new Intent(this, SkinIllness.class);
+        Intent skinIllness = new Intent(this, SkinIllnessActivity.class);
         startActivity(skinIllness);
     }
 

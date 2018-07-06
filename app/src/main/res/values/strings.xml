@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Kag-Aid</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -30,4 +29,16 @@
     <string name="skinIllness_page_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="skinIllness_page_los_label">Level of Severity</string>
     <string name="skinIllness_page_causes_label">Causes</string>
+    <string name="title_activity_skin_illness_item_view">SkinIllnessItemView</string>
+    <string name="app_name">kag-aid</string>
+    <string name="title_activity_skin_illness">SkinIllnessActivity</string>
+    <string name="treatments_page_label">Common Treatments</string>
+    <string name="copyright">© 2018 Kag-Aid</string>
+    <string name="treatments_list">Other Treatments</string>
+    <string name="skinIllness_row_pageLabel">Skin Illness Name</string>
+    <string name="skinIllness_row_symptoms">Skin Illness Symptoms</string>
+    <string name="level_of_severity">Level of Severity</string>
+    <string name="treatments_medicine_name">Medicine Name</string>
+    <string name="treatments_medicine_dosage">Dosage</string>
+    <string name="treatments_medicine_brand">Medicine Brand</string>
 </resources>
