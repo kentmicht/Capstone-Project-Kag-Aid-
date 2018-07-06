@@ -49,27 +49,27 @@ public class LogIn extends AppCompatActivity {
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true){
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
         //}else {
-        } else
-            //if (mDatabaseHelper.checkUser(username.getText().toString(), password.getText().toString()))
-            {
-//                toastMessage("Successfully Logged In");
-                Intent homepage = new Intent(this, Homepage.class);
-                homepage.putExtra("USERNAME", username.getText().toString());
-                startActivity(homepage);
-        }
+//        } else
+//            //if (mDatabaseHelper.checkUser(username.getText().toString(), password.getText().toString()))
+//            {
+////                toastMessage("Successfully Logged In");
+//                Intent homepage = new Intent(this, Homepage.class);
+//                homepage.putExtra("USERNAME", username.getText().toString());
+//                startActivity(homepage);
+//        }
 //        else {
 //            toastMessage("Invalid Username/Password");
 //        }
 
-//        else if (mDatabaseHelper.checkUser(username.getText().toString(), password.getText().toString())) {
-////                toastMessage("Successfully Logged In");
-//            Intent homepage = new Intent(this, Homepage.class);
-//            homepage.putExtra("USERNAME", username.getText().toString());
-//            startActivity(homepage);
-//            startActivity(homepage);
-//        }else {
-//            toastMessage("Invalid Username/Password");
-//        }
+        }else if (mDatabaseHelper.checkUser(username.getText().toString(), password.getText().toString())) {
+//                toastMessage("Successfully Logged In");
+            Intent homepage = new Intent(this, Homepage.class);
+            homepage.putExtra("USERNAME", username.getText().toString());
+            startActivity(homepage);
+            startActivity(homepage);
+        }else {
+            toastMessage("Invalid Username/Password");
+        }
 //        mDatabaseHelper.close();
 
     }
