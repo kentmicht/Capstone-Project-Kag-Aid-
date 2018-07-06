@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008c98</color>
+    <color name="colorPrimaryDark">#008c98</color>
+    <color name="colorAccent">#008c98</color>
+    <color name="textHomepage">#008C98</color>
+    <color name="textHomepage1">#ffff</color>
+    <color name="backgroundAddPatient">#f3f3f3</color>
+</resources>

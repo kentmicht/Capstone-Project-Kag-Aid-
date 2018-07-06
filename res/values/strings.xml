@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Kag-Aid</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string-array name="p_records">
+        <item>Patient 1</item>
+        <item>Patient 2</item>
+        <item>Patient 3</item>
+        <item>Patient 4</item>
+        <item>Patient 5</item>
+        <item>Patient 6</item>
+        <item>Patient 7</item>
+    </string-array>
+    <string name="footnote_credit">© 2018 Kag-Aid</string>
+
+    <!-- Skin Illness String Res -->
+    <string name="skinIllness_label">Skin Illnesses</string>
+    <string name="skinIllness_desc">Click on an item to see its description and treatments.</string>
+    <string name="openSkinIllness">Open</string>
+
+    <!-- Skin Illness Page String Res -->
+    <string name="skinIllness_page_name">Skin Illness Name</string>
+    <string name="skinIllness_page_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="skinIllness_page_los_label">Level of Severity</string>
+    <string name="skinIllness_page_causes_label">Causes</string>
+</resources>
