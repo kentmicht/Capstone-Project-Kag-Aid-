@@ -24,10 +24,30 @@
     <string name="skinIllness_label">Skin Illnesses</string>
     <string name="skinIllness_desc">Click on an item to see its description and treatments.</string>
     <string name="openSkinIllness">Open</string>
+    <string name="copyright">© 2018 Kag-Aid</string>
+    <string name="skinIllness_row_pageLabel">Skin Illness</string>
+    <string name="skinIllness_row_symptoms">Symptoms</string>
 
     <!-- Skin Illness Page String Res -->
     <string name="skinIllness_page_name">Skin Illness Name</string>
     <string name="skinIllness_page_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="skinIllness_page_los_label">Level of Severity</string>
     <string name="skinIllness_page_causes_label">Causes</string>
+    <string name="treatments_page_label">Common Treatments</string>
+    <string name="treatments_list">Other Treatments</string>
+    <string name="level_of_severity">Level of Severity</string>
+
+    <!-- Treatments Page String Res -->
+    <string name="treatments_medicine_name">Medicine Name</string>
+    <string name="treatments_medicine_brand">Brand</string>
+    <string name="treatments_medicine_dosage">Dosage</string>
+
+    <!-- Camera Details -->
+    <string name="new_memory_title_hint">Title of Image</string>
+    <string name="new_memory_btn_cancel">Cancel</string>
+    <string name="new_memory_btn_save">Save</string>
+    <string name="activity_main_empty_view_text">No photos of skin illness photos yet.</string>
+    <string name="new_memory_btn_gallery">Upload from gallery</string>
+    <string name="new_memory_btn_camera">Use camera</string>
+    <string name="title_activity_gallery">Gallery</string>
 </resources>

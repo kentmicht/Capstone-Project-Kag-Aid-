@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:orientation="vertical"
+    tools:context=".SkinIllness.SkinIllnessPage">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="302dp"
+        android:layout_height="128dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/skinIllness_name"
+        android:layout_width="302dp"
+        android:layout_height="41dp"
+        android:layout_alignStart="@+id/image"
+        android:layout_below="@+id/image"
+        android:background="#96989b"
+        android:padding="10dp"
+        android:text="Skin Illness Name"
+        android:textAlignment="viewStart"
+        android:textColor="#fff"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/skinIllness_desc"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="25dp"
+        android:text="Description"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/copyright"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="© 2018 Kag-Aid"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/find_nearby_doctors"
+        android:layout_width="110dp"
+        android:layout_height="101dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/common_treatments"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/find_nearby_doctors"
+        android:onClick="openMaps"
+        android:text=" " />
+
+    <Button
+        android:id="@+id/common_treatments"
+        android:layout_width="110dp"
+        android:layout_height="101dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/copyright"
+        android:layout_marginBottom="57dp"
+        android:background="@drawable/common_treatments_logo"
+        android:onClick="openTreatments" />
+
+    <TextView
+        android:id="@+id/skinIllness_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/image"
+        android:layout_alignTop="@+id/image"
+        android:text="TextView" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="230dp"
+        android:layout_height="86dp"
+        android:layout_alignStart="@+id/skinIllness_desc"
+        android:layout_alignTop="@+id/find_nearby_doctors">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="284dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="10dp"
+            android:text="Level of Severity"
+            android:textAlignment="textEnd"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/level_of_severity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/level_of_severity"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</RelativeLayout>
