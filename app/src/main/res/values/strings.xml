@@ -9,16 +9,13 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_maps">Map</string>
-    <string-array name="p_records">
-        <item>Patient 1</item>
-        <item>Patient 2</item>
-        <item>Patient 3</item>
-        <item>Patient 4</item>
-        <item>Patient 5</item>
-        <item>Patient 6</item>
-        <item>Patient 7</item>
-    </string-array>
     <string name="footnote_credit">© 2018 Kag-Aid</string>
+
+    <!--Patient Gender-->
+    <array name="patient_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </array>
 
     <!-- Skin Illness String Res -->
     <string name="skinIllness_label">Skin Illnesses</string>
@@ -50,10 +47,4 @@
     <string name="new_memory_btn_gallery">Upload from gallery</string>
     <string name="new_memory_btn_camera">Use camera</string>
     <string name="title_activity_gallery">Gallery</string>
-
-    <!-- Add Patient String Res-->
-    <array name="patient_gender">
-        <item>Male</item>
-        <item>Female</item>
-    </array>
 </resources>

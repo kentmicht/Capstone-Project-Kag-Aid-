@@ -9,7 +9,15 @@
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
-        android:layout_height="107dp"
+        android:layout_height="34dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@color/textHomepage" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@color/textHomepage" />
@@ -42,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="98dp"
         android:ems="10"
         android:hint="Doctor Name"
         android:inputType="textPersonName" />
@@ -51,8 +59,7 @@
     <ListView
         android:id="@+id/listViewDoctors"
         android:layout_width="match_parent"
-        android:layout_height="149dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="174dp"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_below="@+id/searchDoctor" />
 </RelativeLayout>

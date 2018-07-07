@@ -18,7 +18,7 @@
 
     <EditText
         android:id="@+id/searchPatient"
-        android:layout_width="match_parent"
+        android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -87,6 +87,14 @@
         android:onClick="addPatientRecord"
         android:src="@drawable/ic_add_black_24dp"
         app:fabSize="normal" />
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="200dp"
+        android:layout_height="27dp"
+        android:layout_alignEnd="@+id/listViewPatient"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="127dp" />
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

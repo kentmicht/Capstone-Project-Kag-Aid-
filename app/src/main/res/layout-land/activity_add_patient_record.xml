@@ -12,7 +12,7 @@
         android:layout_height="209dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="29dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -20,7 +20,7 @@
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="match_parent"
-        android:layout_height="107dp"
+        android:layout_height="87dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:layout_constraintLeft_toLeftOf="parent"

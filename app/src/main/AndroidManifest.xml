@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -41,10 +42,26 @@
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Patient.PatientRecords" />
+        <activity
+            android:name=".Patient.PatientRecords"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Patient.AddPatientRecord" />
-        <activity android:name=".SkinIllness.SkinIllness" />
-        <activity android:name=".SkinIllness.SkinIllnessPage" />
+        <activity
+            android:name=".SkinIllness.SkinIllnessActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".SkinIllness.SkinIllnessPage"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".SkinIllness.TreatmentsPage"></activity>
+        <activity
+            android:name=".Camera.CameraDetails"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Camera.Gallery"
+            android:label="@string/title_activity_gallery"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Patient.ViewPatientInfo" />
         <activity android:name=".Doctor.DoctorRecords" />
     </application>

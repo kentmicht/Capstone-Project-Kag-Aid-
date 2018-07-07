@@ -1,30 +1,67 @@
 package com.example.kagaid.kagaid.SkinIllness;
-/**
- * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
- **/
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import com.example.kagaid.kagaid.R;
+import android.widget.ImageView;
 
-public class SkinIllness extends AppCompatActivity {
+import com.squareup.picasso.Picasso;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skin_illness);
+import java.util.List;
 
-        Button launchPage = (Button) findViewById(R.id.launchPage);
-        launchPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SkinIllnessPage.class);
-                startActivityForResult(intent, 0);
-            }
-        });
+public class SkinIllness {
+    String skin_illness_name;
+    String skin_illness_desc;
+    String image;
+    String skin_illness_symptoms;
+    String level_of_severity;
+
+    public SkinIllness() {
+    }
+
+    public SkinIllness(String skin_illness_name, String skin_illness_desc, String image, String skin_illness_symptoms, String level_of_severity) {
+        this.skin_illness_name = skin_illness_name;
+        this.skin_illness_desc = skin_illness_desc;
+        this.image = image;
+        this.skin_illness_symptoms = skin_illness_symptoms;
+        this.level_of_severity = level_of_severity;
+    }
+
+    public String getSkin_illness_name() {
+        return skin_illness_name;
+    }
+
+    public String getSkin_illness_desc() {
+        return skin_illness_desc;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getSkin_illness_symptoms() {
+        return skin_illness_symptoms;
+    }
+
+    public String getLevel_of_severity() {
+        return level_of_severity;
+    }
+
+    public void setLevel_of_severity(String level_of_severity) {
+        this.level_of_severity = level_of_severity;
+    }
+
+    public void setSkin_illness_symptoms(String skin_illness_symptoms) {
+        this.skin_illness_symptoms = skin_illness_symptoms;
+    }
+
+    public void setSkin_illness_name(String skin_illness_name) {
+        this.skin_illness_name = skin_illness_name;
+    }
+
+    public void setSkin_illness_desc(String skin_illness_desc) {
+        this.skin_illness_desc = skin_illness_desc;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
 
     }
 }

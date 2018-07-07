@@ -20,37 +20,68 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView15"
         android:layout_centerHorizontal="true"
+        android:text="name"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/doctor_schedule"
-        android:layout_width="252dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="174dp"
-        android:textAlignment="center"
-        android:textSize="20sp" />
+        android:layout_width="191dp"
+        android:layout_height="28dp"
+        android:layout_alignBottom="@+id/imageView18"
+        android:layout_alignStart="@+id/doctor_contact"
+        android:layout_marginStart="0dp"
+        android:text="MWF 8:00am-12:00pm"
+        android:textAlignment="textStart"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/doctor_contact"
-        android:layout_width="252dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="139dp"
-        android:textAlignment="center"
-        android:textSize="20sp" />
+        android:layout_alignEnd="@+id/imageView15"
+        android:layout_below="@+id/doctor_name"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="6dp"
+        android:text="092178075936"
+        android:textAlignment="textStart"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/doctor_location"
         android:layout_width="297dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView19"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="209dp"
+        android:text="location"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="40dp"
+        android:layout_height="33dp"
+        android:layout_alignStart="@+id/imageView15"
+        android:layout_below="@+id/doctor_name"
+        android:layout_marginStart="12dp"
+        app:srcCompat="@drawable/phone_logo" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="36dp"
+        android:layout_height="28dp"
+        android:layout_alignStart="@+id/imageView15"
+        android:layout_below="@+id/doctor_contact"
+        android:layout_marginStart="15dp"
+        app:srcCompat="@drawable/schedule_logo" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/doctor_schedule"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/location_logo" />
 
 </RelativeLayout>
