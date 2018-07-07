@@ -12,5 +12,7 @@ public class GalleryContract {
         public static final String TABLE_NAME = "memories";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_IMAGE = "image";
+//        public static final String COLUMN_DATE = "image";
+//        public static final String COLUMN_TIME = "image";
     }
 }
