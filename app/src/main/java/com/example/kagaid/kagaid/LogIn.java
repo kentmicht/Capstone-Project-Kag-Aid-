@@ -25,7 +25,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         mDatabaseHelper = new DatabaseHelperLogin(this);
-
+        mDatabaseHelper.addData("Sheena", "12345");
     }
 
     public void AddData(String username, String password) {
@@ -45,7 +45,7 @@ public class LogIn extends AppCompatActivity {
     public void goToHomepage(View view) {
         username = (EditText) findViewById(R.id.loginUser);
         password = (EditText) findViewById(R.id.loginPwd);
-        //AddData("Kent", "004323");
+        //
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true){
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
         //}else {

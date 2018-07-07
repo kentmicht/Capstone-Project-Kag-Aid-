@@ -88,9 +88,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        alertLogout();
-    }
+    public void onBackPressed() {alertLogout();}
 
     public void openCamera(View view){
         Intent intent = new Intent(this, CameraDetails.class);
