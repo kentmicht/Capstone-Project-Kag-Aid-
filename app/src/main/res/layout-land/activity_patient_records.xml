@@ -10,7 +10,7 @@
 
     <ListView
         android:id="@+id/listViewPatient"
-        android:layout_width="317dp"
+        android:layout_width="466dp"
         android:layout_height="365dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/searchPatient"
@@ -58,7 +58,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="298dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewDoctorName"
         android:layout_below="@+id/textViewDoctorName"

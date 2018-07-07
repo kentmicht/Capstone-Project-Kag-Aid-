@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "668988213456-1u64h9mtvcfvtubfn1olrgb1o88p73gs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kagaid.kagaid",
+            "certificate_hash": "e38e1776fd77f131983408d4e0c1dd35d63a3bb7"
+          }
+        },
+        {
           "client_id": "668988213456-9qi2l77su81dd7c9b9as99vcve39eflo.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="404dp"
+        android:layout_height="194dp"
+        android:layout_alignEnd="@+id/textView11"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@color/backgroundAddPatient"
+        tools:layout_editor_absoluteY="237dp" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="match_parent"
+        android:layout_height="107dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/textHomepage" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="26dp"
+        android:text="Personal Information"
+        android:textColor="@color/textHomepage1"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="306dp"
+        android:layout_height="19dp"
+        android:layout_alignEnd="@+id/imageView10"
+        android:layout_below="@+id/textView11"
+        android:text="The patient personal information are shown here."
+        android:textColor="@color/textHomepage1"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="58dp" />
+
+    <TextView
+        android:id="@+id/gn"
+        android:layout_width="46dp"
+        android:layout_height="19dp"
+        android:layout_alignStart="@+id/bd"
+        android:layout_below="@+id/textViewPatientBday"
+        android:text="Address"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="379dp" />
+
+    <TextView
+        android:id="@+id/gn2"
+        android:layout_width="46dp"
+        android:layout_height="19dp"
+        android:layout_alignStart="@+id/textViewPatientGender"
+        android:layout_alignTop="@+id/textView18"
+        android:text="Gender"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="379dp" />
+
+    <TextView
+        android:id="@+id/bd"
+        android:layout_width="71dp"
+        android:layout_height="19dp"
+        android:layout_above="@+id/textViewPatientName"
+        android:layout_alignStart="@+id/textViewPatientAddress"
+        android:text="Fullname"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="322dp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="57dp"
+        android:layout_height="19dp"
+        android:layout_alignStart="@+id/bd"
+        android:layout_below="@+id/textViewPatientName"
+        android:text="Birthday"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="262dp" />
+
+    <TextView
+        android:id="@+id/textViewPatientBday"
+        android:layout_width="171dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/bd"
+        android:layout_below="@+id/textView18"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="341dp" />
+
+    <TextView
+        android:id="@+id/textViewPatientName"
+        android:layout_width="363dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="53dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="281dp" />
+
+    <TextView
+        android:id="@+id/textViewPatientGender"
+        android:layout_width="171dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView18"
+        android:layout_marginEnd="53dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="398dp" />
+
+    <TextView
+        android:id="@+id/textViewPatientAddress"
+        android:layout_width="363dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/textViewPatientName"
+        android:layout_below="@+id/gn"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="455dp" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="122dp"
+        android:layout_height="166dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="35dp"
+        android:layout_marginStart="22dp"
+        app:srcCompat="@drawable/patient_logo"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="96dp" />
+
+</RelativeLayout>
