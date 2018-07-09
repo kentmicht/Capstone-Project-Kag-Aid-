@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Database.DatabaseHelperLogin;
+import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,10 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.example.kagaid.kagaid.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LogIn extends AppCompatActivity {
     //Firebase
-    FirebaseDatabase database;
     DatabaseReference ref;
+    ArrayList<User> userList = new ArrayList<User>();
+    User u = new User();
 
     private static final String TAG = "Login";
 
@@ -38,9 +43,11 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        username = (EditText) findViewById(R.id.loginUser);
+        password = (EditText) findViewById(R.id.loginPwd);
+
         //firebase
-        database = FirebaseDatabase.getInstance();
-        ref = database.getReference().child("users");
+        ref = FirebaseDatabase.getInstance().getReference().child("users");
 
     }
 
@@ -50,24 +57,47 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void goToHomepage(View view) {
-        username = (EditText) findViewById(R.id.loginUser);
-        password = (EditText) findViewById(R.id.loginPwd);
+//        DatabaseReference usernameRef = ref.child(username.getText().toString());
+//        final DatabaseReference passwordDetailsRef = usernameRef.child(password.getText().toString());
 
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true) {
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
         }else{
+            //toastMessage(password.getText().toString());
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child(username.getText().toString()).exists()){
-//                        toastMessage("Nakita ko besh!");
-                            toastMessage("Successful Login");
-                            Intent homepage = new Intent(LogIn.this, Homepage.class);
-                            homepage.putExtra("USERNAME", username.getText().toString());
-                            startActivity(homepage);
-                            finish();
-                    }else{
-                        toastMessage("Unregistered Account");
+                    boolean userMatch = false;
+                    boolean pwdMatch = false;
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        //u.setUsername(ds.child(username.getText().toString()).getValue(User.class).getUsername());
+                        u = ds.getValue(User.class);
+                        if(username.getText().toString().equals(u.getUsername())){
+                            userMatch = true;
+                            if(password.getText().toString().equals(u.getPassword())){
+                                pwdMatch = true;
+                            }
+                        }
+                    }
+
+                    if(userMatch == false){
+                        toastMessage("You did not enter a correct username");
+                    }
+
+                    if(pwdMatch == false){
+                        toastMessage("You did not enter a correct password");
+                    }
+
+                    if(userMatch == false && pwdMatch == false){
+                        toastMessage("Unregistered Account or Incorrect username/password");
+                    }
+
+                    if(userMatch == true && pwdMatch == true){
+                        toastMessage("Successful Login");
+                        Intent homepage = new Intent(LogIn.this, Homepage.class);
+                        homepage.putExtra("USERNAME", username.getText().toString());
+                        startActivity(homepage);
+                        finish();
                     }
                 }
 
@@ -78,9 +108,12 @@ public class LogIn extends AppCompatActivity {
             });
         }
 
+
     }
 
+    private void showData(DataSnapshot dataSnapshot) {
 
+    }
 
 
 }
