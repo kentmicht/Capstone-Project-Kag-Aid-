@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Camera.CameraDetails;
 import com.example.kagaid.kagaid.Camera.Gallery;
-import com.example.kagaid.kagaid.Doctor.DoctorRecords;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
 import com.example.kagaid.kagaid.SkinIllness.SkinIllnessActivity;
@@ -71,6 +70,7 @@ public class Homepage extends AppCompatActivity {
     public void openLogin(){
         Intent login = new Intent(this, LogIn.class);
         startActivity(login);
+        finish();
     }
 
     public void map(View view){
@@ -107,10 +107,7 @@ public class Homepage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openDoctors(View view){
-        Intent doctors = new Intent(this, DoctorRecords.class);
-        startActivity(doctors);
-    }
+
 
 
 }
