@@ -69,8 +69,8 @@ public class Homepage extends AppCompatActivity {
 
     public void openLogin(){
         Intent login = new Intent(this, LogIn.class);
-        startActivity(login);
         finish();
+        startActivity(login);
     }
 
     public void map(View view){

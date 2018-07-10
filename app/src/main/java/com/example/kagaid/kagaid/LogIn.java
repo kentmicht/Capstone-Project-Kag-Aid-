@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kagaid.kagaid.Database.DatabaseHelperLogin;
 import com.example.kagaid.kagaid.SkinIllness.SkinIllness;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -63,19 +62,21 @@ public class LogIn extends AppCompatActivity {
         if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true) {
             Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
         }else{
-            //toastMessage(password.getText().toString());
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean userMatch = false;
                     boolean pwdMatch = false;
+                    String userFirstName = null;
                     for(DataSnapshot ds: dataSnapshot.getChildren()){
-                        //u.setUsername(ds.child(username.getText().toString()).getValue(User.class).getUsername());
                         u = ds.getValue(User.class);
                         if(username.getText().toString().equals(u.getUsername())){
                             userMatch = true;
                             if(password.getText().toString().equals(u.getPassword())){
                                 pwdMatch = true;
+                                if(userMatch == true && pwdMatch == true){
+                                    userFirstName = u.getFirstname();
+                                }
                             }
                         }
                     }
@@ -95,9 +96,9 @@ public class LogIn extends AppCompatActivity {
                     if(userMatch == true && pwdMatch == true){
                         toastMessage("Successful Login");
                         Intent homepage = new Intent(LogIn.this, Homepage.class);
-                        homepage.putExtra("USERNAME", username.getText().toString());
-                        startActivity(homepage);
+                        homepage.putExtra("USERNAME", userFirstName);
                         finish();
+                        startActivity(homepage);
                     }
                 }
 
