@@ -36,24 +36,6 @@
         android:text="Long Press to view more information."
         android:textColor="@color/textHomepage1" />
 
-    <EditText
-        android:id="@+id/searchDoctor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="115dp"
-        android:ems="10"
-        android:hint="Doctor Name"
-        android:inputType="textPersonName" />
-
-    <ListView
-        android:id="@+id/listViewDoctors"
-        android:layout_width="332dp"
-        android:layout_height="365dp"
-        android:layout_below="@+id/searchDoctor"
-        android:layout_centerHorizontal="true" />
-
     <ImageView
         android:id="@+id/imageView11"
         android:layout_width="match_parent"
@@ -61,4 +43,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:srcCompat="@color/textHomepage" />
+
+    <ListView
+        android:id="@+id/listViewDoctors"
+        android:layout_width="match_parent"
+        android:layout_height="404dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="46dp"
+        android:layout_marginStart="14dp" />
 </RelativeLayout>

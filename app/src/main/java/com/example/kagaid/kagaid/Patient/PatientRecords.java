@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.Spinner;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
@@ -41,11 +43,16 @@ public class PatientRecords extends AppCompatActivity {
     public static final String PATIENT_GENDER = "patientgender";
     public static final String PATIENT_ADDRESS = "patientaddress";
 
-
     DatabaseReference db;
 
     ListView patient_record;
     List<Patient> pList;
+//    EditText search_patient;
+//    ImageView search_patient_btn;
+    ArrayList<String> patient_names;
+    PatientLists pLadapter;
+
+    TextView test;
 //    ArrayAdapter<Patient> adapter;
     private ArrayAdapter pAdapter;
 
@@ -59,29 +66,13 @@ public class PatientRecords extends AppCompatActivity {
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
         pList = new ArrayList<>();
+//        search_patient = (EditText) findViewById(R.id.editTextSearchPatient);
+//        search_patient_btn = (ImageView) findViewById(R.id.searchPatientButton);
+//        test = (TextView) findViewById(R.id.test);
+        patient_names = new ArrayList<String>();
 
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");
-
-        //Filter/Search Patient Record
-//        EditText theFilter = (EditText) findViewById(R.id.searchPatient);
-//        pAdapter = new ArrayAdapter(this, R.layout.activity_patient_list_layout, R.id.textview_patient_name);
-//        theFilter.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                (PatientRecords.this).pAdapter.getFilter().filter(s);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
         //Show individual patient record
         patient_record.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,6 +88,7 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(PATIENT_ADDRESS, patient.getAddress());
 
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -114,7 +106,7 @@ public class PatientRecords extends AppCompatActivity {
         });
     }
 
-    //Viewing the Patient records inside a listview
+    //Viewing all the Patient records inside a listview
     @Override
     protected void onStart() {
         super.onStart();
@@ -127,9 +119,8 @@ public class PatientRecords extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                     Patient patient = pSnapshot.getValue(Patient.class);
-
                     pList.add(patient);
-
+//                    patient_names.add(patient.getFullname());
                 }
 
                 PatientLists adapter = new PatientLists(PatientRecords.this, pList);
@@ -149,9 +140,7 @@ public class PatientRecords extends AppCompatActivity {
 
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-
         LayoutInflater inflater = getLayoutInflater();
-
         final View dialogView = inflater.inflate(R.layout.activity_update_patient_info_dialog, null);
 
         dialogBuilder.setView(dialogView);
@@ -205,11 +194,9 @@ public class PatientRecords extends AppCompatActivity {
         println(pid);
 
         db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
-
         Patient patient = new Patient(pid, fullname, bday, gender, address);
 
         db.setValue(patient);
-
         Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();
 
         return true;
