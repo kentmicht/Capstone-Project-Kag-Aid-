@@ -74,12 +74,10 @@ public class CameraDetails extends AppCompatActivity {
                 Uri selectedImage = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(selectedImage);
                 selectedImageView.setImageBitmap(BitmapFactory.decodeStream(imageStream));
-            } catch (IOException exception) {
+            } catch (Exception exception) {
                 exception.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(this, "Haven't picked an image", Toast.LENGTH_LONG).show();
         }
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
