@@ -112,8 +112,9 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
 
