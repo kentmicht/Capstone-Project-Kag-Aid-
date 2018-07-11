@@ -7,13 +7,22 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="351dp"
-        android:layout_height="344dp"
+        android:id="@+id/imageView36"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="95dp"
-        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="287dp"
+        android:layout_height="401dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="144dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -31,31 +40,33 @@
 
     <EditText
         android:id="@+id/address"
-        android:layout_width="293dp"
+        android:layout_width="231dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView10"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="203dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/fullname"
-        android:layout_width="291dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView8"
-        android:layout_marginStart="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="181dp"
         android:ems="10"
         android:hint="Fullname"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/birthday"
-        android:layout_width="290dp"
+        android:layout_width="232dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="272dp"
         android:ems="10"
         android:hint="Birthdate"
         android:inputType="date" />
@@ -66,10 +77,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="132dp"
         android:background="@drawable/loginshape"
         android:text="Add"
         android:textColor="@color/textHomepage" />
+
+    <TextView
+        android:id="@+id/copyright7"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="© 2018 Kag-Aid"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -101,8 +126,9 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/fullname"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginTop="246dp"
         android:text="Birthdate" />
 
     <TextView
@@ -111,31 +137,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/birthday"
-        android:layout_marginTop="153dp"
+        android:layout_marginTop="155dp"
         android:text="Fullname" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/gender"
+        android:layout_above="@+id/address"
+        android:layout_alignStart="@+id/textView6"
         android:text="Address" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/birthday"
+        android:layout_height="29dp"
+        android:layout_above="@+id/gender"
+        android:layout_alignStart="@+id/textView6"
         android:text="Gender" />
+
+    <ImageView
+        android:id="@+id/imageView27"
+        android:layout_width="110dp"
+        android:layout_height="108dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/patient_logo" />
 
     <Spinner
         android:id="@+id/gender"
-        android:layout_width="235dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/textView13"
+        android:layout_marginBottom="277dp"
         android:entries="@array/patient_gender" />
 
 </RelativeLayout>

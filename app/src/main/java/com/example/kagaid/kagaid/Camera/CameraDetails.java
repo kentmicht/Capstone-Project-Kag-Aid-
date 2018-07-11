@@ -54,10 +54,15 @@ public class CameraDetails extends AppCompatActivity {
         finish();
     }
 
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+
     public void save(View view) {
         try {
             Bitmap image = ((BitmapDrawable) selectedImageView.getDrawable()).getBitmap();
             new GalleryDbHelper(this).addMemory(new GalleryImg(titleEditText.getText().toString(), image));
+            toastMessage("Image saved to gallery.");
             finish();
         }catch (Exception e) {
             Toast.makeText(this, "No image uploaded", Toast.LENGTH_LONG).show();

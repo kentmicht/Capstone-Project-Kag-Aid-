@@ -7,12 +7,22 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="530dp"
         android:layout_height="209dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="62dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -28,9 +38,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/textHomepage" />
 
+    <TextView
+        android:id="@+id/copyright6"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="© 2018 Kag-Aid"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <EditText
         android:id="@+id/address"
-        android:layout_width="259dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView13"
         android:layout_alignTop="@+id/fullname"
@@ -44,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView8"
-        android:layout_marginStart="46dp"
+        android:layout_marginStart="115dp"
         android:ems="10"
         android:hint="Fullname"
         android:inputType="textPersonName" />
@@ -53,8 +77,9 @@
         android:id="@+id/birthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView6"
+        android:layout_marginStart="115dp"
         android:ems="10"
         android:hint="Birthdate"
         android:inputType="date" />
@@ -63,9 +88,9 @@
         android:id="@+id/addPatientBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/birthday"
-        android:layout_marginEnd="88dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="81dp"
+        android:layout_toEndOf="@+id/textView10"
         android:background="@drawable/loginshape"
         android:text="Add"
         android:textColor="@color/textHomepage" />
@@ -100,8 +125,9 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
-        android:layout_below="@+id/fullname"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/address"
+        android:layout_marginTop="0dp"
         android:text="Birthdate" />
 
     <TextView
@@ -132,10 +158,18 @@
 
     <Spinner
         android:id="@+id/gender"
-        android:layout_width="235dp"
+        android:layout_width="127dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/address"
+        android:layout_alignStart="@+id/textView13"
         android:layout_alignTop="@+id/birthday"
         android:entries="@array/patient_gender" />
+
+    <ImageView
+        android:id="@+id/imageView31"
+        android:layout_width="96dp"
+        android:layout_height="81dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/patient_logo" />
 
 </RelativeLayout>

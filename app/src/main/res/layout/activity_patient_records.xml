@@ -8,13 +8,51 @@
     tools:context=".Patient.PatientRecords">
 
 
-    <ListView
-        android:id="@+id/listViewPatient"
-        android:layout_width="317dp"
-        android:layout_height="404dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addPatientBtn"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="71dp"
+        android:layout_marginEnd="14dp"
+        android:onClick="addPatientRecord"
+        android:src="@drawable/ic_add_black_24dp"
+        app:elevation="5dp"
+        app:fabSize="normal" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="46dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/copyright5"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/listViewPatient"
+        android:layout_width="349dp"
+        android:layout_height="462dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="77dp"
         android:layout_marginStart="17dp" />
 
     <ImageView
@@ -45,35 +83,23 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="298dp"
+        android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewDoctorName"
         android:layout_below="@+id/textViewDoctorName"
+        android:gravity="right"
         android:text="Click patient record to see its details, long press to update."
         android:textColor="@color/textHomepage1"
         tools:layout_editor_absoluteX="166dp"
         tools:layout_editor_absoluteY="61dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/imageView21"
+        android:layout_width="110dp"
+        android:layout_height="108dp"
         android:layout_alignParentStart="true"
-        app:srcCompat="@color/textHomepage" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addPatientBtn"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignEnd="@+id/textViewDoctorName"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="44dp"
-        android:layout_marginEnd="-12dp"
-        android:onClick="addPatientRecord"
-        android:src="@drawable/ic_add_black_24dp"
-        app:fabSize="normal" />
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/patient_logo" />
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

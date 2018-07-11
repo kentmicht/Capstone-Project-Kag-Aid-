@@ -28,12 +28,12 @@ import com.example.kagaid.kagaid.Patient.PatientRecords;
 import com.example.kagaid.kagaid.SkinIllness.SkinIllnessActivity;
 
 public class Homepage extends AppCompatActivity {
-
+    String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        String userName = (String) getIntent().getStringExtra("USERNAME");
+        userName = (String) getIntent().getStringExtra("USERNAME");
 
         TextView name = (TextView)findViewById(R.id.header);
         name.setText("Welcome "+userName+"!");
@@ -70,6 +70,7 @@ public class Homepage extends AppCompatActivity {
 
     public void openLogin(){
         Intent login = new Intent(this, LogIn.class);
+        finish();
         startActivity(login);
     }
 
@@ -80,6 +81,7 @@ public class Homepage extends AppCompatActivity {
 
     public void openPatientRecord(View view){
         Intent patientRec = new Intent(this, PatientRecords.class);
+        patientRec.putExtra("USERNAME", userName);
         startActivity(patientRec);
     }
 

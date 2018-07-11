@@ -138,7 +138,6 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/gallery"
-        android:onClick="openGallery"
         android:layout_width="135dp"
         android:layout_height="59dp"
         android:layout_above="@+id/copyright"
@@ -146,7 +145,9 @@
         android:layout_marginEnd="-85dp"
         android:layout_toStartOf="@+id/patient"
         android:backgroundTint="@color/textHomepage1"
+        android:onClick="openGallery"
         android:src="@drawable/ic_panorama_black_24dp"
+        app:elevation="5dp"
         app:fabSize="normal" />
 
     <android.support.design.widget.FloatingActionButton
@@ -160,6 +161,7 @@
         android:backgroundTint="@color/textHomepage1"
         android:onClick="openCamera"
         android:src="@drawable/ic_camera_black_24dp"
+        app:elevation="5dp"
         app:fabSize="normal" />
 
     <TextView

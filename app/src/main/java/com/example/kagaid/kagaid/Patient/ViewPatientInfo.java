@@ -3,8 +3,10 @@ package com.example.kagaid.kagaid.Patient;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.kagaid.kagaid.Camera.Gallery;
 import com.example.kagaid.kagaid.R;
 
 public class ViewPatientInfo extends AppCompatActivity {
@@ -13,11 +15,13 @@ public class ViewPatientInfo extends AppCompatActivity {
     TextView textViewPatientBday;
     TextView textviewPatientGender;
     TextView textViewPatientAddress;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_info);
+        userName = (String) getIntent().getStringExtra("USERNAME");
 
         textViewPatientName = (TextView) findViewById(R.id.textViewPatientName);
         textViewPatientBday = (TextView) findViewById(R.id.textViewPatientBday);
@@ -35,5 +39,18 @@ public class ViewPatientInfo extends AppCompatActivity {
         textViewPatientBday.setText(pbday);
         textviewPatientGender.setText(pgender);
         textViewPatientAddress.setText(paddress);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openPatientRecords();
+
+    }
+
+    public void openPatientRecords(){
+        Intent intent = new Intent(this, PatientRecords.class);
+        intent.putExtra("USERNAME", userName);
+        finish();
+        startActivity(intent);
     }
 }

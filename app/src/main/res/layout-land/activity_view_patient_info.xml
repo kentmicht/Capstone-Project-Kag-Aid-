@@ -9,10 +9,10 @@
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="404dp"
-        android:layout_height="194dp"
+        android:layout_height="185dp"
         android:layout_alignEnd="@+id/textView11"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="29dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@color/backgroundAddPatient"
@@ -58,7 +58,7 @@
 
     <TextView
         android:id="@+id/gn"
-        android:layout_width="46dp"
+        android:layout_width="83dp"
         android:layout_height="19dp"
         android:layout_alignStart="@+id/bd"
         android:layout_below="@+id/textViewPatientBday"
@@ -106,6 +106,7 @@
         android:layout_alignStart="@+id/bd"
         android:layout_below="@+id/textView18"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
@@ -119,6 +120,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="53dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="73dp"
         tools:layout_editor_absoluteY="281dp" />
@@ -131,6 +133,7 @@
         android:layout_below="@+id/textView18"
         android:layout_marginEnd="53dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
@@ -143,10 +146,19 @@
         android:layout_alignStart="@+id/textViewPatientName"
         android:layout_below="@+id/gn"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="455dp" />
+
+    <ImageView
+        android:id="@+id/imageView40"
+        android:layout_width="110dp"
+        android:layout_height="108dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/patient_logo" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -154,8 +166,8 @@
         android:layout_height="166dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="35dp"
-        android:layout_marginStart="22dp"
+        android:layout_marginBottom="46dp"
+        android:layout_marginStart="23dp"
         app:srcCompat="@drawable/patient_logo"
         tools:layout_editor_absoluteX="131dp"
         tools:layout_editor_absoluteY="96dp" />

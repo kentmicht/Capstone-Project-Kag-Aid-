@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Homepage;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +43,7 @@ public class PatientRecords extends AppCompatActivity {
     public static final String PATIENT_BIRTHDAY = "patientbday";
     public static final String PATIENT_GENDER = "patientgender";
     public static final String PATIENT_ADDRESS = "patientaddress";
-
+    String userName;
     DatabaseReference db;
 
     ListView patient_record;
@@ -62,7 +63,7 @@ public class PatientRecords extends AppCompatActivity {
 
         //Patient Records
         setContentView(R.layout.activity_patient_records);
-
+        userName = (String) getIntent().getStringExtra("USERNAME");
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
         pList = new ArrayList<>();
@@ -86,9 +87,9 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(PATIENT_BIRTHDAY, patient.getBirthday());
                 intent.putExtra(PATIENT_GENDER, patient.getGender());
                 intent.putExtra(PATIENT_ADDRESS, patient.getAddress());
+                intent.putExtra("USERNAME", userName);
 
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -152,7 +153,7 @@ public class PatientRecords extends AppCompatActivity {
         final EditText editTextAddress = (EditText) dialogView.findViewById(R.id.editTextAddress);
         final Button updatePatientBtn = (Button) dialogView.findViewById(R.id.updatePatientBtn);
 
-        dialogBuilder.setTitle("Updating Patient Record of: "+ fullname);
+        dialogBuilder.setTitle("Updating Patient "+ fullname);
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -205,6 +206,20 @@ public class PatientRecords extends AppCompatActivity {
     //Showing new window for adding
     public void addPatientRecord(View view){
         Intent addPatientRec = new Intent(this, AddPatientRecord.class);
+        //addPatientRec.putExtra("USERNAME", userName);
         startActivity(addPatientRec);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openHomepage();
+
+    }
+
+    public void openHomepage(){
+        Intent intent = new Intent(this, Homepage.class);
+        intent.putExtra("USERNAME", userName);
+        finish();
+        startActivity(intent);
     }
 }

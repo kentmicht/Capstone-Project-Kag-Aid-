@@ -40,9 +40,8 @@
         android:id="@+id/medicine_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/treatments_image"
-        android:layout_marginStart="141dp"
+        android:layout_toEndOf="@+id/treatments_image"
         android:text="TextView"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -53,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/medicine_name"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="118dp"
         android:text="TextView" />
 
     <TextView
@@ -89,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="17dp"
         android:gravity="center"
         android:text="@string/copyright"
         android:textColor="@color/textHomepage1"

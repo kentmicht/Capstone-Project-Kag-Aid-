@@ -107,7 +107,7 @@
     <ListView
         android:id="@+id/ListViewTreatments"
         android:layout_width="322dp"
-        android:layout_height="221dp"
+        android:layout_height="215dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/treatments_image"
         android:layout_marginEnd="13dp"
