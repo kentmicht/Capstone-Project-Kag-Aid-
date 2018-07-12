@@ -36,7 +36,7 @@ public class DoctorRecords extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_records);
-
+        toastMessage("Long press to view more information");
         db = FirebaseDatabase.getInstance().getReference("doctor");
 
         doctor_record = (ListView) findViewById(R.id.listViewDoctors);
@@ -53,6 +53,10 @@ public class DoctorRecords extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
     private void showDoctorInfoDialog(String id, String fullname, String contact, String sched, String location)

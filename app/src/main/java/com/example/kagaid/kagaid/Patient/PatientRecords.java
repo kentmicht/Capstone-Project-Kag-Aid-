@@ -63,6 +63,7 @@ public class PatientRecords extends AppCompatActivity {
 
         //Patient Records
         setContentView(R.layout.activity_patient_records);
+        toastMessage("Long press to update a patient's information.");
         userName = (String) getIntent().getStringExtra("USERNAME");
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
@@ -105,6 +106,10 @@ public class PatientRecords extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
     //Viewing all the Patient records inside a listview
