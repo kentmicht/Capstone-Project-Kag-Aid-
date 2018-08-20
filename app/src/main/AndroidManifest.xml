@@ -18,11 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LogIn">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Homepage"
@@ -52,18 +47,25 @@
         <activity
             android:name=".SkinIllness.SkinIllnessPage"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".SkinIllness.TreatmentsPage"></activity>
+        <activity android:name=".SkinIllness.TreatmentsPage" />
         <activity
             android:name=".Camera.CameraDetails"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Camera.Gallery"
             android:label="@string/title_activity_gallery"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Patient.ViewPatientInfo" />
         <activity android:name=".Doctor.DoctorRecords" />
+        <activity android:name=".MainScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

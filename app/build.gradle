@@ -54,6 +54,10 @@ dependencies {
     //RecyclerView and CardView implementation
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
+
+    //transitions
+    implementation "com.github.biodunalfet:SlidingSquaresLoader:1.0"
+    implementation "com.github.hajiyevelnur92:intentanimation:1.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

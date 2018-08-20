@@ -6,4 +6,5 @@
     <color name="textHomepage">#008c98</color>
     <color name="textHomepage1">#ffffff</color>
     <color name="backgroundAddPatient">#f3f3f3</color>
+    <color name="gray">#c9c9c8</color>
 </resources>

@@ -18,6 +18,7 @@
         android:layout_marginBottom="71dp"
         android:layout_marginEnd="14dp"
         android:onClick="addPatientRecord"
+        app:srcCompat="@color/colorPrimary"
         android:src="@drawable/ic_add_black_24dp"
         app:elevation="5dp"
         app:fabSize="normal" />
@@ -48,8 +49,8 @@
 
     <ListView
         android:id="@+id/listViewPatient"
-        android:layout_width="349dp"
-        android:layout_height="462dp"
+        android:layout_width="376dp"
+        android:layout_height="559dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="77dp"
@@ -88,7 +89,7 @@
         android:layout_alignEnd="@+id/textViewDoctorName"
         android:layout_below="@+id/textViewDoctorName"
         android:gravity="right"
-        android:text="Click patient record to see its details, long press to update."
+        android:text="@string/patient_rec_desc"
         android:textColor="@color/textHomepage1"
         tools:layout_editor_absoluteX="166dp"
         tools:layout_editor_absoluteY="61dp" />
@@ -99,7 +100,7 @@
         android:layout_height="108dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/patient_logo" />
+        app:srcCompat="@drawable/patientss_1" />
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

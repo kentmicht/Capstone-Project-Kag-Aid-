@@ -25,6 +25,8 @@ import com.example.kagaid.kagaid.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class LogIn extends AppCompatActivity {
     //Firebase
     DatabaseReference ref;
@@ -99,6 +101,7 @@ public class LogIn extends AppCompatActivity {
                         homepage.putExtra("USERNAME", userFirstName);
                         finish();
                         startActivity(homepage);
+                        CustomIntent.customType(LogIn.this, "fadein-to-fadeout");
                     }
                 }
 

@@ -7,17 +7,19 @@
     tools:context=".LogIn">
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="422dp"
-        android:layout_height="171dp"
-        app:srcCompat="?attr/colorAccent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <ImageView
         android:id="@+id/imageView9"
         android:layout_width="422dp"
-        android:layout_height="157dp"
+        android:layout_height="187dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toBottomOf="@+id/loginPwd"
+        app:srcCompat="?attr/colorAccent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView44"
+        android:layout_width="422dp"
+        android:layout_height="187dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toBottomOf="@+id/loginPwd"
@@ -40,14 +42,15 @@
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="224dp"
-        android:layout_height="42dp"
+        android:layout_width="233dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="93dp"
         android:background="@drawable/loginshape"
         android:onClick="goToHomepage"
         android:text="Log In"
+        android:textAllCaps="false"
         android:textColor="@color/textHomepage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,11 +59,11 @@
 
     <EditText
         android:id="@+id/loginUser"
-        android:layout_width="220dp"
-        android:layout_height="41dp"
+        android:layout_width="233dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="239dp"
+        android:layout_marginBottom="285dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_child_care_black_24dp"
@@ -78,11 +81,11 @@
 
     <EditText
         android:id="@+id/loginPwd"
-        android:layout_width="224dp"
-        android:layout_height="40dp"
+        android:layout_width="237dp"
+        android:layout_height="47dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="186dp"
+        android:layout_marginBottom="228dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_lock_outline_black_24dp"
@@ -98,11 +101,11 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="202dp"
-        android:layout_height="207dp"
-        android:layout_above="@+id/kagaid"
+        android:layout_width="195dp"
+        android:layout_height="211dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-264dp"
+        android:layout_marginTop="68dp"
         app:layout_constraintBottom_toTopOf="@+id/loginUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,22 +119,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="288dp"
         android:text="Kag-Aid"
-        android:textStyle="bold"
         android:textColor="@color/textHomepage"
-        android:textSize="35dp" />
+        android:textSize="45dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="309dp"
         android:layout_height="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="296dp"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="A Skin Illness Identification System and Patient Monitoring System"
-        android:textSize="17dp" />
+        android:textSize="19dp" />
 
 
 </RelativeLayout>

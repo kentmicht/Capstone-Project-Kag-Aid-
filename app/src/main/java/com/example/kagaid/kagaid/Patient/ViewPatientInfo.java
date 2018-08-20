@@ -1,15 +1,29 @@
 package com.example.kagaid.kagaid.Patient;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Camera.Gallery;
+import com.example.kagaid.kagaid.Camera.GalleryDbHelper;
+import com.example.kagaid.kagaid.Camera.GalleryImg;
 import com.example.kagaid.kagaid.R;
 
+import java.io.InputStream;
+
 public class ViewPatientInfo extends AppCompatActivity {
+
+    private static final int CAMERA_REQUEST_CODE = 200;
+    private ImageView selectedImageView;
 
     TextView textViewPatientName;
     TextView textViewPatientBday;
@@ -52,5 +66,12 @@ public class ViewPatientInfo extends AppCompatActivity {
         intent.putExtra("USERNAME", userName);
         finish();
         startActivity(intent);
+    }
+
+    public void openCamera(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+        }
     }
 }

@@ -27,8 +27,11 @@ import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
 import com.example.kagaid.kagaid.SkinIllness.SkinIllnessActivity;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class Homepage extends AppCompatActivity {
     String userName;
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,26 +85,13 @@ public class Homepage extends AppCompatActivity {
     public void openPatientRecord(View view){
         Intent patientRec = new Intent(this, PatientRecords.class);
         patientRec.putExtra("USERNAME", userName);
+        patientRec.putExtra("USER_ID", userId);
         startActivity(patientRec);
-    }
-
-    public void openSkinIllness(View view){
-        Intent skinIllness = new Intent(this, SkinIllnessActivity.class);
-        startActivity(skinIllness);
+        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }
 
     @Override
     public void onBackPressed() {alertLogout();}
-
-    public void openCamera(View view){
-        Intent intent = new Intent(this, CameraDetails.class);
-        startActivity(intent);
-    }
-
-    public void openGallery(View view){
-        Intent intent = new Intent(this, Gallery.class);
-        startActivity(intent);
-    }
 
     public void goPrivacyPolicy (View view) {
         Uri uri = Uri.parse("https://www.freeprivacypolicy.com/privacy/view/71a0efb9e219bb3cdfc6e2a10832d112"); // missing 'http://' will cause crashed
@@ -109,10 +99,6 @@ public class Homepage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openDoctors(View view){
-        Intent doctors = new Intent(this, DoctorRecords.class);
-        startActivity(doctors);
-    }
 
 
 }

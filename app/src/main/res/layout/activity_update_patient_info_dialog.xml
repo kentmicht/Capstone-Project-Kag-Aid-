@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fullname"
+        android:textColor="@color/textHomepage"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="1dp" />
 
@@ -34,6 +36,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/spinnerGender"
         android:text="Address"
+        android:textColor="@color/textHomepage"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="66dp" />
 
@@ -44,6 +48,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editTextName"
         android:text="Birthdate"
+        android:textColor="@color/textHomepage"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="174dp" />
 
@@ -67,6 +73,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editTextBirthday"
         android:text="Gender"
+        android:textColor="@color/textHomepage"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="131dp" />
 

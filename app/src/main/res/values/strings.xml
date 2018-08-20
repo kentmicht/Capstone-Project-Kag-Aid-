@@ -50,4 +50,24 @@
 
     <!-- Google Maps -->
     <string name="google_maps_key">AIzaSyDTVnfmn2Wn7vtm3Q0-lVSk0VM3V0KvnxQ</string>
+
+    <!--- Homepage -->
+    <string name="homepage_desc">
+        \t\t\tKAG-AID is a skin illness identification system, both in mobile and web application that would give aid to Barangay Health Centers in matters of
+        identifying the scanned skin illness with the relevant treatment, and
+        able to monitor their patient's information.
+    </string>
+    <string name="homepage_title">
+        Kag-Aid: A Skin Illness Identification and Patient Monitoring System
+    </string>
+
+    <!--- Patient Records -->
+    <string name="patient_rec_desc">
+        Choose/Add a patient for skin illness identification.
+    </string>
+
+    <!--- Patient Information -->
+    <string name="patient_info_dec">
+        The patient personal information are shown here.
+    </string>
 </resources>
