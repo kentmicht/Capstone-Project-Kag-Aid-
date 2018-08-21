@@ -229,5 +229,6 @@ public class PatientRecords extends AppCompatActivity {
         intent.putExtra("USERNAME", userName);
         finish();
         startActivity(intent);
+        CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 }

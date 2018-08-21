@@ -37,9 +37,10 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         userName = (String) getIntent().getStringExtra("USERNAME");
+//        userId = (String) getIntent().getStringExtra("USER_ID");
 
-        TextView name = (TextView)findViewById(R.id.header);
-        name.setText("Welcome "+userName+"!");
+//        TextView name = (TextView)findViewById(R.id.header);
+//        name.setText("Welcome "+userName+"!");
     }
 
 
@@ -73,9 +74,9 @@ public class Homepage extends AppCompatActivity {
 
     public void openLogin(){
         Intent login = new Intent(this, LogIn.class);
-        finish();
         startActivity(login);
         CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
+        finish();
     }
 
     public void map(View view){
