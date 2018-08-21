@@ -75,6 +75,7 @@ public class Homepage extends AppCompatActivity {
         Intent login = new Intent(this, LogIn.class);
         finish();
         startActivity(login);
+        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }
 
     public void map(View view){
@@ -97,6 +98,13 @@ public class Homepage extends AppCompatActivity {
         Uri uri = Uri.parse("https://www.freeprivacypolicy.com/privacy/view/71a0efb9e219bb3cdfc6e2a10832d112"); // missing 'http://' will cause crashed
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
+    }
+
+    public void openLogs(View view) {
+        Intent logs = new Intent(this, Logs.class);
+        startActivity(logs);
+        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }
 
 

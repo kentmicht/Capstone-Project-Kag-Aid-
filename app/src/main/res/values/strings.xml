@@ -70,4 +70,9 @@
     <string name="patient_info_dec">
         The patient personal information are shown here.
     </string>
+
+    <!--- Logs Information -->
+    <string name="logs_info_dec">
+        The system's logs are shown here.
+    </string>
 </resources>

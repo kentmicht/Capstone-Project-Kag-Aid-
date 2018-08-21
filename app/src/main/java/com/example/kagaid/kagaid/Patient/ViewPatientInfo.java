@@ -20,6 +20,8 @@ import com.example.kagaid.kagaid.R;
 
 import java.io.InputStream;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ViewPatientInfo extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -66,6 +68,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         intent.putExtra("USERNAME", userName);
         finish();
         startActivity(intent);
+        CustomIntent.customType(ViewPatientInfo.this, "right-to-left");
     }
 
     public void openCamera(View view) {

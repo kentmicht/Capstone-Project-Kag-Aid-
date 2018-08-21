@@ -35,6 +35,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import maes.tech.intentanim.CustomIntent;
+
 import static java.sql.DriverManager.println;
 
 public class PatientRecords extends AppCompatActivity {
@@ -178,7 +180,7 @@ public class PatientRecords extends AppCompatActivity {
                 String paddress = editTextAddress.getText().toString();
 
                 if(TextUtils.isEmpty(pname)){
-                    editTextName.setError("Name resquired");
+                    editTextName.setError("Name is required");
                     return;
                 }else if(TextUtils.isEmpty(pbday)){
                     editTextBday.setError("Birthday is required");
@@ -213,6 +215,7 @@ public class PatientRecords extends AppCompatActivity {
         Intent addPatientRec = new Intent(this, AddPatientRecord.class);
         //addPatientRec.putExtra("USERNAME", userName);
         startActivity(addPatientRec);
+        CustomIntent.customType(PatientRecords.this, "bottom-to-up");
     }
 
     @Override

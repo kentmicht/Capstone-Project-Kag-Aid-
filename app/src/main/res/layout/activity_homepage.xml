@@ -86,6 +86,7 @@
         android:layout_marginBottom="62dp"
         android:background="@drawable/loginshape"
         android:text="Logs"
+        android:onClick="openLogs"
         android:textColor="@color/textHomepage" />
 
     <TextView
