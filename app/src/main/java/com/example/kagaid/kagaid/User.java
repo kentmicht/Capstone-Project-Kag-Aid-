@@ -7,6 +7,7 @@ public class User {
     private String firstname;
     private String lastname;
     private String password;
+    private String uId;
     private String username;
 
     public User(String password, String username) {
@@ -46,13 +47,25 @@ public class User {
         this.username = username;
     }
 
-    public User(String firstname, String lastname, String password, String username) {
+    public String getUId() {
+        return uId;
+    }
+
+    public void setUId(String username) {
+        this.uId = uId;
+    }
+
+
+    public User(String firstname, String lastname, String password, String uId, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
+        this.uId = uId;
         this.username = username;
     }
 
     public User() {
     }
+
+
 }

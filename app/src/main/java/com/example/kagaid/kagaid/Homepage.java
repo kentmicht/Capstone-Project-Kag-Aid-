@@ -2,51 +2,38 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kagaid.kagaid.Camera.CameraDetails;
-import com.example.kagaid.kagaid.Camera.Gallery;
-import com.example.kagaid.kagaid.Doctor.DoctorRecords;
+import com.example.kagaid.kagaid.Logs.Logs;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.PatientRecords;
-import com.example.kagaid.kagaid.SkinIllness.SkinIllnessActivity;
 
 import maes.tech.intentanim.CustomIntent;
 
 public class Homepage extends AppCompatActivity {
-    String userName;
-    String userId;
+    String uId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        userName = (String) getIntent().getStringExtra("USERNAME");
-//        userId = (String) getIntent().getStringExtra("USER_ID");
-
+        uId = (String) getIntent().getStringExtra("USER_ID");
+//        toastMessage("User Id:" + uId);
 //        TextView name = (TextView)findViewById(R.id.header);
 //        name.setText("Welcome "+userName+"!");
     }
 
 
-    public void userName(String username){
-
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
     public void logOut(View view) {
         alertLogout();
     }
@@ -86,8 +73,7 @@ public class Homepage extends AppCompatActivity {
 
     public void openPatientRecord(View view){
         Intent patientRec = new Intent(this, PatientRecords.class);
-        patientRec.putExtra("USERNAME", userName);
-        patientRec.putExtra("USER_ID", userId);
+        patientRec.putExtra("USER_ID", uId);
         startActivity(patientRec);
         CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }

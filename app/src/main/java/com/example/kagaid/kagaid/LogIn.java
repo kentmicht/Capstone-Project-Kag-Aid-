@@ -37,6 +37,7 @@ public class LogIn extends AppCompatActivity {
 
     EditText username;
     EditText password;
+    String uId;
 
 
     @Override
@@ -69,15 +70,18 @@ public class LogIn extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean userMatch = false;
                     boolean pwdMatch = false;
-                    String userFirstName = null;
+                    String uFirstName = null;
+                    String uId = null;
                     for(DataSnapshot ds: dataSnapshot.getChildren()){
                         u = ds.getValue(User.class);
                         if(username.getText().toString().equals(u.getUsername())){
                             userMatch = true;
                             if(password.getText().toString().equals(u.getPassword())){
                                 pwdMatch = true;
+
                                 if(userMatch == true && pwdMatch == true){
-                                    userFirstName = u.getFirstname();
+                                    uFirstName = u.getFirstname();
+                                    uId = u.getUId();
                                 }
                             }
                         }
@@ -98,7 +102,7 @@ public class LogIn extends AppCompatActivity {
                     if(userMatch == true && pwdMatch == true){
                         toastMessage("Successful Login");
                         Intent homepage = new Intent(LogIn.this, Homepage.class);
-                        homepage.putExtra("USERNAME", userFirstName);
+                        homepage.putExtra("USER_ID", uId);
                         finish();
                         startActivity(homepage);
                         CustomIntent.customType(LogIn.this, "fadein-to-fadeout");

@@ -45,7 +45,9 @@ public class PatientRecords extends AppCompatActivity {
     public static final String PATIENT_BIRTHDAY = "patientbday";
     public static final String PATIENT_GENDER = "patientgender";
     public static final String PATIENT_ADDRESS = "patientaddress";
-    String userName;
+    public static final String PATIENT_ID = "patientid";
+    //public static final String PATIENT_LAST_SCAN = "patientlastscan";
+    String uId;
     DatabaseReference db;
 
     ListView patient_record;
@@ -66,7 +68,7 @@ public class PatientRecords extends AppCompatActivity {
         //Patient Records
         setContentView(R.layout.activity_patient_records);
         toastMessage("Long press to update a patient's information.");
-        userName = (String) getIntent().getStringExtra("USERNAME");
+        uId = (String) getIntent().getStringExtra("USER_ID");
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
         pList = new ArrayList<>();
@@ -90,7 +92,9 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(PATIENT_BIRTHDAY, patient.getBirthday());
                 intent.putExtra(PATIENT_GENDER, patient.getGender());
                 intent.putExtra(PATIENT_ADDRESS, patient.getAddress());
-                intent.putExtra("USERNAME", userName);
+                intent.putExtra(PATIENT_ID, patient.getId());
+                //intent.putExtra(PATIENT_LAST_SCAN, patient.getLastScan());
+                intent.putExtra("USER_ID", uId);
 
                 startActivity(intent);
             }
@@ -226,7 +230,7 @@ public class PatientRecords extends AppCompatActivity {
 
     public void openHomepage(){
         Intent intent = new Intent(this, Homepage.class);
-        intent.putExtra("USERNAME", userName);
+        intent.putExtra("USER_ID", uId);
         finish();
         startActivity(intent);
         CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");

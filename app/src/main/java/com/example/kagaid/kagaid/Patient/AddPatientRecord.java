@@ -23,6 +23,7 @@ public class AddPatientRecord extends AppCompatActivity {
     EditText fullname, birthdate, address;
     Spinner gender;
     Button patientAdd;
+    String uId;
 
     DatabaseReference db;
 
@@ -30,7 +31,7 @@ public class AddPatientRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient_record);
-
+        uId = (String) getIntent().getStringExtra("USER_ID");
         db = FirebaseDatabase.getInstance().getReference("person_information");
 
         fullname = (EditText) findViewById(R.id.fullname);
@@ -57,6 +58,7 @@ public class AddPatientRecord extends AppCompatActivity {
             String pid = db.push().getKey();
 
             Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
+            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned");
 
             db.child(pid).setValue(patient);
 
@@ -78,9 +80,18 @@ public class AddPatientRecord extends AppCompatActivity {
 
     public void openPatientRecords(){
         Intent intent = new Intent(this, PatientRecords.class);
-        //intent.putExtra("USERNAME", userName);
+        intent.putExtra("USER_ID", uId);
         finish();
         startActivity(intent);
         CustomIntent.customType(AddPatientRecord.this, "up-to-bottom");
+    }
+
+    public String currentDate(){
+        java.util.Date c = java.util.Calendar.getInstance().getTime();
+
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+
+        return formattedDate;
     }
 }
