@@ -12,8 +12,12 @@ import android.widget.Toast;
 import com.example.kagaid.kagaid.Logs.Log;
 import com.example.kagaid.kagaid.Logs.Log;
 import com.example.kagaid.kagaid.R;
+import com.example.kagaid.kagaid.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -31,13 +35,23 @@ public class ViewPatientInfo extends AppCompatActivity {
     String uId;
     String pId;
 
+    String employeeName = null;
+    String pfullname = null;
+    String pbday = null;
+    String pgender = null;
+    String paddress = null;
+
     DatabaseReference databaseLogs;
+    DatabaseReference databasePatient;
+    DatabaseReference databaseEmployee;
+
+    User u = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_info);
-        uId = (String) getIntent().getStringExtra("USER_ID");
+        //uId = (String) getIntent().getStringExtra("USER_ID");
 
         textViewPatientName = (TextView) findViewById(R.id.textViewPatientName);
         textViewPatientBday = (TextView) findViewById(R.id.textViewPatientBday);
@@ -46,11 +60,12 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String pfullname = intent.getStringExtra(PatientRecords.PATIENT_FULLNAME);
-        String pbday = intent.getStringExtra(PatientRecords.PATIENT_BIRTHDAY);
-        String pgender = intent.getStringExtra(PatientRecords.PATIENT_GENDER);
-        String paddress = intent.getStringExtra(PatientRecords.PATIENT_ADDRESS);
+        pfullname = intent.getStringExtra(PatientRecords.PATIENT_FULLNAME);
+        pbday = intent.getStringExtra(PatientRecords.PATIENT_BIRTHDAY);
+        pgender = intent.getStringExtra(PatientRecords.PATIENT_GENDER);
+        paddress = intent.getStringExtra(PatientRecords.PATIENT_ADDRESS);
         pId = intent.getStringExtra(PatientRecords.PATIENT_ID);
+        uId = intent.getStringExtra(PatientRecords.USER_ID);
         //String lastscan = intent.getStringExtra(PatientRecords.PATIENT_LAST_SCAN);
 
         textViewPatientName.setText(pfullname);
@@ -58,8 +73,9 @@ public class ViewPatientInfo extends AppCompatActivity {
         textviewPatientGender.setText(pgender);
         textViewPatientAddress.setText(paddress);
 
-        toastMessage("User Id:" + uId + ", Patient Id: " + pId );
+        //toastMessage("User Id:" + uId + ", Patient Id: " + pId );
         //", Last Scan: " + lastscan
+
     }
 
     private void toastMessage(String message){
@@ -85,16 +101,47 @@ public class ViewPatientInfo extends AppCompatActivity {
         takePictureIntent.putExtra("USER_ID", uId);
 
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
-        //unique id
-        String logId = databaseLogs.push().getKey();
-        Log logSingle = new Log(logId, currentDateTime(), pId, uId);
+        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
 
-        databaseLogs.child(logId).setValue(logSingle);
-        Toast.makeText(this, "Logged", Toast.LENGTH_LONG).show();
-        //do the adding to logs db;
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    u = ds.getValue(User.class);
+                    if (uId.equals(u.getUId())) {
+                        employeeName = u.getFirstname() + " " + u.getLastname();
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Toast.makeText(this, "E: " + employeeName, Toast.LENGTH_LONG).show();
+
+
+        if(employeeName==null){
+            Toast.makeText(this, "Pres Scan Again.", Toast.LENGTH_LONG).show();
+        }else{
+            //add Logs
+            String logId = databaseLogs.push().getKey();
+            Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName);
+            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime());
+
+            databasePatient.child(pId).setValue(patient);
+            databaseLogs.child(logId).setValue(logSingle);
+            Toast.makeText(this, "Logged", Toast.LENGTH_LONG).show();
+
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+            }
         }
     }
 

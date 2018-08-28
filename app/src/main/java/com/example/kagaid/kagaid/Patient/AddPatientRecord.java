@@ -34,6 +34,8 @@ public class AddPatientRecord extends AppCompatActivity {
         uId = (String) getIntent().getStringExtra("USER_ID");
         db = FirebaseDatabase.getInstance().getReference("person_information");
 
+        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
+
         fullname = (EditText) findViewById(R.id.fullname);
         birthdate = (EditText) findViewById(R.id.birthday);
         address = (EditText) findViewById(R.id.address);
@@ -57,8 +59,8 @@ public class AddPatientRecord extends AppCompatActivity {
         if(!TextUtils.isEmpty(fullnameP) && !TextUtils.isEmpty(bdayP) && !TextUtils.isEmpty(addressP)){
             String pid = db.push().getKey();
 
-            Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned");
+            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
+            Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned");
 
             db.child(pid).setValue(patient);
 
@@ -67,6 +69,7 @@ public class AddPatientRecord extends AppCompatActivity {
             address.setText("");
 
             Toast.makeText(this, "Patient Record Added", Toast.LENGTH_LONG).show();
+            openPatientRecords();
         }else{
             Toast.makeText(this, "Please don't leave any field empty.", Toast.LENGTH_LONG).show();
         }

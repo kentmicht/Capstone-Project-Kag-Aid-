@@ -24,6 +24,8 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         uId = (String) getIntent().getStringExtra("USER_ID");
+
+        //Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
 //        toastMessage("User Id:" + uId);
 //        TextView name = (TextView)findViewById(R.id.header);
 //        name.setText("Welcome "+userName+"!");

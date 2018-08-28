@@ -6,7 +6,7 @@ public class Patient {
     String birthday;
     String gender;
     String address;
-    //String lastscan;
+    String lastscan;
 
     public Patient(){
 
@@ -26,10 +26,12 @@ public class Patient {
         this.birthday = birthday;
         this.gender = gender;
         this.address = address;
-        //this.lastscan = lastscan;
+        this.lastscan = lastscan;
     }
 
-
+    public Patient(String lastscan) {
+        this.lastscan = lastscan;
+    }
 
     public String getId() {
         return pid;
@@ -51,10 +53,6 @@ public class Patient {
         return address;
     }
 
-//    public String getLastScan() {
-//        return lastscan;
-//    }
-
     public void setId(String pid) { this.pid = pid; }
 
     public void setFullname(String fullname) {
@@ -73,7 +71,11 @@ public class Patient {
         this.address = address;
     }
 
-//    public void setLastScan(String lastscan) {
-//        this.lastscan = lastscan;
-//    }
+    public String getLastscan() {
+        return lastscan;
+    }
+
+    public void setLastscan(String lastscan) {
+        this.lastscan = lastscan;
+    }
 }

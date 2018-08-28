@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Patient.Patient;
 import com.example.kagaid.kagaid.R;
 import com.example.kagaid.kagaid.User;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +28,12 @@ public class LogLists extends ArrayAdapter<Log>{
 
     private Activity context;
     private List<Log> logList;
-    DatabaseReference db;
+    DatabaseReference refUser;
+    DatabaseReference refPatient;
+    User u = new User();
+    Patient p = new Patient();
+    Log log = new Log();
+
 
     public LogLists(Activity context, List logList){
         super(context, R.layout.activity_log_list_layout, logList);
@@ -37,26 +44,61 @@ public class LogLists extends ArrayAdapter<Log>{
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final String[] firstName = new String[1];
-        final String[] lastName = new String[1];
         LayoutInflater inflater = context.getLayoutInflater();
 
-        View listViewItem = inflater.inflate(R.layout.activity_log_list_layout, null, true);
-        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textView_log_name);
-        TextView textViewEmployee = (TextView) listViewItem.findViewById(R.id.textView_log_employee);
-        TextView textViewPatient = (TextView) listViewItem.findViewById(R.id.textView_log_patient);
-        TextView textViewDateTime = (TextView) listViewItem.findViewById(R.id.textView_log_datetime);
+        final View listViewItem = inflater.inflate(R.layout.activity_log_list_layout, null, true);
+        final TextView textViewName = (TextView) listViewItem.findViewById(R.id.textView_log_name);
+        final TextView textViewEmployee = (TextView) listViewItem.findViewById(R.id.textView_log_employee);
+        final TextView textViewPatient = (TextView) listViewItem.findViewById(R.id.textView_log_patient);
+        final TextView textViewDateTime = (TextView) listViewItem.findViewById(R.id.textView_log_datetime);
 
-        Log log = logList.get(position);
+        log = logList.get(position);
 
-//        //Firebase Database
-//        db = FirebaseDatabase.getInstance().getReference("users");
+        //Firebase Database
+//        refUser = FirebaseDatabase.getInstance().getReference().child("users");
+//        refPatient = FirebaseDatabase.getInstance().getReference().child("person_information");
 //
-//        db.child(log.pId).addListenerForSingleValueEvent(new ValueEventListener() {
+//        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
-//                firstName[0] = dataSnapshot.getValue(User.class).getFirstname();
-//                lastName[0] = dataSnapshot.getValue(User.class).getLastname();
+//                String userFname = null;
+//                String userLname = null;
+//
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    u = ds.getValue(User.class);
+//                    if (log.getuId().equals(u.getUId())) {
+//                        userFname = u.getFirstname();
+//                        userLname = u.getLastname();
+//
+//                    }
+//                }
+//
+//                textViewEmployee.setText("Employee: " + userFname + " " + userLname);
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        refPatient.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String patientFLName = null;
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    p = ds.getValue(Patient.class);
+//                    if (log.getpId().equals(p.getId())) {
+//                        patientFLName = p.getFullname();
+//
+//                    }
+//                }
+//
+//
+//
+//
 //            }
 //
 //            @Override
@@ -65,9 +107,10 @@ public class LogLists extends ArrayAdapter<Log>{
 //            }
 //        });
 
-        textViewName.setText(log.getLogId());
-        textViewEmployee.setText("Employee: " + log.getuId());
-        textViewPatient.setText("Patient: ");
+        textViewPatient.setText("Patient: " + log.getPatientName());
+        textViewEmployee.setText("Employee: " + log.getEmployeeName());
+        textViewName.setText(log.getLogdatetime());
+        textViewPatient.setText("Patient: " + log.getPatientName());
         textViewDateTime.setText("Date and Time: " + log.getLogdatetime());
 
         return listViewItem;

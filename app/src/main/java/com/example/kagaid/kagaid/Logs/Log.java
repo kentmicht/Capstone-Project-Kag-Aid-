@@ -8,6 +8,8 @@ public class Log {
     String logdatetime;
     String pId;
     String uId;
+    String patientName;
+    String employeeName;
 
     public String getLogdatetime() {
         return logdatetime;
@@ -41,11 +43,29 @@ public class Log {
         this.logId = logId;
     }
 
-    public Log(String logId, String logdatetime, String pId, String uId) {
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public Log(String logId, String logdatetime, String pId, String uId, String patientName, String employeeName) {
         this.logId = logId;
         this.logdatetime = logdatetime;
         this.pId = pId;
         this.uId = uId;
+        this.patientName = patientName;
+        this.employeeName = employeeName;
     }
 
     public Log() {
