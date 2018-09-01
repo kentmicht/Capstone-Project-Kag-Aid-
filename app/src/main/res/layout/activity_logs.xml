@@ -7,6 +7,29 @@
     tools:context=".Logs.Logs">
 
     <ImageView
+        android:id="@+id/logSearchBtn"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/logSearch"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
+
+    <EditText
+        android:id="@+id/logSearch"
+        android:layout_width="322dp"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textViewDoctorName3"
+        android:layout_marginTop="153dp"
+        android:background="@drawable/loginshape"
+        android:ems="10"
+        android:hint="Search Logs"
+        android:inputType="textPersonName"
+        android:paddingStart="15dp"
+        android:textSize="15dp" />
+
+    <ImageView
         android:id="@+id/imageView46"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -72,15 +95,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/listViewLogs"
-        android:layout_width="396dp"
-        android:layout_height="583dp"
-        android:layout_above="@+id/imageView46"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="163dp" />
+    <TextView
+        android:id="@+id/textViewDoctorName3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView48"
+        android:layout_alignTop="@+id/logCategory"
+        android:text="Search By:"
+        android:textColor="@color/textHomepage"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView25"
@@ -90,4 +115,23 @@
         android:layout_below="@+id/textViewDoctorName2"
         android:text="The system's logs are shown here."
         android:textColor="@color/textHomepage1"/>
+
+    <Spinner
+        android:id="@+id/logCategory"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="120dp"
+        android:entries="@array/logs"
+        android:textColor="@color/textHomepage" />
+
+    <ListView
+        android:id="@+id/listViewLogs"
+        android:layout_width="match_parent"
+        android:layout_height="497dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="62dp" />
 </RelativeLayout>

@@ -128,7 +128,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 
 
         if(employeeName==null){
-            Toast.makeText(this, "Pres Scan Again.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Pres Scan Again", Toast.LENGTH_LONG).show();
         }else{
             //add Logs
             String logId = databaseLogs.push().getKey();

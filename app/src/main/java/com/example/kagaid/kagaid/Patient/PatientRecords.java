@@ -33,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import maes.tech.intentanim.CustomIntent;
@@ -126,25 +128,13 @@ public class PatientRecords extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        viewAllPatients();
 
-                pList.clear();
+        ImageView search = (ImageView) findViewById(R.id.patientSearchBtn);
+        search.setOnClickListener(new View.OnClickListener() {
 
-                for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
-                    Patient patient = pSnapshot.getValue(Patient.class);
-                    pList.add(patient);
-//                    patient_names.add(patient.getFullname());
-                }
-
-                PatientLists adapter = new PatientLists(PatientRecords.this, pList);
-                patient_record.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                searchPatient();
             }
         });
     }
@@ -238,5 +228,82 @@ public class PatientRecords extends AppCompatActivity {
         finish();
         startActivity(intent);
         CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
+    }
+
+    public void searchPatient(){
+        EditText fullNameSearch = (EditText) findViewById(R.id.patientSearch);
+        final String fullnameS = fullNameSearch.getText().toString();
+
+        if(fullnameS.matches("")){
+            toastMessage("Nothing to search");
+            viewAllPatients();
+        }else{
+            db.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    pList.clear();
+
+                    for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
+                        Patient patient = pSnapshot.getValue(Patient.class);
+                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase())){
+                            pList.add(patient);
+                        }
+//                    patient_names.add(patient.getFullname());
+                    }
+
+                    if(pList.isEmpty()){
+                        toastMessage("No Match");
+                        viewAllPatients();
+                    }else {
+                        sortPList();
+                        PatientLists adapter = new PatientLists(PatientRecords.this, pList);
+                        patient_record.setAdapter(adapter);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
+
+    public void viewAllPatients(){
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                pList.clear();
+
+                for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
+                    Patient patient = pSnapshot.getValue(Patient.class);
+                    pList.add(patient);
+//                    patient_names.add(patient.getFullname());
+                }
+                //sort the list
+                sortPList();
+                PatientLists adapter = new PatientLists(PatientRecords.this, pList);
+                patient_record.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void sortPList(){
+        if (pList.size() > 0) {
+            Collections.sort(pList, new Comparator<Patient>() {
+                @Override
+                public int compare(final Patient object1, final Patient object2) {
+                    return object1.getFullname().toLowerCase().compareTo(object2.getFullname().toLowerCase());
+                }
+            });
+        }
     }
 }

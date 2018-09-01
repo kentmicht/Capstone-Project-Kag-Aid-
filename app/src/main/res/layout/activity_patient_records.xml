@@ -93,12 +93,35 @@
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/patientss_1" />
 
+    <EditText
+        android:id="@+id/patientSearch"
+        android:layout_width="316dp"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="125dp"
+        android:layout_toStartOf="@+id/addPatientBtn"
+        android:background="@drawable/loginshape"
+        android:ems="10"
+        android:hint="Search by Patient's Name..."
+        android:inputType="textPersonName"
+        android:paddingStart="15dp"
+        android:textSize="15dp" />
+
+    <ImageView
+        android:id="@+id/patientSearchBtn"
+        android:layout_width="40dp"
+        android:layout_height="44dp"
+        android:layout_alignEnd="@+id/addPatientBtn"
+        android:layout_alignTop="@+id/patientSearch"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
+
     <ListView
         android:id="@+id/listViewPatient"
-        android:layout_width="379dp"
-        android:layout_height="583dp"
-        android:layout_above="@+id/imageView7"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="match_parent"
+        android:layout_height="525dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="60dp" />
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

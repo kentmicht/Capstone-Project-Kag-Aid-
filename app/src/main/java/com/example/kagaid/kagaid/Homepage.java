@@ -92,6 +92,7 @@ public class Homepage extends AppCompatActivity {
 
     public void openLogs(View view) {
         Intent logs = new Intent(this, Logs.class);
+        logs.putExtra("USER_ID", uId);
         startActivity(logs);
         CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }

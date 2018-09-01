@@ -17,6 +17,14 @@
         <item>Female</item>
     </array>
 
+    <!--Logs-->
+    <array name="logs">
+        <item>Date</item>
+        <item>Time</item>
+        <item>Patient Name</item>
+        <item>Employee Name</item>
+    </array>
+
     <!-- Skin Illness String Res -->
     <string name="skinIllness_label">Skin Illnesses</string>
     <string name="skinIllness_desc">Click on an item to see its description and treatments.</string>

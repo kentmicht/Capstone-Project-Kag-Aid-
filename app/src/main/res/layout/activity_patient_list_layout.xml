@@ -8,11 +8,11 @@
 
     <ImageView
         android:id="@+id/imageView51"
-        android:layout_width="48dp"
+        android:layout_width="59dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/log_file"
+        app:srcCompat="@drawable/patient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 

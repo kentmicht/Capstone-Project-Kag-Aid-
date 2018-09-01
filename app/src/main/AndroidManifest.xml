@@ -65,7 +65,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Logs.Logs"></activity>
+        <activity
+            android:name=".Logs.Logs"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
