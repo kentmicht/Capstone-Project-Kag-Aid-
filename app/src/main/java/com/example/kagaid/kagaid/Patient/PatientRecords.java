@@ -80,7 +80,7 @@ public class PatientRecords extends AppCompatActivity {
 //        test = (TextView) findViewById(R.id.test);
         patient_names = new ArrayList<String>();
 
-        //Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
 
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");

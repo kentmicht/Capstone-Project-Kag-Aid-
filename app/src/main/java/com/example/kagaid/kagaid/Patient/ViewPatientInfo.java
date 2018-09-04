@@ -73,7 +73,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         textviewPatientGender.setText(pgender);
         textViewPatientAddress.setText(paddress);
 
-        //toastMessage("User Id:" + uId + ", Patient Id: " + pId );
+        toastMessage("User Id:" + uId + ", Patient Id: " + pId );
         //", Last Scan: " + lastscan
 
     }
@@ -111,10 +111,12 @@ public class ViewPatientInfo extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    u = ds.getValue(User.class);
-                    if (uId.equals(u.getUId())) {
-                        employeeName = u.getFirstname() + " " + u.getLastname();
-
+                    //toastMessage(ds.child());
+//                    u = ds.getValue(User.class);
+                    if (uId.equals(ds.child("uId").getValue().toString())) {
+                        //if (.equals(u.getUId()))
+                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+//
                     }
                 }
             }
