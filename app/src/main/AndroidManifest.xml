@@ -17,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogIn"></activity>
+        <activity android:name=".LogIn" />
         <activity
             android:name=".Homepage"
-            android:label="Homepage" >        </activity>
+            android:label="Homepage"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

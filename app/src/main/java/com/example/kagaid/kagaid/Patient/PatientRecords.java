@@ -2,17 +2,22 @@ package com.example.kagaid.kagaid.Patient;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -50,6 +56,10 @@ public class PatientRecords extends AppCompatActivity {
     public static final String PATIENT_ID = "patientid";
     public static final String USER_ID = "uId";
     //public static final String PATIENT_LAST_SCAN = "patientlastscan";
+
+    private static android.app.DatePickerDialog.OnDateSetListener mDateSetListener;
+    final String TAG = "PatientRecords";
+
     String uId;
     DatabaseReference db;
 
@@ -63,7 +73,7 @@ public class PatientRecords extends AppCompatActivity {
     TextView test;
 //    ArrayAdapter<Patient> adapter;
     private ArrayAdapter pAdapter;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +122,7 @@ public class PatientRecords extends AppCompatActivity {
 
                 Patient patient = pList.get(position);
 
-                showUpdateDialog(patient.getId(), patient.getFullname(), patient.getBirthday(), patient.getGender(), patient.getAddress());
+                showUpdateDialog(patient.getId(), patient.getFullname(), patient.getBirthday(), patient.getGender(), patient.getAddress(), patient.getLastscan());
 
                 return false;
             }
@@ -140,7 +150,7 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     //Show the update Dialog
-    private void showUpdateDialog(final String pid, final String fullname, final String bday, final String gender, final String address)
+    private void showUpdateDialog(final String pid, final String fullname, final String bday, final String gender, final String address, final String lastscan)
     {
 
 
@@ -151,13 +161,23 @@ public class PatientRecords extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final EditText editTextBday = (EditText) dialogView.findViewById(R.id.editTextBirthday);
-        final TextView textViewGender = (TextView) dialogView.findViewById(R.id.patient_gender); //for displaying the current gender
+        final TextView editTextBday = (TextView) dialogView.findViewById(R.id.editTextBirthday);
+        //final TextView textViewGender = (TextView) dialogView.findViewById(R.id.patient_gender); //for displaying the current gender
         final Spinner spinnerGender = (Spinner) dialogView.findViewById(R.id.spinnerGender); //for the updating of teh gender
         final EditText editTextAddress = (EditText) dialogView.findViewById(R.id.editTextAddress);
         final Button updatePatientBtn = (Button) dialogView.findViewById(R.id.updatePatientBtn);
 
-        dialogBuilder.setTitle("Updating Patient "+ fullname);
+        dialogBuilder.setTitle(fullname);
+
+        //toastMessage("Position: " + Integer.toString(spinnerGender.getSelectedItemPosition()) + "Gender: " + gender);
+
+        if(gender.equals("Female")) {
+            spinnerGender.setSelection(1, true);
+            //toastMessage("Laban");
+        }
+
+
+
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -165,8 +185,33 @@ public class PatientRecords extends AppCompatActivity {
         //Setting the values from the db to the fields
         editTextName.setText(fullname);
         editTextBday.setText(bday);
-        textViewGender.setText(gender);
+        //textViewGender.setText(gender);
         editTextAddress.setText(address);
+
+        editTextBday.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String[] dateParts = editTextBday.getText().toString().split("-");
+                int year = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]) - 1;
+                int day = Integer.parseInt(dateParts[2]);
+
+//                Calendar cal = Calendar.getInstance();
+//                int year = cal.get(Calendar.YEAR);
+//                int month = cal.get(Calendar.MONTH);
+//                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                toastMessage("Year:" + dateParts[0] + " Month:" + dateParts[1]);
+
+                DatePickerDialog dialog = new DatePickerDialog(PatientRecords.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year, month, day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
 
         updatePatientBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,19 +232,36 @@ public class PatientRecords extends AppCompatActivity {
                     return;
                 }
 
-                updatePatient(pid, pname, pbday, pgender, paddress);
+                updatePatient(pid, pname, pbday, pgender, paddress, lastscan);
                 alertDialog.dismiss();
             }
         });
+
+        mDateSetListener = new android.app.DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month+1;
+                month = month + 1;
+                Log.d(TAG, "onDataSet: yyyy-mm-dd: " + year + "-" + month + "-" + dayOfMonth);
+                if(month >= 1 && month <=9){
+                    String date = year + "-0" + month + "-" + dayOfMonth;
+                    editTextBday.setText(date);
+                }else{
+                    String date = year + "-" + month + "-" + dayOfMonth;
+                    editTextBday.setText(date);
+                }
+
+            }
+        };
     }
 
     //Actual updating in the database
-    private boolean updatePatient(String pid, String fullname, String bday, String gender, String address){
+    private boolean updatePatient(String pid, String fullname, String bday, String gender, String address, String lastscan){
 
         println(pid);
 
         db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
-        Patient patient = new Patient(pid, fullname, bday, gender, address);
+        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan);
 
         db.setValue(patient);
         Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();

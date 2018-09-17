@@ -135,7 +135,9 @@ public class ViewPatientInfo extends AppCompatActivity {
             //add Logs
             String logId = databaseLogs.push().getKey();
             Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName);
-            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime());
+            String status = "1";
+            String age = calculateAge(pbday);
+            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime(), status, age);
 
             databasePatient.child(pId).setValue(patient);
             databaseLogs.child(logId).setValue(logSingle);
@@ -151,5 +153,13 @@ public class ViewPatientInfo extends AppCompatActivity {
         String datetime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         return datetime;
+    }
+
+    public String calculateAge(String date){
+        String age = null;
+        String year = date.substring(0, 4);
+
+        age = Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(year));
+        return age;
     }
 }

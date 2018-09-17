@@ -10,7 +10,9 @@
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fullname"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/editTextName"
+        android:text="Fullname "
         android:textColor="@color/textHomepage"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="3dp"
@@ -20,8 +22,8 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView20"
+        android:layout_below="@+id/textView31"
+        android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Enter New Fullname"
@@ -31,9 +33,9 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="wrap_content"
+        android:layout_width="328dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/textView20"
         android:layout_below="@+id/spinnerGender"
         android:text="Address"
         android:textColor="@color/textHomepage"
@@ -45,7 +47,7 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/textView20"
         android:layout_below="@+id/editTextName"
         android:text="Birthdate"
         android:textColor="@color/textHomepage"
@@ -57,8 +59,8 @@
         android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView21"
+        android:layout_below="@+id/textView29"
+        android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Enter New Address"
@@ -70,7 +72,7 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/textView20"
         android:layout_below="@+id/editTextBirthday"
         android:text="Gender"
         android:textColor="@color/textHomepage"
@@ -80,25 +82,13 @@
 
     <Spinner
         android:id="@+id/spinnerGender"
-        android:layout_width="105dp"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView20"
         android:layout_below="@+id/textView23"
-        android:layout_marginStart="9dp"
-        android:layout_toEndOf="@+id/patient_gender"
         android:entries="@array/patient_gender"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="150dp" />
-
-    <EditText
-        android:id="@+id/editTextBirthday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView22"
-        android:ems="10"
-        android:inputType="date"
-        android:text="Enter New Birthdate"
-        android:textColor="@color/place_autocomplete_prediction_primary_text_highlight" />
 
     <Button
         android:id="@+id/updatePatientBtn"
@@ -112,21 +102,41 @@
         android:textColor="@color/textHomepage" />
 
     <TextView
-        android:id="@+id/patient_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView20"
-        android:layout_below="@+id/textView23"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="italic" />
-
-    <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editTextName"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/textView23"
+        android:layout_marginEnd="37dp"
         android:text="Choose a gender."
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/editTextBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_below="@+id/textView22"
+        android:text="Birthdate"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_below="@+id/textView21"
+        android:text=" Lot No., Block No., Street, Barangay, City"
+        android:textSize="10sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_below="@+id/textView20"
+        android:text="LastName, FirstName M.I"
+        android:textSize="10sp"
         android:textStyle="italic" />
 </RelativeLayout>

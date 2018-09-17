@@ -33,10 +33,10 @@
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="290dp"
-        android:layout_height="266dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="297dp"
+        android:layout_alignBottom="@+id/textViewPatientAddress"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="201dp"
+        android:layout_marginBottom="-18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@color/backgroundAddPatient"
@@ -94,14 +94,26 @@
         android:id="@+id/ad"
         android:layout_width="70dp"
         android:layout_height="19dp"
-        android:layout_above="@+id/textViewPatientAddress"
-        android:layout_alignStart="@+id/textView18"
+        android:layout_alignStart="@+id/gn"
+        android:layout_below="@+id/textViewPatientGender"
+        android:layout_marginTop="-287dp"
         android:text="Address"
         android:textColor="@color/textHomepage"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="436dp" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ad"
+        android:layout_below="@+id/bd"
+        android:text="LastName, FirstName M.I"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/gn"
@@ -119,12 +131,12 @@
 
     <TextView
         android:id="@+id/bd"
-        android:layout_width="97dp"
+        android:layout_width="238dp"
         android:layout_height="19dp"
-        android:layout_above="@+id/textViewPatientName"
-        android:layout_alignStart="@+id/ad"
-        android:layout_marginBottom="-336dp"
-        android:text="Fullname"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:text="Fullname "
         android:textColor="@color/textHomepage"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"
@@ -187,9 +199,8 @@
         android:id="@+id/textViewPatientAddress"
         android:layout_width="238dp"
         android:layout_height="46dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView26"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="212dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -209,9 +220,8 @@
         android:id="@+id/imageView14"
         android:layout_width="122dp"
         android:layout_height="137dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/imageView10"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="156dp"
         app:srcCompat="@drawable/patient_logo"
         tools:layout_editor_absoluteX="131dp"
         tools:layout_editor_absoluteY="96dp" />
@@ -222,10 +232,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="125dp"
         android:background="@drawable/loginshape"
         android:onClick="openCamera"
         android:text="Scan"
         android:textColor="@color/textHomepage" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ad"
+        android:layout_below="@+id/ad"
+        android:text="Lot No., Block No., Street, Barangay, City"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

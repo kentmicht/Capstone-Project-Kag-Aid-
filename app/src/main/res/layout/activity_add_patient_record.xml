@@ -34,9 +34,8 @@
         android:id="@+id/imageView42"
         android:layout_width="122dp"
         android:layout_height="137dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/imageView4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="131dp"
         app:srcCompat="@drawable/patient_logo"
         tools:layout_editor_absoluteX="131dp"
         tools:layout_editor_absoluteY="96dp" />
@@ -44,10 +43,10 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="287dp"
-        android:layout_height="297dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="334dp"
+        android:layout_alignBottom="@+id/address"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="194dp"
+        android:layout_marginBottom="-17dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -69,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="206dp"
+        android:layout_marginBottom="194dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName" />
@@ -85,23 +84,13 @@
         android:hint="Fullname"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/birthday"
-        android:layout_width="232dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView13"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="Birthdate"
-        android:inputType="date" />
-
     <Button
         android:id="@+id/addPatientBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="130dp"
+        android:layout_marginBottom="111dp"
         android:background="@drawable/loginshape"
         android:text="Add"
         android:textColor="@color/textHomepage" />
@@ -143,22 +132,43 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="71dp"
+        android:layout_width="257dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fullname"
-        android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="-312dp"
-        android:text="Fullname"
+        android:layout_above="@+id/textView30"
+        android:layout_alignEnd="@+id/imageView4"
+        android:text="Fullname "
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/address"
+        android:layout_alignStart="@+id/address"
+        android:text="Lot No., Block No., Street, Barangay, City"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fullname"
+        android:layout_alignStart="@+id/fullname"
+        android:layout_marginBottom="-312dp"
+        android:text="LastName, FirstName M.I"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/textView28"
         android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="251dp"
         android:text="Address"
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
@@ -169,7 +179,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="303dp"
+        android:layout_marginBottom="310dp"
         android:text="Gender"
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
@@ -188,7 +198,17 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/address"
         android:layout_below="@+id/textView13"
-        android:layout_marginTop="-303dp"
+        android:layout_marginTop="-310dp"
         android:entries="@array/patient_gender" />
+
+    <TextView
+        android:id="@+id/birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/fullname"
+        android:layout_below="@+id/textView6"
+        android:ems="10"
+        android:text="Birthdate"
+        android:textSize="20sp" />
 
 </RelativeLayout>

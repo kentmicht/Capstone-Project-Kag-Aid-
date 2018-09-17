@@ -4,9 +4,13 @@ public class Patient {
     String pid;
     String fullname;
     String birthday;
+    String age;
     String gender;
     String address;
     String lastscan;
+    String status;
+
+
 
     public Patient(){
 
@@ -27,6 +31,27 @@ public class Patient {
         this.gender = gender;
         this.address = address;
         this.lastscan = lastscan;
+    }
+
+    public Patient(String pid, String fullname, String birthday, String gender, String address, String lastscan, String status) {
+        this.pid = pid;
+        this.fullname = fullname;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.address = address;
+        this.lastscan = lastscan;
+        this.status = status;
+    }
+
+    public Patient(String pid, String fullname, String birthday, String gender, String address, String lastscan, String status, String age) {
+        this.pid = pid;
+        this.fullname = fullname;
+        this.birthday = birthday;
+        this.age = age;
+        this.gender = gender;
+        this.address = address;
+        this.lastscan = lastscan;
+        this.status = status;
     }
 
     public Patient(String lastscan) {
@@ -77,5 +102,29 @@ public class Patient {
 
     public void setLastscan(String lastscan) {
         this.lastscan = lastscan;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
