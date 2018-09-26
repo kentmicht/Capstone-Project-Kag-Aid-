@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +31,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -38,7 +42,9 @@ public class ViewPatientInfo extends AppCompatActivity {
     private static final int CAMERA_PIC_REQUEST = 1111;
     private ImageView selectedImageView;
     private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
+    private static final String RETRIEVE_URL = "https://kag-aid.000webhostapp.com/uploads/resultFile.txt";
     private static String _bytes64String, _imageFileName;
+    private static String[] scannedResult;
 
     TextView textViewPatientName;
     TextView textViewPatientBday;
@@ -241,40 +247,22 @@ public class ViewPatientInfo extends AppCompatActivity {
             super.onPostExecute(result);
             pd.hide();
             pd.dismiss();
-            toastMessage("Image uploaded to server!");
 
-//            String path ="https://kag-aid.000webhostapp.com/uploads/result.txt";
-//            URL u = null;
-//            try {
-//                u = new URL(path);
-//                HttpURLConnection c = (HttpURLConnection) u.openConnection();
-//                c.setRequestMethod("GET");
-//                c.connect();
-//                InputStream in = c.getInputStream();
-//                final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-//                byte[] buffer = new byte[1024];
-//                in.read(buffer); // Read from Buffer.
-//                bo.write(buffer); // Write Into Buffer.
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        toastMessage(bo.toString());
-//                        try {
-//                            bo.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (ProtocolException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                // Create a URL for the desired page
+                URL url = new URL(RETRIEVE_URL);
+
+                // Read all the text returned by the server
+                StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                String str = in.readLine();
+                in.close();
+
+                scannedResult = str.split(Pattern.quote("?"));
+                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
+            } catch (MalformedURLException e) {
+            } catch (IOException e) {
+            }
         }
     }
 
