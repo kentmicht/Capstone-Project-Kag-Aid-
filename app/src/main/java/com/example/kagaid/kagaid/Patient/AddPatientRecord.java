@@ -151,4 +151,8 @@ public class AddPatientRecord extends AppCompatActivity {
         age = Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(year));
         return age;
     }
+
+    public void back(View view){
+        finish();
+    }
 }

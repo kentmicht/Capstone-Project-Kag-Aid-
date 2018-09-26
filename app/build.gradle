@@ -58,6 +58,7 @@ dependencies {
     //transitions
     implementation "com.github.biodunalfet:SlidingSquaresLoader:1.0"
     implementation "com.github.hajiyevelnur92:intentanimation:1.0"
+
 }
 
 apply plugin: 'com.google.gms.google-services'

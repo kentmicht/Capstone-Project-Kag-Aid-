@@ -166,4 +166,8 @@ public class Logs extends AppCompatActivity {
             }
         });
     }
+
+    public void back(View view){
+        finish();
+    }
 }

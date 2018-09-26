@@ -8,6 +8,16 @@
     tools:context=".Patient.PatientRecords">
 
 
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="179dp"
+        android:text="@string/patient_rec_desc_instruction"
+        android:textStyle="italic" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPatientBtn"
         android:layout_width="250dp"
@@ -62,10 +72,9 @@
         android:id="@+id/textViewDoctorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/patientSearchBtn"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="24dp"
         android:text="Patient Records"
         android:textColor="@color/textHomepage1"
         android:textSize="24sp"
@@ -87,10 +96,10 @@
 
     <ImageView
         android:id="@+id/imageView21"
-        android:layout_width="110dp"
+        android:layout_width="112dp"
         android:layout_height="108dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/patientSearch"
         app:srcCompat="@drawable/patientss_1" />
 
     <EditText
@@ -119,10 +128,19 @@
     <ListView
         android:id="@+id/listViewPatient"
         android:layout_width="match_parent"
-        android:layout_height="525dp"
+        android:layout_height="492dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="60dp" />
+
+    <ImageView
+        android:id="@+id/imageView53"
+        android:layout_width="43dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textViewDoctorName"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+        android:onClick="back"/>
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

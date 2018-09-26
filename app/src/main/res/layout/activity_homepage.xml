@@ -36,9 +36,8 @@
         android:id="@+id/imageView43"
         android:layout_width="329dp"
         android:layout_height="355dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/header"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="96dp"
         android:onClick="openPatientRecord"
         android:visibility="visible"
         app:srcCompat="@drawable/kag_aid_logo_raw" />
@@ -112,5 +111,14 @@
         android:text="@string/homepage_title"
         android:textColor="@color/textHomepage1"
         android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_centerHorizontal="true"
+        android:text="@string/homepage_instruction"
+        android:textStyle="italic" />
 
 </RelativeLayout>

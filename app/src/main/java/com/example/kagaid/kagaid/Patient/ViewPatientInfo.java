@@ -1,37 +1,50 @@
 package com.example.kagaid.kagaid.Patient;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kagaid.kagaid.Logs.Log;
-import com.example.kagaid.kagaid.Logs.Log;
+import com.example.kagaid.kagaid.Patient.ScanningModule.MyHttpURLConnection;
+import com.example.kagaid.kagaid.Patient.ScanningModule.RequestPackage;
 import com.example.kagaid.kagaid.R;
 import com.example.kagaid.kagaid.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.Calendar;
 
 import maes.tech.intentanim.CustomIntent;
 
 public class ViewPatientInfo extends AppCompatActivity {
 
-    private static final int CAMERA_REQUEST_CODE = 200;
+    private static final int CAMERA_PIC_REQUEST = 1111;
     private ImageView selectedImageView;
+    private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
+    private static String _bytes64String, _imageFileName;
 
     TextView textViewPatientName;
     TextView textViewPatientBday;
     TextView textviewPatientGender;
     TextView textViewPatientAddress;
+    private Button btnCamera;
     String uId;
     String pId;
 
@@ -76,6 +89,16 @@ public class ViewPatientInfo extends AppCompatActivity {
         toastMessage("User Id:" + uId + ", Patient Id: " + pId );
         //", Last Scan: " + lastscan
 
+        _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
+
+        btnCamera = (Button) findViewById(R.id.button2);
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureImage();
+            }
+        });
+
     }
 
     private void toastMessage(String message){
@@ -96,58 +119,165 @@ public class ViewPatientInfo extends AppCompatActivity {
         CustomIntent.customType(ViewPatientInfo.this, "right-to-left");
     }
 
-    public void openCamera(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePictureIntent.putExtra("USER_ID", uId);
 
-        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+    public void captureImage() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//
 
-        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAMERA_PIC_REQUEST);
+        }
 
-        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    //toastMessage(ds.child());
-//                    u = ds.getValue(User.class);
-                    if (uId.equals(ds.child("uId").getValue().toString())) {
-                        //if (.equals(u.getUId()))
-                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+
+//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, _imagefileUri);
+
+
+//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 //
-                    }
-                }
+//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+//        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
+//
+//        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    //toastMessage(ds.child());
+////                    u = ds.getValue(User.class);
+//                    if (uId.equals(ds.child("uId").getValue().toString())) {
+//                        //if (.equals(u.getUId()))
+//                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+////
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        if(employeeName==null){
+//            Toast.makeText(this, "Pres Scan Again", Toast.LENGTH_LONG).show();
+//        }else{
+//            //add Logs
+//            String logId = databaseLogs.push().getKey();
+//            Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName);
+//            String status = "1";
+//            String age = calculateAge(pbday);
+//            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime(), status, age);
+//
+//            databasePatient.child(pId).setValue(patient);
+//            databaseLogs.child(logId).setValue(logSingle);
+//            Toast.makeText(this, "Logged", Toast.LENGTH_LONG).show();
+//
+//            //camera setup
+//            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+//
+//            }
+//
+//
+//
+//        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if(requestCode == CAMERA_PIC_REQUEST){
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+//                toastMessage("Laban besh! nakasulod oks" + _imagefileUri.getPath());
+                uploadImage(imageBitmap);
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        //Toast.makeText(this, "E: " + employeeName, Toast.LENGTH_LONG).show();
-
-
-        if(employeeName==null){
-            Toast.makeText(this, "Pres Scan Again", Toast.LENGTH_LONG).show();
+        }else if(resultCode == RESULT_CANCELED){
+            toastMessage("User cancelled the image capture");
         }else{
-            //add Logs
-            String logId = databaseLogs.push().getKey();
-            Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName);
-            String status = "1";
-            String age = calculateAge(pbday);
-            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime(), status, age);
+            toastMessage("Sorry! Failed to capture image");
+        }
 
-            databasePatient.child(pId).setValue(patient);
-            databaseLogs.child(logId).setValue(logSingle);
-            Toast.makeText(this, "Logged", Toast.LENGTH_LONG).show();
+    }
 
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-            }
+    private void uploadImage(Bitmap picture){
+//        Bitmap bm = BitmapFactory.decodeFile(picturePath);
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        picture.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+        byte[] byteArray = bao.toByteArray();
+        _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        RequestPackage rp = new RequestPackage();
+        rp.setMethod("POST");
+        rp.setUri(UPLOAD_URL);
+        rp.setSingleParam("base64", _bytes64String);
+        rp.setSingleParam("ImageName", _imageFileName + ".jpg");
+
+        uploadToServer uploadServer = new uploadToServer();
+        uploadServer.execute(rp);
+    }
+
+    public class uploadToServer extends AsyncTask<RequestPackage, Void, String> {
+
+        private ProgressDialog pd = new ProgressDialog(ViewPatientInfo.this);
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            resultText = (TextView) findViewById(R.id.textView);
+//            resultText.setText("New file "+_imageFileName+".jpg created\n");
+            pd.setMessage("Image uploading! please wait..");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+
+            String content = MyHttpURLConnection.getData(params[0]);
+            return content;
+
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            pd.hide();
+            pd.dismiss();
+            toastMessage("Image uploaded to server!");
+
+//            String path ="https://kag-aid.000webhostapp.com/uploads/result.txt";
+//            URL u = null;
+//            try {
+//                u = new URL(path);
+//                HttpURLConnection c = (HttpURLConnection) u.openConnection();
+//                c.setRequestMethod("GET");
+//                c.connect();
+//                InputStream in = c.getInputStream();
+//                final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+//                byte[] buffer = new byte[1024];
+//                in.read(buffer); // Read from Buffer.
+//                bo.write(buffer); // Write Into Buffer.
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        toastMessage(bo.toString());
+//                        try {
+//                            bo.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (ProtocolException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
+
 
     public String currentDateTime(){
         String datetime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
@@ -161,5 +291,9 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         age = Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(year));
         return age;
+    }
+
+    public void back(View view){
+        finish();
     }
 }

@@ -2,7 +2,9 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Patient.ViewPatientInfo;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +36,7 @@ public class LogIn extends AppCompatActivity {
     User u = new User();
 
     private static final String TAG = "Login";
+    private static int TIME_OUT = 4000; //Time to launch the another activity
 
     EditText username;
     EditText password;
@@ -110,11 +114,18 @@ public class LogIn extends AppCompatActivity {
                     }else if(userName == true && pass == false){
                         toastMessage("You did not enter a correct password");
                     }else if(userName == true && pass == true){
-                        toastMessage("Successful Login");
-                        Intent homepage = new Intent(LogIn.this, Homepage.class);
-                        homepage.putExtra("USER_ID", uId);
-                        finish();
-                        startActivity(homepage);
+                        progressDialog();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent homepage = new Intent(LogIn.this, Homepage.class);
+                                homepage.putExtra("USER_ID", uId);
+                                finish();
+                                startActivity(homepage);
+                                finish();
+                            }
+                        }, TIME_OUT);
+
                     }
                 }
 //
@@ -131,5 +142,12 @@ public class LogIn extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    private void progressDialog(){
+        ProgressDialog pd = new ProgressDialog(LogIn.this);
+        pd.setMessage("Logging In...");
+        pd.setCancelable(false);
+        pd.show();
     }
 }

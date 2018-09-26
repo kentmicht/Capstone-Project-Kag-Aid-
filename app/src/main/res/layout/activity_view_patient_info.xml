@@ -7,6 +7,24 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView57"
+        android:layout_width="43dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textViewDoctorName"
+        android:onClick="back"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView58"
+        android:layout_width="112dp"
+        android:layout_height="108dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/patientSearch"
+        android:layout_marginStart="-2dp"
+        app:srcCompat="@drawable/patientss_1" />
+
+    <ImageView
         android:id="@+id/imageView36"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -65,12 +83,12 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="wrap_content"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/imageView12"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
+        android:layout_alignBottom="@+id/imageView57"
+        android:layout_toEndOf="@+id/gn"
         android:text="Personal Information"
+        android:textAlignment="textEnd"
         android:textColor="@color/textHomepage1"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -79,10 +97,11 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="238dp"
+        android:layout_width="254dp"
         android:layout_height="39dp"
         android:layout_alignEnd="@+id/imageView12"
         android:layout_below="@+id/textView11"
+        android:layout_marginEnd="-16dp"
         android:gravity="right"
         android:text="@string/patient_info_dec"
         android:textColor="@color/textHomepage1"
@@ -209,14 +228,6 @@
         tools:layout_editor_absoluteY="455dp" />
 
     <ImageView
-        android:id="@+id/imageView28"
-        android:layout_width="110dp"
-        android:layout_height="108dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/patientss_1" />
-
-    <ImageView
         android:id="@+id/imageView14"
         android:layout_width="122dp"
         android:layout_height="137dp"
@@ -237,6 +248,23 @@
         android:onClick="openCamera"
         android:text="Scan"
         android:textColor="@color/textHomepage" />
+
+    <ImageView
+        android:id="@+id/imageView60"
+        android:layout_width="112dp"
+        android:layout_height="108dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/textView11"
+        app:srcCompat="@drawable/patientss_1" />
+
+    <ImageView
+        android:id="@+id/imageView59"
+        android:layout_width="43dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView11"
+        android:onClick="back"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
     <TextView
         android:id="@+id/textView26"

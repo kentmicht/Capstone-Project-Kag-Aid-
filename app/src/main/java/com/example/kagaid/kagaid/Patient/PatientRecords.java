@@ -80,7 +80,7 @@ public class PatientRecords extends AppCompatActivity {
 
         //Patient Records
         setContentView(R.layout.activity_patient_records);
-        toastMessage("Long press to update a patient's information.");
+//        toastMessage("Long press to update a patient's information.");
         uId = (String) getIntent().getStringExtra("USER_ID");
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
@@ -241,7 +241,6 @@ public class PatientRecords extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month+1;
-                month = month + 1;
                 Log.d(TAG, "onDataSet: yyyy-mm-dd: " + year + "-" + month + "-" + dayOfMonth);
                 if(month >= 1 && month <=9){
                     String date = year + "-0" + month + "-" + dayOfMonth;
@@ -261,7 +260,9 @@ public class PatientRecords extends AppCompatActivity {
         println(pid);
 
         db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
-        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan);
+        String status = "1";
+        String age = calculateAge(bday);
+        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan, status, age);
 
         db.setValue(patient);
         Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();
@@ -342,7 +343,10 @@ public class PatientRecords extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                     Patient patient = pSnapshot.getValue(Patient.class);
-                    pList.add(patient);
+                    if(patient.getStatus().equals("1")){
+                        pList.add(patient);
+                    }
+
 //                    patient_names.add(patient.getFullname());
                 }
                 //sort the list
@@ -367,5 +371,23 @@ public class PatientRecords extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public String currentDateTime(){
+        String datetime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+        return datetime;
+    }
+
+    public String calculateAge(String date){
+        String age = null;
+        String year = date.substring(0, 4);
+
+        age = Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(year));
+        return age;
+    }
+
+    public void back(View view){
+        finish();
     }
 }

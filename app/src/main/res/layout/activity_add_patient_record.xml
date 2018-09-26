@@ -99,8 +99,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/addPatientBtn"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="28dp"
         android:text="Add Patient Record"
         android:textColor="@color/textHomepage1"
@@ -184,14 +185,6 @@
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/imageView27"
-        android:layout_width="110dp"
-        android:layout_height="108dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/patientss_1" />
-
     <Spinner
         android:id="@+id/gender"
         android:layout_width="115dp"
@@ -210,5 +203,22 @@
         android:ems="10"
         android:text="Birthdate"
         android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView27"
+        android:layout_width="43dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView3"
+        android:onClick="back"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView28"
+        android:layout_width="112dp"
+        android:layout_height="108dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/imageView42"
+        app:srcCompat="@drawable/patientss_1" />
 
 </RelativeLayout>

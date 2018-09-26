@@ -50,7 +50,7 @@
     <!-- Camera Details -->
     <string name="new_memory_title_hint">Title of Image</string>
     <string name="new_memory_btn_cancel">Cancel</string>
-    <string name="new_memory_btn_save">Save</string>
+    <string name="new_memory_btn_save">Proceed</string>
     <string name="activity_main_empty_view_text">No photos of skin illness photos yet.</string>
     <string name="new_memory_btn_gallery">Upload from gallery</string>
     <string name="new_memory_btn_camera">Use camera</string>
@@ -68,10 +68,17 @@
     <string name="homepage_title">
         Kag-Aid: A Skin Illness Identification and Patient Monitoring System
     </string>
+    <string name="homepage_instruction">
+        Click on the logo to view patients
+    </string>
 
     <!--- Patient Records -->
     <string name="patient_rec_desc">
         Choose/Add a patient for skin illness identification.
+    </string>
+
+    <string name="patient_rec_desc_instruction">
+        Long press to update patient's information
     </string>
 
     <!--- Patient Information -->
