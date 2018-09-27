@@ -13,17 +13,17 @@
         android:layout_height="91dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="229dp"
+        android:layout_marginBottom="114dp"
         app:sslv_color="@color/textHomepage"
         app:sslv_duration="100"
         app:sslv_square_length="10dp" />
 
     <ImageView
         android:id="@+id/imageView41"
-        android:layout_width="332dp"
-        android:layout_height="328dp"
+        android:layout_width="314dp"
+        android:layout_height="359dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="157dp"
+        android:layout_marginTop="61dp"
         app:srcCompat="@drawable/kag_aid_logo_raw" />
 </RelativeLayout>
