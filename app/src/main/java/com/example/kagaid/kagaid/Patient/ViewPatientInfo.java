@@ -1,5 +1,6 @@
 package com.example.kagaid.kagaid.Patient;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,17 +10,22 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.ScanningModule.MyHttpURLConnection;
 import com.example.kagaid.kagaid.Patient.ScanningModule.RequestPackage;
 import com.example.kagaid.kagaid.R;
+import com.example.kagaid.kagaid.SkinIllness.TreatmentsPage;
 import com.example.kagaid.kagaid.User;
 import com.google.firebase.database.DatabaseReference;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -54,6 +60,9 @@ public class ViewPatientInfo extends AppCompatActivity {
     String uId;
     String pId;
 
+    AlertDialog.Builder dialogBuilder;
+    private Button buttonActive;
+
     String employeeName = null;
     String pfullname = null;
     String pbday = null;
@@ -77,6 +86,10 @@ public class ViewPatientInfo extends AppCompatActivity {
         textviewPatientGender = (TextView) findViewById(R.id.textViewPatientGender);
         textViewPatientAddress = (TextView) findViewById(R.id.textViewPatientAddress);
 
+        //for enable/disable button
+        buttonActive = (Button) findViewById(R.id.active_status);
+        buttonActive.setEnabled(scannedResult != null);
+
         Intent intent = getIntent();
 
         pfullname = intent.getStringExtra(PatientRecords.PATIENT_FULLNAME);
@@ -94,6 +107,9 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         toastMessage("User Id:" + uId + ", Patient Id: " + pId );
         //", Last Scan: " + lastscan
+
+        //Enable & Disable Button
+
 
         _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
 
@@ -259,11 +275,46 @@ public class ViewPatientInfo extends AppCompatActivity {
                 in.close();
 
                 scannedResult = str.split(Pattern.quote("?"));
-                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
+//                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
+                buttonActive.setEnabled(scannedResult != null);
+                showDiagnosisResults(scannedResult[0],scannedResult[1]);
             } catch (MalformedURLException e) {
             } catch (IOException e) {
             }
         }
+    }
+
+    private void showDiagnosisResults(String skinIllnessName, String percentage){
+//        toastMessage("Skin Illness: " + skinIllnessName + "Percentage: " + percentage);
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_diagnosis_results_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        final TextView skinIllnessTextName = (TextView) dialogView.findViewById(R.id.skin_illness_name);
+        final TextView skinIllnessTextPercentage = (TextView) dialogView.findViewById(R.id.skin_illness_accuracy);
+        final TextView lastScannedTextDatetime = (TextView) dialogView.findViewById(R.id.datetime_scanned);
+        final Button okButton = (Button) dialogView.findViewById(R.id.ok_button);
+
+        //Gets the current date and time from the currentdatetime() function
+        String lastScannedDateTime;
+        lastScannedDateTime = currentDateTime();
+
+        skinIllnessTextName.setText(skinIllnessName);
+        skinIllnessTextPercentage.setText(percentage);
+        lastScannedTextDatetime.setText(lastScannedDateTime);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 
@@ -284,4 +335,7 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void back(View view){
         finish();
     }
+
+
+
 }

@@ -275,4 +275,12 @@
         android:textSize="10sp"
         android:textStyle="italic" />
 
+    <Button
+        android:id="@+id/active_status"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/button2"
+        android:layout_toEndOf="@+id/imageView58"
+        android:background="@drawable/loginshape" />
+
 </RelativeLayout>
