@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="match_parent"
-        android:layout_height="187dp"
+        android:layout_width="422dp"
+        android:layout_height="142dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:layout_constraintTop_toBottomOf="@+id/loginPwd"
@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/imageView44"
-        android:layout_width="match_parent"
-        android:layout_height="187dp"
+        android:layout_width="422dp"
+        android:layout_height="134dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toBottomOf="@+id/loginPwd"
@@ -44,10 +44,10 @@
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="233dp"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="61dp"
         android:background="@drawable/loginshape"
         android:text="Log In"
         android:textAllCaps="false"
@@ -60,10 +60,10 @@
     <EditText
         android:id="@+id/loginUser"
         android:layout_width="233dp"
-        android:layout_height="45dp"
+        android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="285dp"
+        android:layout_marginBottom="215dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_child_care_black_24dp"
@@ -82,10 +82,10 @@
     <EditText
         android:id="@+id/loginPwd"
         android:layout_width="237dp"
-        android:layout_height="47dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="161dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_lock_outline_black_24dp"
@@ -101,11 +101,11 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="195dp"
-        android:layout_height="211dp"
+        android:layout_width="156dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintBottom_toTopOf="@+id/loginUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,22 +117,22 @@
         android:id="@+id/kagaid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView6"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="288dp"
         android:text="Kag-Aid"
         android:textColor="@color/textHomepage"
-        android:textSize="45dp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="309dp"
         android:layout_height="53dp"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/kagaid"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="A Skin Illness Identification System and Patient Monitoring System"
-        android:textSize="19dp" />
+        android:textSize="14sp" />
 
 
 </RelativeLayout>

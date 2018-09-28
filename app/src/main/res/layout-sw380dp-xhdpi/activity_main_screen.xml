@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainScreen_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainScreen">
+
+    <com.hamza.slidingsquaresloaderview.SlidingSquareLoaderView
+        android:id="@+id/loader"
+        android:layout_width="127dp"
+        android:layout_height="91dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="252dp"
+        app:sslv_color="@color/textHomepage"
+        app:sslv_duration="100"
+        app:sslv_square_length="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView41"
+        android:layout_width="361dp"
+        android:layout_height="371dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp"
+        app:srcCompat="@drawable/kag_aid_logo_raw" />
+</RelativeLayout>

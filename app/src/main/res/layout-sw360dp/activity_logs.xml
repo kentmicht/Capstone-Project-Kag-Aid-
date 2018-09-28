@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityLogs_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Logs.Logs">
+
+    <ImageView
+        android:id="@+id/logSearchBtn"
+        android:layout_width="36dp"
+        android:layout_height="34dp"
+        android:layout_alignBottom="@+id/logSearch"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="19dp"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
+
+    <EditText
+        android:id="@+id/logSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/copyright13"
+        android:layout_alignTop="@+id/logCategory"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/loginshape"
+        android:ems="10"
+        android:hint="Search Logs"
+        android:inputType="textPersonName"
+        android:paddingStart="15dp"
+        android:textSize="15dp" />
+
+    <ImageView
+        android:id="@+id/imageView46"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/copyright13"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView45"
+        android:layout_width="match_parent"
+        android:layout_height="107dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/textHomepage" />
+
+    <ImageView
+        android:id="@+id/imageView48"
+        android:layout_width="110dp"
+        android:layout_height="108dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        app:srcCompat="@drawable/logs" />
+
+    <TextView
+        android:id="@+id/textViewDoctorName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="26dp"
+        android:text="Logs"
+        android:textColor="@color/textHomepage1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewDoctorName2"
+        android:layout_below="@+id/textViewDoctorName2"
+        android:text="The system's logs are shown here."
+        android:textColor="@color/textHomepage1"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/logCategory"
+        android:layout_width="100dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="116dp"
+        android:entries="@array/logs"
+        android:textColor="@color/textHomepage" />
+
+    <ImageView
+        android:id="@+id/imageView56"
+        android:layout_width="43dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textViewDoctorName2"
+        android:onClick="back"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
+    <ListView
+        android:id="@+id/listViewLogs"
+        android:layout_width="match_parent"
+        android:layout_height="375dp"
+        android:layout_above="@+id/imageView46"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

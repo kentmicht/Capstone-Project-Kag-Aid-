@@ -34,30 +34,6 @@
         app:fabSize="normal" />
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/colorPrimary"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/copyright5"
-        android:layout_width="174dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp"
-        android:gravity="center"
-        android:text="@string/copyright"
-        android:textColor="@color/textHomepage1"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="107dp"
@@ -99,12 +75,12 @@
         android:layout_width="112dp"
         android:layout_height="108dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imageView53"
+        android:layout_alignStart="@+id/patientSearch"
         app:srcCompat="@drawable/patientss_1" />
 
     <EditText
         android:id="@+id/patientSearch"
-        android:layout_width="388dp"
+        android:layout_width="316dp"
         android:layout_height="47dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="125dp"
@@ -125,14 +101,6 @@
         android:layout_marginEnd="22dp"
         app:srcCompat="@drawable/ic_search_black_24dp" />
 
-    <ListView
-        android:id="@+id/listViewPatient"
-        android:layout_width="match_parent"
-        android:layout_height="492dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="60dp" />
-
     <ImageView
         android:id="@+id/imageView53"
         android:layout_width="43dp"
@@ -141,6 +109,37 @@
         android:layout_alignTop="@+id/textViewDoctorName"
         app:srcCompat="@drawable/ic_chevron_left_black_24dp"
         android:onClick="back"/>
+
+    <ListView
+        android:id="@+id/listViewPatient"
+        android:layout_width="match_parent"
+        android:layout_height="552dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView36" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/copyright5"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@color/textHomepage1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->

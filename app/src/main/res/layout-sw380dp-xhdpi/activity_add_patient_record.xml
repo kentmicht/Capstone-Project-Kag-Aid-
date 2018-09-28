@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView49"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="19dp"
         android:gravity="center"
         android:text="@string/copyright"
         android:textColor="@color/textHomepage1"
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -44,10 +44,10 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="287dp"
-        android:layout_height="227dp"
+        android:layout_height="334dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="141dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp"
+        android:layout_marginBottom="152dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
@@ -79,8 +79,9 @@
         android:id="@+id/fullname"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView30"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="343dp"
         android:ems="10"
         android:hint="Fullname"
         android:inputType="textPersonName"
@@ -89,10 +90,10 @@
     <Button
         android:id="@+id/addPatientBtn"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="77dp"
         android:background="@drawable/loginshape"
         android:text="Add"
         android:textColor="@color/textHomepage" />
@@ -129,14 +130,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="337dp"
         android:text="Birthdate"
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="216dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView30"
         android:layout_alignStart="@+id/address"
@@ -152,18 +153,19 @@
         android:layout_alignStart="@+id/address"
         android:text="Lot No., Block No., Street, Barangay, City"
         android:textColor="@color/gray"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/fullname"
         android:layout_alignStart="@+id/address"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="-336dp"
         android:text="LastName, FirstName M.I"
         android:textColor="@color/gray"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="italic" />
 
     <TextView
@@ -180,8 +182,9 @@
         android:id="@+id/textView13"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView10"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/address"
+        android:layout_marginBottom="269dp"
         android:text="Gender"
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
@@ -190,9 +193,21 @@
         android:id="@+id/gender"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView10"
-        android:layout_alignStart="@+id/addPatientBtn"
+        android:layout_alignStart="@+id/address"
+        android:layout_below="@+id/textView13"
+        android:layout_marginTop="-269dp"
         android:entries="@array/patient_gender" />
+
+    <TextView
+        android:id="@+id/birthday"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-337dp"
+        android:ems="10"
+        android:text="Birthdate"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/imageView27"
@@ -208,17 +223,7 @@
         android:layout_width="112dp"
         android:layout_height="108dp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/addPatientBtn"
+        android:layout_toStartOf="@+id/imageView42"
         app:srcCompat="@drawable/patientss_1" />
-
-    <TextView
-        android:id="@+id/birthday"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignStart="@+id/addPatientBtn"
-        android:ems="10"
-        android:text="Birthdate"
-        android:textSize="18sp" />
 
 </RelativeLayout>

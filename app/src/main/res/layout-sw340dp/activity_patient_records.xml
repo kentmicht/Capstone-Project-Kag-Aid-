@@ -12,9 +12,8 @@
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/patientSearchBtn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="179dp"
         android:text="@string/patient_rec_desc_instruction"
         android:textStyle="italic" />
 
@@ -36,7 +35,7 @@
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="13dp"
         android:gravity="center"
         android:text="@string/copyright"
         android:textColor="@color/textHomepage1"
@@ -84,7 +83,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="251dp"
+        android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textViewDoctorName"
         android:layout_below="@+id/textViewDoctorName"
@@ -98,14 +97,15 @@
         android:id="@+id/imageView21"
         android:layout_width="112dp"
         android:layout_height="108dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imageView53"
+        android:layout_marginStart="29dp"
         app:srcCompat="@drawable/patientss_1" />
 
     <EditText
         android:id="@+id/patientSearch"
-        android:layout_width="388dp"
-        android:layout_height="47dp"
+        android:layout_width="269dp"
+        android:layout_height="38dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="125dp"
         android:layout_toStartOf="@+id/addPatientBtn"
@@ -128,10 +128,10 @@
     <ListView
         android:id="@+id/listViewPatient"
         android:layout_width="match_parent"
-        android:layout_height="492dp"
+        android:layout_height="332dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="43dp" />
 
     <ImageView
         android:id="@+id/imageView53"

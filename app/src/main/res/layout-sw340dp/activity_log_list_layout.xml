@@ -17,10 +17,10 @@
 
     <TextView
         android:id="@+id/textView_log_name"
-        android:layout_width="307dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/textHomepage"

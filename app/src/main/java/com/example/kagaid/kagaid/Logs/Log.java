@@ -10,6 +10,35 @@ public class Log {
     String uId;
     String patientName;
     String employeeName;
+    String skinIllness;
+    String percentage;
+
+    public Log(String logId, String logdatetime, String pId, String uId, String patientName, String employeeName, String skinIllness, String percentage) {
+        this.logId = logId;
+        this.logdatetime = logdatetime;
+        this.pId = pId;
+        this.uId = uId;
+        this.patientName = patientName;
+        this.employeeName = employeeName;
+        this.skinIllness = skinIllness;
+        this.percentage = percentage;
+    }
+
+    public String getSkinIllness() {
+        return skinIllness;
+    }
+
+    public void setSkinIllness(String skinIllness) {
+        this.skinIllness = skinIllness;
+    }
+
+    public String getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
 
     public String getLogdatetime() {
         return logdatetime;

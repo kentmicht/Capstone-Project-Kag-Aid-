@@ -11,20 +11,19 @@
         android:id="@+id/imageView51"
         android:layout_width="62dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
+        android:layout_toStartOf="@+id/textview_patient_name"
         app:srcCompat="@drawable/patient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/textview_patient_name"
-        android:layout_width="308dp"
+        android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="58dp"
+        android:layout_marginEnd="33dp"
         android:text="TextView"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="@color/textHomepage"

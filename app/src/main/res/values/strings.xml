@@ -38,7 +38,7 @@
     <string name="skinIllness_page_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="skinIllness_page_los_label">Level of Severity</string>
     <string name="skinIllness_page_causes_label">Causes</string>
-    <string name="treatments_page_label">Common Treatments</string>
+    <string name="treatments_page_label">Treatments</string>
     <string name="treatments_list">Other Treatments</string>
     <string name="level_of_severity">Level of Severity</string>
 

@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView49"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="41dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
         android:text="@string/copyright"
         android:textColor="@color/textHomepage1"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -44,10 +44,10 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="287dp"
-        android:layout_height="227dp"
+        android:layout_height="220dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="104dp"
         app:srcCompat="@color/backgroundAddPatient"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="626dp" />
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp"
+        android:layout_marginBottom="114dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
@@ -89,10 +89,10 @@
     <Button
         android:id="@+id/addPatientBtn"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
+        android:layout_height="36dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="53dp"
         android:background="@drawable/loginshape"
         android:text="Add"
         android:textColor="@color/textHomepage" />
@@ -107,7 +107,7 @@
         android:layout_marginTop="28dp"
         android:text="Add Patient Record"
         android:textColor="@color/textHomepage1"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -120,6 +120,7 @@
         android:layout_below="@+id/textView3"
         android:text="Fill out the necessary information"
         android:textColor="@color/textHomepage1"
+        android:textSize="12sp"
         tools:layout_editor_absoluteX="166dp"
         tools:layout_editor_absoluteY="61dp" />
 
@@ -129,19 +130,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="217dp"
         android:text="Birthdate"
         android:textColor="@color/textHomepage"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="231dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView30"
-        android:layout_alignStart="@+id/address"
+        android:layout_alignEnd="@+id/imageView4"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="256dp"
         android:text="Fullname "
         android:textColor="@color/textHomepage"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
@@ -159,8 +164,8 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/address"
-        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/textView8"
         android:text="LastName, FirstName M.I"
         android:textColor="@color/gray"
         android:textSize="10sp"
@@ -174,16 +179,18 @@
         android:layout_alignStart="@+id/address"
         android:text="Address"
         android:textColor="@color/textHomepage"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="67dp"
+        android:layout_width="52dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView10"
         android:layout_alignStart="@+id/address"
         android:text="Gender"
         android:textColor="@color/textHomepage"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <Spinner
@@ -193,6 +200,16 @@
         android:layout_above="@+id/textView10"
         android:layout_alignStart="@+id/addPatientBtn"
         android:entries="@array/patient_gender" />
+
+    <TextView
+        android:id="@+id/birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/addPatientBtn"
+        android:layout_alignTop="@+id/textView6"
+        android:ems="10"
+        android:text="Birthdate"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/imageView27"
@@ -208,17 +225,7 @@
         android:layout_width="112dp"
         android:layout_height="108dp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/addPatientBtn"
+        android:layout_alignStart="@+id/imageView4"
         app:srcCompat="@drawable/patientss_1" />
-
-    <TextView
-        android:id="@+id/birthday"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignStart="@+id/addPatientBtn"
-        android:ems="10"
-        android:text="Birthdate"
-        android:textSize="18sp" />
 
 </RelativeLayout>

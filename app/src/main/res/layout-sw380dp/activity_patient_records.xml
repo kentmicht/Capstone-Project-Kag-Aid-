@@ -99,7 +99,7 @@
         android:layout_width="112dp"
         android:layout_height="108dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imageView53"
+        android:layout_toStartOf="@+id/copyright5"
         app:srcCompat="@drawable/patientss_1" />
 
     <EditText
@@ -128,7 +128,7 @@
     <ListView
         android:id="@+id/listViewPatient"
         android:layout_width="match_parent"
-        android:layout_height="492dp"
+        android:layout_height="511dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="60dp" />

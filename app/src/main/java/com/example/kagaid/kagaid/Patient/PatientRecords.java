@@ -55,7 +55,7 @@ public class PatientRecords extends AppCompatActivity {
     public static final String PATIENT_ADDRESS = "patientaddress";
     public static final String PATIENT_ID = "patientid";
     public static final String USER_ID = "uId";
-    //public static final String PATIENT_LAST_SCAN = "patientlastscan";
+    public static final String PATIENT_LAST_SCAN = "patientlastscan";
 
     private static android.app.DatePickerDialog.OnDateSetListener mDateSetListener;
     final String TAG = "PatientRecords";
@@ -108,7 +108,7 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(PATIENT_GENDER, patient.getGender());
                 intent.putExtra(PATIENT_ADDRESS, patient.getAddress());
                 intent.putExtra(PATIENT_ID, patient.getId());
-                //intent.putExtra(PATIENT_LAST_SCAN, patient.getLastScan());
+                intent.putExtra(PATIENT_LAST_SCAN, patient.getLastscan());
                 intent.putExtra(USER_ID, uId);
 
                 startActivity(intent);

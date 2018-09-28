@@ -17,27 +17,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Logs.Log;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.ScanningModule.MyHttpURLConnection;
 import com.example.kagaid.kagaid.Patient.ScanningModule.RequestPackage;
 import com.example.kagaid.kagaid.R;
 import com.example.kagaid.kagaid.SkinIllness.TreatmentsPage;
 import com.example.kagaid.kagaid.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-
-import org.w3c.dom.Text;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -60,8 +60,15 @@ public class ViewPatientInfo extends AppCompatActivity {
     String uId;
     String pId;
 
+    //Image Bitmap
+    Bitmap imageBitmap;
+
     AlertDialog.Builder dialogBuilder;
-    private Button buttonActive;
+    String skinIllness;
+    String skinIllnessId;
+    String percentage;
+    String currentDateTimeStored;
+    String lastscan;
 
     String employeeName = null;
     String pfullname = null;
@@ -72,6 +79,8 @@ public class ViewPatientInfo extends AppCompatActivity {
     DatabaseReference databaseLogs;
     DatabaseReference databasePatient;
     DatabaseReference databaseEmployee;
+    DatabaseReference databaseSkinIllness;
+    DatabaseReference databaseScanResult;
 
     User u = new User();
 
@@ -86,10 +95,6 @@ public class ViewPatientInfo extends AppCompatActivity {
         textviewPatientGender = (TextView) findViewById(R.id.textViewPatientGender);
         textViewPatientAddress = (TextView) findViewById(R.id.textViewPatientAddress);
 
-        //for enable/disable button
-        buttonActive = (Button) findViewById(R.id.active_status);
-        buttonActive.setEnabled(scannedResult != null);
-
         Intent intent = getIntent();
 
         pfullname = intent.getStringExtra(PatientRecords.PATIENT_FULLNAME);
@@ -98,7 +103,9 @@ public class ViewPatientInfo extends AppCompatActivity {
         paddress = intent.getStringExtra(PatientRecords.PATIENT_ADDRESS);
         pId = intent.getStringExtra(PatientRecords.PATIENT_ID);
         uId = intent.getStringExtra(PatientRecords.USER_ID);
-        //String lastscan = intent.getStringExtra(PatientRecords.PATIENT_LAST_SCAN);
+        lastscan = intent.getStringExtra(PatientRecords.PATIENT_LAST_SCAN);
+
+        toastMessage(lastscan);
 
         textViewPatientName.setText(pfullname);
         textViewPatientBday.setText(pbday);
@@ -106,10 +113,6 @@ public class ViewPatientInfo extends AppCompatActivity {
         textViewPatientAddress.setText(paddress);
 
         toastMessage("User Id:" + uId + ", Patient Id: " + pId );
-        //", Last Scan: " + lastscan
-
-        //Enable & Disable Button
-
 
         _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
 
@@ -145,63 +148,10 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//
 
+        //camera setup
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAMERA_PIC_REQUEST);
         }
-
-
-//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, _imagefileUri);
-
-
-//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-//
-//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-//        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
-//
-//        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    //toastMessage(ds.child());
-////                    u = ds.getValue(User.class);
-//                    if (uId.equals(ds.child("uId").getValue().toString())) {
-//                        //if (.equals(u.getUId()))
-//                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
-////
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        if(employeeName==null){
-//            Toast.makeText(this, "Pres Scan Again", Toast.LENGTH_LONG).show();
-//        }else{
-//            //add Logs
-//            String logId = databaseLogs.push().getKey();
-//            Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName);
-//            String status = "1";
-//            String age = calculateAge(pbday);
-//            Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTime(), status, age);
-//
-//            databasePatient.child(pId).setValue(patient);
-//            databaseLogs.child(logId).setValue(logSingle);
-//            Toast.makeText(this, "Logged", Toast.LENGTH_LONG).show();
-//
-//            //camera setup
-//            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-//
-//            }
-//
-//
-//
-//        }
     }
 
     @Override
@@ -211,7 +161,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if(requestCode == CAMERA_PIC_REQUEST){
                 Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imageBitmap = (Bitmap) extras.get("data");
 //                toastMessage("Laban besh! nakasulod oks" + _imagefileUri.getPath());
                 uploadImage(imageBitmap);
             }
@@ -276,17 +226,50 @@ public class ViewPatientInfo extends AppCompatActivity {
 
                 scannedResult = str.split(Pattern.quote("?"));
 //                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
-                buttonActive.setEnabled(scannedResult != null);
-                showDiagnosisResults(scannedResult[0],scannedResult[1]);
+
+                //log all details percentage and skin illness identified most especially
+                databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+                databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+
+                databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+                databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+                databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
+
+                databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if (uId.equals(ds.child("uId").getValue().toString())) {
+                                employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+//
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                String logId = databaseLogs.push().getKey();
+                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
+                String status = "1";
+                String age = calculateAge(pbday);
+                currentDateTimeStored = currentDateTime();
+                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
+
+                databasePatient.child(pId).setValue(patient);
+                databaseLogs.child(logId).setValue(logSingle);
+                toastMessage("Logged");
+
+                showDiagnosisResults(scannedResult[1], scannedResult[0]);
             } catch (MalformedURLException e) {
             } catch (IOException e) {
             }
         }
     }
 
-    private void showDiagnosisResults(String skinIllnessName, String percentage){
-//        toastMessage("Skin Illness: " + skinIllnessName + "Percentage: " + percentage);
-
+    private void showDiagnosisResults(String skinIdentify, String percent){
         dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_diagnosis_results_dialog, null);
@@ -297,14 +280,46 @@ public class ViewPatientInfo extends AppCompatActivity {
         final TextView skinIllnessTextPercentage = (TextView) dialogView.findViewById(R.id.skin_illness_accuracy);
         final TextView lastScannedTextDatetime = (TextView) dialogView.findViewById(R.id.datetime_scanned);
         final Button okButton = (Button) dialogView.findViewById(R.id.ok_button);
+        final Button mapsButton = (Button) dialogView.findViewById(R.id.find_nearby_doctors2);
+        final Button treatmentButton = (Button) dialogView.findViewById(R.id.common_treatments2);
 
-        //Gets the current date and time from the currentdatetime() function
-        String lastScannedDateTime;
-        lastScannedDateTime = currentDateTime();
+        skinIllness = skinIdentify;
+        percentage = percent;
 
-        skinIllnessTextName.setText(skinIllnessName);
+        databaseSkinIllness = FirebaseDatabase.getInstance().getReference("skin_illnesses");
+        databaseSkinIllness.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (scannedResult[0].equals(ds.child("skin_illness_name").getValue().toString())) {
+                        skinIllnessId = ds.child("siId").getValue().toString();
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMaps(v);
+            }
+        });
+
+        treatmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTreatments(v);
+            }
+        });
+
+        skinIllnessTextName.setText(skinIllness);
         skinIllnessTextPercentage.setText(percentage);
-        lastScannedTextDatetime.setText(lastScannedDateTime);
+        lastScannedTextDatetime.setText(currentDateTimeStored);
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -315,6 +330,21 @@ public class ViewPatientInfo extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    public void openTreatments(View view){
+        final String SKIN_ILLNESS_NAME = "skin_illness_name";
+        final String SKIN_ILLNESS_ID  = "skin_illness_id";
+        toastMessage(skinIllnessId);
+
+        Intent treatments = new Intent(this, TreatmentsPage.class);
+        treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
+        treatments.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        startActivity(treatments);
+    }
+    public void openMaps(View view){
+        Intent maps = new Intent(this, MapsActivity.class);
+        startActivity(maps);
     }
 
 
@@ -335,7 +365,4 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void back(View view){
         finish();
     }
-
-
-
 }
