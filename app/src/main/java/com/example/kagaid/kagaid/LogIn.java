@@ -25,6 +25,8 @@ import com.example.kagaid.kagaid.Homepage;
 
 import com.example.kagaid.kagaid.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,11 +74,6 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-    }
-
     public void goToHomepage() {
         //toastMessage("You are here!");
 //        DatabaseReference usernameRef = ref.child(username.getText().toString());
@@ -90,18 +87,25 @@ public class LogIn extends AppCompatActivity {
                 boolean pass = false;
                 String uId = null;
 
+                String string_to_be_converted_to_MD5 = "REPLACE_WITH YOUR_OWN_STRING";
+
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    String md5HashPass = md5(password.getText().toString());
+//                    toastMessage("Inputted Password:" + md5HashPass);
+
                     for(DataSnapshot loginSnapshot: dataSnapshot.getChildren()){
                         if(username.getText().toString().equals(loginSnapshot.child("username").getValue().toString())){
                             //toastMessage("Got it Username!");
                             userName = true;
-                            if(password.getText().toString().equals(loginSnapshot.child("password").getValue().toString())){
+
+                            if(md5HashPass.equals(loginSnapshot.child("password").getValue().toString())){
                                 //toastMessage("Got it Password!");
                                 pass = true;
                                 if(userName == true && pass == true){
                                     uId = loginSnapshot.child("uId").getValue().toString();
-                                    toastMessage(uId);
+//                                    toastMessage(uId);
                                 }
                             }
                         }
@@ -149,5 +153,24 @@ public class LogIn extends AppCompatActivity {
         pd.setMessage("Logging In...");
         pd.setCancelable(false);
         pd.show();
+    }
+
+    public static final String md5(final String toEncrypt) {
+        try {
+            final MessageDigest digest = MessageDigest.getInstance("md5");
+            digest.update(toEncrypt.getBytes());
+            final byte[] bytes = digest.digest();
+            final StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(String.format("%02X", bytes[i]));
+            }
+            return sb.toString().toLowerCase();
+        } catch (Exception exc) {
+            return "";
+        }
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }
