@@ -88,15 +88,6 @@ public class Log {
         this.employeeName = employeeName;
     }
 
-    public Log(String logId, String logdatetime, String pId, String uId, String patientName, String employeeName) {
-        this.logId = logId;
-        this.logdatetime = logdatetime;
-        this.pId = pId;
-        this.uId = uId;
-        this.patientName = patientName;
-        this.employeeName = employeeName;
-    }
-
     public Log() {
     }
 }

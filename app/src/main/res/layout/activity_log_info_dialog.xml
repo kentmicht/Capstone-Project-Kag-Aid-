@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="97dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView34"
+        android:layout_toStartOf="@+id/textView42"
+        android:paddingTop="5sp"
+        android:text="Accuracy: "
+        android:textAlignment="textEnd"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView35"
+        android:layout_below="@+id/textView42"
+        android:paddingTop="5sp"
+        android:paddingBottom="10sp"
+        android:text="Last Scanned: "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="146dp" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView35"
+        android:layout_marginStart="-1dp"
+        android:layout_toEndOf="@+id/textView35"
+        android:paddingTop="5sp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="106dp"
+        tools:text="Alcantara, Sheena" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView37"
+        android:layout_toStartOf="@+id/imageView18"
+        android:paddingTop="5sp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="126dp"
+        tools:text="admin admin" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView42"
+        android:layout_toEndOf="@+id/textView35"
+        android:paddingTop="5sp"
+        android:paddingBottom="10sp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="146dp"
+        tools:text="Aug 29, 2018	2:30:39 PM" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="82dp"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        app:srcCompat="@drawable/log_file" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/places_ic_clear" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView19"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="5sp"
+        android:text="Acne Open Commedo"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView35"
+        android:layout_below="@+id/textView35"
+        android:paddingTop="5sp"
+        android:text="Patient Name: "
+        android:textAlignment="textEnd"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView35"
+        android:layout_below="@+id/textView37"
+        android:paddingTop="5sp"
+        android:text="Scanned By: "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView34"
+        android:layout_toEndOf="@+id/textView35"
+        android:paddingTop="5sp"
+        android:text="60%"
+        android:textAlignment="textStart"
+        android:textSize="14sp" />
+</RelativeLayout>

@@ -51,10 +51,11 @@
 
     <ImageView
         android:id="@+id/imageView10"
-        android:layout_width="290dp"
-        android:layout_height="316dp"
+        android:layout_width="297dp"
+        android:layout_height="321dp"
         android:layout_below="@+id/imageView14"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@color/backgroundAddPatient"
@@ -115,7 +116,7 @@
         android:layout_height="19dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/gn"
-        android:layout_marginBottom="231dp"
+        android:layout_marginBottom="239dp"
         android:text="Address"
         android:textColor="@color/textHomepage"
         android:textStyle="bold"
@@ -270,11 +271,11 @@
 
     <TextView
         android:id="@+id/textView26"
-        android:layout_width="256dp"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/ad"
         android:layout_below="@+id/ad"
-        android:layout_marginTop="-231dp"
+        android:layout_marginTop="-239dp"
         android:text="Lot No., Block No., Street, Barangay, City"
         android:textColor="@color/gray"
         android:textSize="12sp"

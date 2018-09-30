@@ -1,15 +1,20 @@
 package com.example.kagaid.kagaid.Logs;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Homepage;
@@ -25,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -63,6 +69,49 @@ public class Logs extends AppCompatActivity {
 
             public void onClick(View v) {
                 searchLog();
+            }
+        });
+
+
+        //Show dialog for logs
+        listViewLogs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log log = logList.get(position);
+
+                showLogDialog(log.getLogId(), log.getPatientName(), log.getEmployeeName(), log.getLogdatetime(), log.getPercentage(), log.getSkinIllness());
+
+            }
+        });
+    }
+
+    private void showLogDialog(String logId, String patientName, String empName, String logDateTime, String percentage, String skinIllness){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_log_info_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        final TextView skinIdentify = (TextView) dialogView.findViewById(R.id.textView34);
+        final TextView percent = (TextView) dialogView.findViewById(R.id.textView44);
+        final TextView patient = (TextView) dialogView.findViewById(R.id.textView41);
+        final TextView employee = (TextView) dialogView.findViewById(R.id.textView42);
+        final TextView dateTime = (TextView) dialogView.findViewById(R.id.textView43);
+
+        skinIdentify.setText(skinIllness);
+        percent.setText(percentage);
+        patient.setText(patientName);
+        employee.setText(empName);
+        dateTime.setText(logDateTime);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        ImageView xButton = (ImageView) dialogView.findViewById(R.id.imageView18);
+        xButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
     }
@@ -151,9 +200,14 @@ public class Logs extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 logList.clear();
+                String currentDate[] = currentDateTime().split("(?<=\\d{3})\\s");
                 for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                     Log log = logsSnapshot.getValue(Log.class);
-                    logList.add(log);
+                    String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
+                    if(currentDate[0].equals(logDate[0])){
+                        logList.add(log);
+                    }
+
                 }
 
                 LogLists adapter = new LogLists(Logs.this, logList);
@@ -167,7 +221,15 @@ public class Logs extends AppCompatActivity {
         });
     }
 
+    public String currentDateTime(){
+        String datetime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+        return datetime;
+    }
+
     public void back(View view){
         finish();
     }
+
+
 }

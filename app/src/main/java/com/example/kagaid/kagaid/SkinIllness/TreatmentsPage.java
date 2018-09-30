@@ -91,7 +91,7 @@ public class TreatmentsPage extends AppCompatActivity {
                     }
 
                 }
-                skin_illness_name.setText("Most common for " + illnessName);
+                skin_illness_name.setText(illnessName);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

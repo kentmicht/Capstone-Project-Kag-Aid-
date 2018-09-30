@@ -11,49 +11,51 @@
         android:id="@+id/medicineName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/treatments_medicine_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:paddingBottom="10sp"
         android:paddingLeft="5sp"
-        android:textColor="@color/colorPrimary"/>
+        android:paddingTop="10sp"
+        android:text="@string/treatments_medicine_name"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/medicineBrand"
         android:layout_width="356dp"
         android:layout_height="39dp"
-        android:layout_above="@+id/medicineDosage"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/medicineName"
         android:paddingBottom="10sp"
-        android:paddingTop="10sp"
         android:paddingLeft="5sp"
-        android:text="@string/treatments_medicine_brand" />
+        android:paddingTop="10sp"
+        android:text="@string/treatments_medicine_brand"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/medicineDosage"
-        android:layout_width="355dp"
+        android:layout_width="356dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/imageView16"
+        android:layout_below="@+id/medicineBrand"
         android:paddingBottom="10sp"
-        android:paddingTop="10sp"
         android:paddingLeft="5sp"
-        android:text="@string/treatments_medicine_dosage" />
+        android:paddingTop="10sp"
+        android:text="@string/treatments_medicine_dosage"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/imageView16"
         android:layout_width="37dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="73dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/medicineBrand"
         android:layout_toStartOf="@+id/medicineBrand"
-        app:srcCompat="@drawable/brand" />
+        app:srcCompat="@drawable/dosage1" />
 
     <ImageView
         android:id="@+id/imageView17"
         android:layout_width="38dp"
         android:layout_height="39dp"
-        android:layout_above="@+id/medicineDosage"
+        android:layout_below="@+id/medicineName"
         android:layout_toStartOf="@+id/medicineBrand"
-        app:srcCompat="@drawable/dosage" />
+        app:srcCompat="@drawable/brand1" />
 
 </RelativeLayout>

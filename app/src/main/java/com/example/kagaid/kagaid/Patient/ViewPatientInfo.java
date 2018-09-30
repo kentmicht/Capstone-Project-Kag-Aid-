@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -227,41 +228,6 @@ public class ViewPatientInfo extends AppCompatActivity {
                 scannedResult = str.split(Pattern.quote("?"));
 //                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
 
-                //log all details percentage and skin illness identified most especially
-                databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-                databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-
-                databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-                databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-                databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
-
-                databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            if (uId.equals(ds.child("uId").getValue().toString())) {
-                                employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
-//
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                String logId = databaseLogs.push().getKey();
-                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
-                String status = "1";
-                String age = calculateAge(pbday);
-                currentDateTimeStored = currentDateTime();
-                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
-
-                databasePatient.child(pId).setValue(patient);
-                databaseLogs.child(logId).setValue(logSingle);
-                toastMessage("Logged");
-
                 showDiagnosisResults(scannedResult[1], scannedResult[0]);
             } catch (MalformedURLException e) {
             } catch (IOException e) {
@@ -276,12 +242,50 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         dialogBuilder.setView(dialogView);
 
+
         final TextView skinIllnessTextName = (TextView) dialogView.findViewById(R.id.skin_illness_name);
         final TextView skinIllnessTextPercentage = (TextView) dialogView.findViewById(R.id.skin_illness_accuracy);
         final TextView lastScannedTextDatetime = (TextView) dialogView.findViewById(R.id.datetime_scanned);
-        final Button okButton = (Button) dialogView.findViewById(R.id.ok_button);
-        final Button mapsButton = (Button) dialogView.findViewById(R.id.find_nearby_doctors2);
-        final Button treatmentButton = (Button) dialogView.findViewById(R.id.common_treatments2);
+        final ImageView okButton = (ImageView) dialogView.findViewById(R.id.ok_button);
+        final ImageView mapsButton = (ImageView) dialogView.findViewById(R.id.find_nearby_doctors2);
+        final ImageView treatmentButton = (ImageView) dialogView.findViewById(R.id.common_treatments2);
+
+        //log all details percentage and skin illness identified most especially
+        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (uId.equals(ds.child("uId").getValue().toString())) {
+                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+//
+                    }
+                }
+                toastMessage(employeeName);
+                String logId = databaseLogs.push().getKey();
+                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
+                String status = "1";
+                String age = calculateAge(pbday);
+                currentDateTimeStored = currentDateTime();
+                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
+
+                databasePatient.child(pId).setValue(patient);
+                databaseLogs.child(logId).setValue(logSingle);
+                toastMessage("Logged");
+
+                skinIllnessTextName.setText(skinIllness);
+                skinIllnessTextPercentage.setText(percentage);
+                lastScannedTextDatetime.setText(currentDateTimeStored);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         skinIllness = skinIdentify;
         percentage = percent;
@@ -316,10 +320,6 @@ public class ViewPatientInfo extends AppCompatActivity {
                 openTreatments(v);
             }
         });
-
-        skinIllnessTextName.setText(skinIllness);
-        skinIllnessTextPercentage.setText(percentage);
-        lastScannedTextDatetime.setText(currentDateTimeStored);
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();

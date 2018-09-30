@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="157dp"
+        android:layout_width="208dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/treatments_pageLabel"
         android:layout_below="@+id/treatments_pageLabel"
@@ -66,6 +66,7 @@
         android:layout_above="@+id/treatments_image"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="-141dp"
+        android:layout_marginEnd="53dp"
         android:text="Acne"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimary"
@@ -119,7 +120,7 @@
     <ListView
         android:id="@+id/ListViewTreatments"
         android:layout_width="406dp"
-        android:layout_height="187dp"
+        android:layout_height="239dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp" />
