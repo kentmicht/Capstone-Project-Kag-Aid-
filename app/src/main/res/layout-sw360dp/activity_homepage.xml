@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="415dp"
-        android:layout_height="242dp"
+        android:layout_height="248dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,10 +79,10 @@
     <Button
         android:id="@+id/button"
         android:layout_width="102dp"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView17"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
+        android:layout_marginTop="-90dp"
         android:background="@drawable/loginshape"
         android:onClick="openLogs"
         android:text="Logs"
@@ -96,6 +96,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="90dp"
         android:gravity="fill_horizontal"
+        android:paddingBottom="10sp"
         android:text="@string/homepage_desc"
         android:textColor="@color/textHomepage1"
         android:textSize="12sp" />
@@ -104,10 +105,10 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/textView17"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="179dp"
         android:gravity="center"
+        android:paddingBottom="5sp"
         android:text="@string/homepage_title"
         android:textColor="@color/textHomepage1"
         android:textSize="18sp" />

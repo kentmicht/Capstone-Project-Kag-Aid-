@@ -3,9 +3,12 @@ package com.example.kagaid.kagaid.Patient;
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -42,6 +45,17 @@ public class AddPatientRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient_record);
+
+        //Internet Connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //Add Patient Records
+
+        }else {
+            toastMessage("No Internet Connection");
+        }
+
         uId = (String) getIntent().getStringExtra("USER_ID");
         db = FirebaseDatabase.getInstance().getReference("person_information");
 
@@ -154,5 +168,9 @@ public class AddPatientRecord extends AppCompatActivity {
 
     public void back(View view){
         finish();
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }

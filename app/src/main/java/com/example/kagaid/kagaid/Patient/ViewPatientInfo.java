@@ -2,9 +2,12 @@ package com.example.kagaid.kagaid.Patient;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -89,6 +92,16 @@ public class ViewPatientInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_info);
+
+        //Internet Connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+        }else {
+            toastMessage("No Internet Connection");
+        }
+
         //uId = (String) getIntent().getStringExtra("USER_ID");
 
         textViewPatientName = (TextView) findViewById(R.id.textViewPatientName);

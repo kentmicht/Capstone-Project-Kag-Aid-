@@ -1,6 +1,9 @@
 package com.example.kagaid.kagaid.Logs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,11 +53,34 @@ public class Logs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logs);
 
+        //Internet Connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+        }else {
+            toastMessage("No Internet Connection");
+        }
+
+
         uId = (String) getIntent().getStringExtra("USER_ID");
         listViewLogs = (ListView) findViewById(R.id.listViewLogs);
 
         logList = new ArrayList<>();
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+
+        ImageView search = (ImageView) findViewById(R.id.logSearchBtn);
+
+        search.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
+                String logCategory = logCateg.getSelectedItem().toString();
+
+                toastMessage(logCategory);
+                searchLog(logCategory);
+            }
+        });
     }
 
     @Override
@@ -63,14 +89,6 @@ public class Logs extends AppCompatActivity {
 
 
         viewAllLogs();
-
-        ImageView search = (ImageView) findViewById(R.id.logSearchBtn);
-        search.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                searchLog();
-            }
-        });
 
 
         //Show dialog for logs
@@ -135,10 +153,7 @@ public class Logs extends AppCompatActivity {
     }
 
 
-    public void searchLog(){
-        Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
-        final String logCategory = logCateg.getSelectedItem().toString();
-
+    public void searchLog(final String logCategory){
         EditText logS = (EditText) findViewById(R.id.logSearch);
         final String logSearch = logS.getText().toString();
 
@@ -169,8 +184,12 @@ public class Logs extends AppCompatActivity {
                                 }
                                 break;
                             case "Employee Name":
-                                if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase())){
-                                    logList.add(log);
+//                                toastMessage(log.getEmployeeName());
+                                if(!log.getEmployeeName().isEmpty()){
+                                    if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase())){
+                                        logList.add(log);
+                                    }
+//                                    toastMessage(log.getEmployeeName());
                                 }
                                 break;
                         }

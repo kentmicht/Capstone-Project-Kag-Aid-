@@ -44,10 +44,10 @@
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="233dp"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="61dp"
+        android:layout_marginBottom="51dp"
         android:background="@drawable/loginshape"
         android:text="Log In"
         android:textAllCaps="false"
@@ -61,9 +61,10 @@
         android:id="@+id/loginUser"
         android:layout_width="233dp"
         android:layout_height="41dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="10sp"
+        android:layout_below="@+id/textView6"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="215dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_child_care_black_24dp"
@@ -83,9 +84,8 @@
         android:id="@+id/loginPwd"
         android:layout_width="237dp"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/loginUser"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="161dp"
         android:background="@drawable/loginshape"
         android:drawablePadding="6dp"
         android:drawableStart="@drawable/ic_lock_outline_black_24dp"
@@ -101,8 +101,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="156dp"
-        android:layout_height="150dp"
+        android:layout_width="172dp"
+        android:layout_height="167dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
@@ -130,9 +130,10 @@
         android:layout_height="53dp"
         android:layout_below="@+id/kagaid"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10sp"
         android:gravity="center"
         android:text="A Skin Illness Identification System and Patient Monitoring System"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

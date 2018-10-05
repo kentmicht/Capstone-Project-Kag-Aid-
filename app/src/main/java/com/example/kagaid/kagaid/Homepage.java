@@ -2,8 +2,11 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +26,16 @@ public class Homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        //Internet Connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+        }else {
+            toastMessage("No Internet Connection");
+        }
+
         uId = (String) getIntent().getStringExtra("USER_ID");
 
 //        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
@@ -30,6 +43,7 @@ public class Homepage extends AppCompatActivity {
 //        TextView name = (TextView)findViewById(R.id.header);
 //        name.setText("Welcome "+userName+"!");
     }
+
 
 
     private void toastMessage(String message){

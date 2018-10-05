@@ -1,11 +1,15 @@
 package com.example.kagaid.kagaid.SkinIllness;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +40,15 @@ public class TreatmentsPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_treatments_page);
+        //Internet Connectivity
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            setContentView(R.layout.activity_treatments_page);
+        }else {
+            toastMessage("No Internet Connection");
+        }
+
 
         Intent intent = getIntent();
         illnessName = intent.getStringExtra(SkinIllnessPage.SKIN_ILLNESS_NAME);
@@ -102,5 +114,9 @@ public class TreatmentsPage extends AppCompatActivity {
     }
     public void back(View view){
         finish();
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -5,77 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="97dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView34"
-        android:layout_toStartOf="@+id/textView42"
-        android:paddingTop="5sp"
-        android:text="Accuracy: "
-        android:textAlignment="textEnd"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="86dp" />
-
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView35"
-        android:layout_below="@+id/textView42"
-        android:paddingTop="5sp"
-        android:paddingBottom="10sp"
-        android:text="Last Scanned: "
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="146dp" />
-
-    <TextView
-        android:id="@+id/textView41"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView35"
-        android:layout_marginStart="-1dp"
-        android:layout_toEndOf="@+id/textView35"
-        android:paddingTop="5sp"
-        android:text="TextView"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        tools:layout_editor_absoluteX="210dp"
-        tools:layout_editor_absoluteY="106dp"
-        tools:text="Alcantara, Sheena" />
-
-    <TextView
-        android:id="@+id/textView42"
-        android:layout_width="168dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView37"
-        android:layout_toStartOf="@+id/imageView18"
-        android:paddingTop="5sp"
-        android:text="TextView"
-        android:textAlignment="textStart"
-        android:textSize="15sp"
-        tools:layout_editor_absoluteX="210dp"
-        tools:layout_editor_absoluteY="126dp"
-        tools:text="admin admin" />
-
-    <TextView
-        android:id="@+id/textView43"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView42"
-        android:layout_toEndOf="@+id/textView35"
-        android:paddingTop="5sp"
-        android:paddingBottom="10sp"
-        android:text="TextView"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        tools:layout_editor_absoluteX="210dp"
-        tools:layout_editor_absoluteY="146dp"
-        tools:text="Aug 29, 2018	2:30:39 PM" />
 
     <ImageView
         android:id="@+id/imageView19"
@@ -108,10 +37,35 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView37"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView35"
+        android:layout_width="141dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView35"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView34"
+        android:paddingTop="5sp"
+        android:text="Accuracy: "
+        android:textAlignment="textEnd"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView34"
+        android:paddingTop="5sp"
+        android:text="60%"
+        android:textAlignment="textStart"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView35"
         android:paddingTop="5sp"
         android:text="Patient Name: "
@@ -122,26 +76,76 @@
         tools:layout_editor_absoluteY="106dp" />
 
     <TextView
-        android:id="@+id/textView38"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView41"
+        android:layout_width="171dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView35"
+        android:layout_alignStart="@+id/textView44"
+        android:layout_below="@+id/textView35"
+        android:paddingTop="5sp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="106dp"
+        tools:text="Alcantara, Sheena" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView37"
         android:paddingTop="5sp"
         android:text="Scanned By: "
+        android:textAlignment="textEnd"
         android:textSize="15sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="106dp"
         tools:layout_editor_absoluteY="126dp" />
 
     <TextView
-        android:id="@+id/textView44"
-        android:layout_width="165dp"
+        android:id="@+id/textView42"
+        android:layout_width="171dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView34"
-        android:layout_toEndOf="@+id/textView35"
+        android:layout_alignStart="@+id/textView44"
+        android:layout_below="@+id/textView37"
         android:paddingTop="5sp"
-        android:text="60%"
+        android:text="TextView"
         android:textAlignment="textStart"
-        android:textSize="14sp" />
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="126dp"
+        tools:text="admin admin" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView38"
+        android:paddingBottom="10sp"
+        android:paddingTop="5sp"
+        android:text="Last Scanned: "
+        android:textAlignment="textEnd"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="146dp" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="171dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/textView44"
+        android:layout_below="@+id/textView38"
+        android:paddingBottom="10sp"
+        android:paddingTop="5sp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="146dp"
+        tools:text="Aug 29, 2018	2:30:39 PM" />
+
+
 </RelativeLayout>
