@@ -144,7 +144,6 @@ public class LogIn extends AppCompatActivity {
                                 public void run() {
                                     Intent homepage = new Intent(LogIn.this, Homepage.class);
                                     homepage.putExtra("USER_ID", uId);
-                                    finish();
                                     startActivity(homepage);
                                     finish();
                                 }

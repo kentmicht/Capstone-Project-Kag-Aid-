@@ -139,8 +139,7 @@ public class Logs extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        openHomepage();
-
+        finish();
     }
 
     public void openHomepage(){

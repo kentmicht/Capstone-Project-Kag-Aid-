@@ -124,6 +124,7 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(USER_ID, uId);
 
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -295,15 +296,14 @@ public class PatientRecords extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        openHomepage();
-
+        finish();
     }
 
     public void openHomepage(){
         Intent intent = new Intent(this, Homepage.class);
         intent.putExtra("USER_ID", uId);
-        finish();
         startActivity(intent);
+        finish();
         CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 

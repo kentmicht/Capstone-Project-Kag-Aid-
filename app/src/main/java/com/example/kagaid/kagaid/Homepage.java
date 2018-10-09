@@ -78,8 +78,8 @@ public class Homepage extends AppCompatActivity {
     public void openLogin(){
         Intent login = new Intent(this, LogIn.class);
         startActivity(login);
-        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
         finish();
+        CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }
 
     public void map(View view){

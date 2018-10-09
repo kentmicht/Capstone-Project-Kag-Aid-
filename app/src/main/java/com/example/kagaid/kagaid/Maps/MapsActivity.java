@@ -145,9 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     };
 
     public void goToHomepage(View view){
-        Intent backHome = new Intent(this, Homepage.class);
         finish();
-        startActivity(backHome);
     }
 
     private boolean CheckGooglePlayServices() {
