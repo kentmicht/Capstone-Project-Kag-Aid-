@@ -192,6 +192,8 @@ public class PatientRecords extends AppCompatActivity {
 
 
         final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
         alertDialog.show();
 
         //Setting the values from the db to the fields

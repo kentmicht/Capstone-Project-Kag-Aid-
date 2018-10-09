@@ -44,6 +44,7 @@ public class Logs extends AppCompatActivity {
 
     ListView listViewLogs;
     DatabaseReference databaseLogs;
+    TextView logErr;
 
     List<Log> logList;
     String uId;
@@ -62,6 +63,8 @@ public class Logs extends AppCompatActivity {
             toastMessage("No Internet Connection");
         }
 
+        logErr = (TextView) findViewById(R.id.logError);
+        logErr.setVisibility(View.INVISIBLE);
 
         uId = (String) getIntent().getStringExtra("USER_ID");
         listViewLogs = (ListView) findViewById(R.id.listViewLogs);
@@ -231,6 +234,10 @@ public class Logs extends AppCompatActivity {
 
                 LogLists adapter = new LogLists(Logs.this, logList);
                 listViewLogs.setAdapter(adapter);
+
+                if(adapter.getCount() <= 0){
+                    logErr.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

@@ -24,6 +24,7 @@
         <item>Patient Name</item>
         <item>Employee Name</item>
     </array>
+    <string name="logError">There are no logs for today yet</string>
 
     <!-- Skin Illness String Res -->
     <string name="skinIllness_label">Skin Illnesses</string>

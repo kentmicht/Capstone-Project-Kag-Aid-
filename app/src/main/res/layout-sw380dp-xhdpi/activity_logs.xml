@@ -125,4 +125,15 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/logError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="174dp"
+        android:text="@string/logError"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
 </RelativeLayout>
