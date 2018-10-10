@@ -117,13 +117,6 @@
         android:text="TextView"
         android:textSize="12sp" />
 
-    <ListView
-        android:id="@+id/ListViewTreatments"
-        android:layout_width="406dp"
-        android:layout_height="277dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/treatments_image" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
@@ -169,5 +162,12 @@
         android:paddingRight="5sp"
         android:text="Most common for: "
         android:textStyle="italic" />
+
+    <ListView
+        android:id="@+id/ListViewTreatments"
+        android:layout_width="406dp"
+        android:layout_height="267dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView10" />
 
 </RelativeLayout>

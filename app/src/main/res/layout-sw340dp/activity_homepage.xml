@@ -67,13 +67,13 @@
 
     <ImageView
         android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView11"
+        android:layout_width="37dp"
+        android:layout_height="41dp"
+        android:layout_alignTop="@+id/imageView11"
         android:layout_toEndOf="@+id/imageView43"
         android:background="@null"
         android:onClick="logOut"
-        app:srcCompat="@drawable/ic_forward_black_24dp" />
+        app:srcCompat="@drawable/logout" />
 
     <Button
         android:id="@+id/button"
