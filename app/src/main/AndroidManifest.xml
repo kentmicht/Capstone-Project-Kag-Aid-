@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-    android:allowBackup="true"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -24,7 +24,7 @@
         <activity android:name=".LogIn" />
         <activity
             android:name=".Homepage"
-            android:label="Homepage"></activity>
+            android:label="Homepage" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -72,6 +72,7 @@
         <activity
             android:name=".Logs.Logs"
             android:windowSoftInputMode="adjustPan" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.kagaid.kagaid.fileprovider"
@@ -81,8 +82,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"
-                tools:replace="android:resource"/>
+                tools:replace="android:resource" />
         </provider>
+
+        <activity android:name=".Diagnosis.PostDiagnosis"></activity>
     </application>
 
 </manifest>

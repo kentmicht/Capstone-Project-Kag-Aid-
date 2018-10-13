@@ -3,12 +3,14 @@ package com.example.kagaid.kagaid.Patient;
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Diagnosis.PostDiagnosis;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -128,8 +131,15 @@ public class AddPatientRecord extends AppCompatActivity {
             birthdate.setText("");
             address.setText("");
 
-            Toast.makeText(this, "Patient Record Added", Toast.LENGTH_LONG).show();
-            openPatientRecords();
+            progressDialog();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    toastMessage("Patient Record Added");
+                    openPatientRecords();
+                }
+            }, 2000);
+
         }else{
             Toast.makeText(this, "Please don't leave any field empty.", Toast.LENGTH_LONG).show();
         }
@@ -173,4 +183,13 @@ public class AddPatientRecord extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+    private void progressDialog(){
+        ProgressDialog pd = new ProgressDialog(AddPatientRecord.this);
+        pd.setMessage("Processing Patient's information...");
+        pd.setCancelable(false);
+        pd.show();
+    }
+
+
 }
