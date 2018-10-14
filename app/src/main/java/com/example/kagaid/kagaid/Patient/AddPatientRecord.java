@@ -25,8 +25,11 @@ import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Diagnosis.PostDiagnosis;
 import com.example.kagaid.kagaid.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -40,7 +43,7 @@ public class AddPatientRecord extends AppCompatActivity {
     Button patientAdd;
     String uId;
 
-    DatabaseReference db;
+    DatabaseReference databasePatient;
     private android.app.DatePickerDialog.OnDateSetListener mDateSetListener;
     private static final String TAG = "AddPatientRecord";
 
@@ -60,7 +63,7 @@ public class AddPatientRecord extends AppCompatActivity {
         }
 
         uId = (String) getIntent().getStringExtra("USER_ID");
-        db = FirebaseDatabase.getInstance().getReference("person_information");
+        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
         Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
 
@@ -113,50 +116,62 @@ public class AddPatientRecord extends AppCompatActivity {
     }
 
     private void addPatient(){
-        String fullnameP = fullname.getText().toString().trim();
-        String bdayP = birthdate.getText().toString();
-        String addressP = address.getText().toString();
-        String genderP = gender.getSelectedItem().toString();
-        String status = "1";
+        final String fullnameP = fullname.getText().toString().trim();
+        final String bdayP = birthdate.getText().toString();
+        final String addressP = address.getText().toString();
+        final String genderP = gender.getSelectedItem().toString();
+        final String status = "1";
 
-        if(!TextUtils.isEmpty(fullnameP) && !TextUtils.isEmpty(bdayP) && !TextUtils.isEmpty(addressP)){
-            String pid = db.push().getKey();
-            String age = calculateAge(bdayP);
-            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-            Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned", status, age);
-
-            db.child(pid).setValue(patient);
-
-            fullname.setText("");
-            birthdate.setText("");
-            address.setText("");
-
-            progressDialog();
-            new Handler().postDelayed(new Runnable() {
+        if(!TextUtils.isEmpty(fullnameP) && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP)){
+            //checking if there's unique
+            databasePatient.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void run() {
-                    toastMessage("Patient Record Added");
-                    openPatientRecords();
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean duplicatePatient = false;
+                    for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
+                        if(fullnameP.equals(dsPatient.child("fullname").getValue().toString())){
+                            duplicatePatient = true;
+                        }
+                    }
+                    if(duplicatePatient == false){
+                        String pid = databasePatient.push().getKey();
+                        String age = calculateAge(bdayP);
+                        //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
+                        Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned", status, age);
+
+                        databasePatient.child(pid).setValue(patient);
+
+                        fullname.setText("");
+                        birthdate.setText("");
+                        address.setText("");
+
+                        progressDialog();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                toastMessage("Patient Record Added");
+                                finish();
+                            }
+                        }, 2000);
+                    }else{
+                        toastMessage("Patient has been added already");
+                    }
                 }
-            }, 2000);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
         }else{
-            Toast.makeText(this, "Please don't leave any field empty.", Toast.LENGTH_LONG).show();
+            toastMessage("Please don't leave any field empty.");
         }
     }
 
     @Override
     public void onBackPressed() {
-        openPatientRecords();
-
-    }
-
-    public void openPatientRecords(){
-        Intent intent = new Intent(this, PatientRecords.class);
-        intent.putExtra("USER_ID", uId);
         finish();
-        startActivity(intent);
-        CustomIntent.customType(AddPatientRecord.this, "up-to-bottom");
+
     }
 
     public String currentDate(){

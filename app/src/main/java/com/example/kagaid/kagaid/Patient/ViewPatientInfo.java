@@ -191,6 +191,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         picture.compress(Bitmap.CompressFormat.JPEG, 90, bao);
         byte[] byteArray = bao.toByteArray();
         _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
         RequestPackage rp = new RequestPackage();
         rp.setMethod("POST");
         rp.setUri(UPLOAD_URL);
@@ -238,12 +239,12 @@ public class ViewPatientInfo extends AppCompatActivity {
 
                 scannedResult = str.split(Pattern.quote("?"));
 //                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
-                if(Integer.parseInt(scannedResult[1].replace("%", ""))>=80){
-                    logDetails();
-                    openDiagnosis();
-                }else{
+//                if(Integer.parseInt(scannedResult[1].replace("%", ""))>=80){
+//                    logDetails();
+//                    openDiagnosis();
+//                }else{
                     showDiagnosisResults(scannedResult[1], scannedResult[0]);
-                }
+//                }
 
             } catch (MalformedURLException e) {
             } catch (IOException e) {
@@ -251,40 +252,40 @@ public class ViewPatientInfo extends AppCompatActivity {
         }
     }
 
-    private void logDetails(){
-        //log all details percentage and skin illness identified most especially
-        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
-
-        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (uId.equals(ds.child("uId").getValue().toString())) {
-                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+//    private void logDetails(){
+//        //log all details percentage and skin illness identified most especially
+//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+//        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
 //
-                    }
-                }
-                toastMessage(employeeName);
-                String logId = databaseLogs.push().getKey();
-                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
-                String status = "1";
-                String age = calculateAge(pbday);
-                currentDateTimeStored = currentDateTime();
-                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
-
-                databasePatient.child(pId).setValue(patient);
-                databaseLogs.child(logId).setValue(logSingle);
-                toastMessage("Logged");
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    if (uId.equals(ds.child("uId").getValue().toString())) {
+//                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+////
+//                    }
+//                }
+//                toastMessage(employeeName);
+//                String logId = databaseLogs.push().getKey();
+//                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
+//                String status = "1";
+//                String age = calculateAge(pbday);
+//                currentDateTimeStored = currentDateTime();
+//                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
+//
+//                databasePatient.child(pId).setValue(patient);
+//                databaseLogs.child(logId).setValue(logSingle);
+//                toastMessage("Logged");
+//
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     private void showDiagnosisResults(String skinIdentify, String percent){
         dialogBuilder = new AlertDialog.Builder(this);
@@ -365,12 +366,12 @@ public class ViewPatientInfo extends AppCompatActivity {
             }
         });
 
-//        treatmentButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openTreatments(v);
-//            }
-//        });
+        treatmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTreatments(v);
+            }
+        });
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -383,33 +384,33 @@ public class ViewPatientInfo extends AppCompatActivity {
         });
     }
 
-//    public void openTreatments(View view){
-//        final String SKIN_ILLNESS_NAME = "skin_illness_name";
-//        final String SKIN_ILLNESS_ID  = "skin_illness_id";
-//        toastMessage(skinIllnessId);
-//
-//        Intent treatments = new Intent(this, TreatmentsPage.class);
-//        treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
-//        treatments.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
-//        startActivity(treatments);
-//    }
+    public void openTreatments(View view){
+        final String SKIN_ILLNESS_NAME = "skin_illness_name";
+        final String SKIN_ILLNESS_ID  = "skin_illness_id";
+        toastMessage(skinIllnessId);
 
-    public void openDiagnosis(){
-        final String PATIENT_ID = "PATIENT_ID";
-        final String USER_ID  = "USER_ID";
-        final String SKINILLNESS = "SKIN_ILLNESS";
-        final String PERCENTAGE = "PERCENTAGE";
-
-        Intent diagnosis = new Intent(this, PostDiagnosis.class);
-        diagnosis.putExtra(PATIENT_ID, pId);
-        diagnosis.putExtra(USER_ID, uId);
-        diagnosis.putExtra(SKINILLNESS, scannedResult[0]);
-        diagnosis.putExtra(PERCENTAGE, scannedResult[1]);
-
-        toastMessage("PID: " + pId + " UID: " + uId);
-
-        startActivity(diagnosis);
+        Intent treatments = new Intent(this, TreatmentsPage.class);
+        treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
+        treatments.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        startActivity(treatments);
     }
+
+//    public void openDiagnosis(){
+//        final String PATIENT_ID = "PATIENT_ID";
+//        final String USER_ID  = "USER_ID";
+//        final String SKINILLNESS = "SKIN_ILLNESS";
+//        final String PERCENTAGE = "PERCENTAGE";
+//
+//        Intent diagnosis = new Intent(this, PostDiagnosis.class);
+//        diagnosis.putExtra(PATIENT_ID, pId);
+//        diagnosis.putExtra(USER_ID, uId);
+//        diagnosis.putExtra(SKINILLNESS, scannedResult[0]);
+//        diagnosis.putExtra(PERCENTAGE, scannedResult[1]);
+//
+//        toastMessage("PID: " + pId + " UID: " + uId);
+//
+//        startActivity(diagnosis);
+//    }
     public void openMaps(View view){
         Intent maps = new Intent(this, MapsActivity.class);
         startActivity(maps);

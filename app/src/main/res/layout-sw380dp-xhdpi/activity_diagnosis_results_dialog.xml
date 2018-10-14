@@ -8,29 +8,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/alert_note"
-        android:layout_below="@+id/dateTimeScanned_layout">
-
-        <TextView
-            android:id="@+id/note"
-            android:layout_width="348dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="10sp"
-            android:text="Percentage result didn't reach the least quota (80%) we reccomend to consult to a dermatologist."
-            android:textAlignment="center"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            tools:layout_editor_absoluteX="54dp"
-            tools:layout_editor_absoluteY="166dp" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/alert_note"
+        android:layout_below="@+id/dateTimeScanned_layout"
         android:layout_centerHorizontal="true">
+
         <ImageView
             android:id="@+id/find_nearby_doctors2"
             android:layout_width="79dp"
@@ -40,6 +20,16 @@
             android:paddingBottom="10sp"
             android:paddingTop="10sp"
             app:srcCompat="@drawable/nearby_doctors" />
+
+        <ImageView
+            android:id="@+id/common_treatments2"
+            android:layout_width="76dp"
+            android:layout_height="83dp"
+            android:layout_below="@+id/textView14"
+            android:layout_toEndOf="@+id/find_nearby_doctors2"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp"
+            app:srcCompat="@drawable/skin_illness_and_treatments_logo" />
 
         <ImageView
             android:id="@+id/ok_button"
