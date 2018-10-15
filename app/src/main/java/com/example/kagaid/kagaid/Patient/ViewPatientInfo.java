@@ -2,11 +2,14 @@ package com.example.kagaid.kagaid.Patient;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.net.http.RequestQueue;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -20,6 +23,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.kagaid.kagaid.Logs.Log;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.ScanningModule.MyHttpURLConnection;
@@ -28,31 +36,64 @@ import com.example.kagaid.kagaid.Diagnosis.PostDiagnosis;
 import com.example.kagaid.kagaid.R;
 import com.example.kagaid.kagaid.SkinIllness.TreatmentsPage;
 import com.example.kagaid.kagaid.User;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.stream.JsonReader;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import maes.tech.intentanim.CustomIntent;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 public class ViewPatientInfo extends AppCompatActivity {
 
     private static final int CAMERA_PIC_REQUEST = 1111;
     private ImageView selectedImageView;
-    private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
-    private static final String RETRIEVE_URL = "https://kag-aid.000webhostapp.com/uploads/resultFile.txt";
+//    private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
+//    private static final String RETRIEVE_URL = "https://kag-aid.000webhostapp.com/uploads/resultFile.txt";
     private static String _bytes64String, _imageFileName;
     private static String[] scannedResult;
+
+    //Custom Vision Prediction API
+    private static final String predictionKey = "1289ea1f967b43c0ba970bc485e1c869";
+
 
     TextView textViewPatientName;
     TextView textViewPatientBday;
@@ -64,6 +105,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     //Image Bitmap
     Bitmap imageBitmap;
+    byte[] byteArray;
 
     AlertDialog.Builder dialogBuilder;
     String skinIllness;
@@ -185,70 +227,165 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     }
 
-    private void uploadImage(Bitmap picture){
+    private void uploadImage(Bitmap picture) {
 //        Bitmap bm = BitmapFactory.decodeFile(picturePath);
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        picture.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-        byte[] byteArray = bao.toByteArray();
+        picture.compress(Bitmap.CompressFormat.JPEG, 100, bao);
+        byteArray = bao.toByteArray();
         _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-        RequestPackage rp = new RequestPackage();
-        rp.setMethod("POST");
-        rp.setUri(UPLOAD_URL);
-        rp.setSingleParam("base64", _bytes64String);
-        rp.setSingleParam("ImageName", _imageFileName + ".jpg");
+        String customVisionURL =
+                "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image?iterationId=fff7811b-3659-4221-98f5-ec51985e112b";
+        new HttpAsyncTask().execute(customVisionURL);
 
-        uploadToServer uploadServer = new uploadToServer();
-        uploadServer.execute(rp);
+
+//        RequestPackage rp = new RequestPackage();
+//        rp.setMethod("POST");
+//        rp.setUri(UPLOAD_URL);
+//        rp.setSingleParam("base64", _bytes64String);
+//        rp.setSingleParam("Content-Type", "application/octet-stream");
+//        rp.setSingleParam("Prediction-Key", predictionKey);
+//
+//        uploadToServer uploadServer = new uploadToServer();
+//        uploadServer.execute(rp);
     }
 
-    public class uploadToServer extends AsyncTask<RequestPackage, Void, String> {
+    public String POST(String url)
+    {
+        Log.e("MINION", "inside POST()");
 
-        private ProgressDialog pd = new ProgressDialog(ViewPatientInfo.this);
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            resultText = (TextView) findViewById(R.id.textView);
-//            resultText.setText("New file "+_imageFileName+".jpg created\n");
-            pd.setMessage("Image uploading! please wait..");
-            pd.setCancelable(false);
-            pd.show();
+        InputStream inputStream = null;
+        String result = "";
+        byte[] buffer;
+        int bufferSize = 1 * 1024 * 1024;
+//        Bitmap bm;
+//        String imagePath = "/mnt/sdcard/BusinessCard/image.jpg";
+//        String encodedImage = null;
+//        nullFile file = new File(imagePath);
+        String temp = "Vipul Sharma";
+        int responseCode=0;
+        String responseMessage = "";
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+
+
+            //Check if file exists
+//            if (!file.isFile()) {
+//                Log.e("uploadFile", "Source File not exist :"+imagePath);
+//            }
+//
+//            else
+//            {
+//                Log.i("MINION", "image file found");
+//                FileInputStream fileInputStream = new FileInputStream(file);
+//                buffer = new byte[bufferSize];
+//                bm = BitmapFactory.decodeStream(fileInputStream);
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                buffer = baos.toByteArray();	//Image->Byte Array
+
+
+                //Byte Array to base64 image string
+//                encodedImage = Base64.encodeToString(buffer, Base64.DEFAULT);
+//                Log.i("MINION", "image conversted to Base 64 string");
+
+                //Converting encodedImage to String Entity
+                StringEntity se = new StringEntity(_bytes64String);
+//                System.out.println("Image: " + _bytes64String);
+//                StringEntity se = new StringEntity(temp);
+//                Log.i("MINION", "encodedImage to StringEntity");
+
+                //httpPost Entity
+                httpPost.setEntity(new ByteArrayEntity(byteArray));
+                // 7. Set some headers to inform server about the type of the content
+                httpPost.setHeader("Content-Type", "application/octet-stream");
+                httpPost.setHeader("Prediction-Key", predictionKey);
+
+                // 8. Execute POST request to the given URL
+                HttpResponse httpResponse = httpclient.execute(httpPost);
+                Log.e("MINION", "Post request successful");
+
+                // 9. receive response as inputStream
+
+
+
+
+                //inputStream = httpResponse.getEntity().getContent();
+
+
+                HttpEntity entity = httpResponse.getEntity();
+
+                String responseText = EntityUtils.toString(entity);
+
+
+
+                responseCode = httpResponse.getStatusLine().getStatusCode();
+                System.out.println("Response Code: " + responseCode);
+
+                //responseMessage = EntityUtils.toString(httpResponse.getEntity());
+                System.out.println("Response Message: " + responseText);
+
+
+	           /* // 10. convert inputstream to string
+	            if(inputStream != null)
+	            {
+	            	Log.i("MINION", "Converting Response to String");
+	            	result = convertInputStreamToString(inputStream);
+	            	Log.i("MINION", "Response to String Sucess");
+	            }
+	            else
+	            	result = "Did not work!";
+
+	            */
+//            }
+
+            result = responseText;
+        } catch (Exception e) {
+            Log.e("InputStream", e.toString());
         }
+
+        // 11. return result
+
+//        result = "Response Code: " + responseCode + "Response Message: " + responseMessage + result;
+        System.out.println("Result: " + result);
+        return result;
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        private ProgressDialog pd = new ProgressDialog(ViewPatientInfo.this);
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+////            resultText = (TextView) findViewById(R.id.textView);
+////            resultText.setText("New file "+_imageFileName+".jpg created\n");
+//            pd.setMessage("Image uploading! please wait..");
+//            pd.setCancelable(false);
+//            pd.show();
+//        }
 
         @Override
-        protected String doInBackground(RequestPackage... params) {
-
-            String content = MyHttpURLConnection.getData(params[0]);
-            return content;
-
+        protected String doInBackground(String... urls) {
+            return POST(urls[0]);
         }
-
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
         protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            pd.hide();
-            pd.dismiss();
-
+            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
             try {
-                // Create a URL for the desired page
-                URL url = new URL(RETRIEVE_URL);
+                JSONObject json = new JSONObject(result);
+                JSONArray skinResults = json.getJSONArray("predictions");
+                JSONObject skinRes = skinResults.getJSONObject(0);
+                String percentage = Double.toString(Double.parseDouble(skinRes.getString("probability")) * 100.00);
+                String skinName = skinRes.getString("tagName");
 
-                // Read all the text returned by the server
-                StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
-                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-                String str = in.readLine();
-                in.close();
-
-                scannedResult = str.split(Pattern.quote("?"));
-//                toastMessage("Skin Illness: " + scannedResult[0] + "Percentage: " + scannedResult[1]);
-//                if(Integer.parseInt(scannedResult[1].replace("%", ""))>=80){
-//                    logDetails();
-//                    openDiagnosis();
-//                }else{
-                    showDiagnosisResults(scannedResult[1], scannedResult[0]);
-//                }
-
-            } catch (MalformedURLException e) {
-            } catch (IOException e) {
+                toastMessage(percentage + " " + skinName);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
     }
 

@@ -90,4 +90,7 @@ public class Log {
 
     public Log() {
     }
+
+    public static void e(String rest_response, String s) {
+    }
 }
