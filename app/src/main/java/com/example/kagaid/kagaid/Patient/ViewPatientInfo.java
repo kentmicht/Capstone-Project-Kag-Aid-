@@ -89,7 +89,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 //    private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
 //    private static final String RETRIEVE_URL = "https://kag-aid.000webhostapp.com/uploads/resultFile.txt";
     private static String _bytes64String, _imageFileName;
-    private static String[] scannedResult;
+    private static String[] scannedResult = new String[2];
 
     //Custom Vision Prediction API
     private static final String predictionKey = "1289ea1f967b43c0ba970bc485e1c869";
@@ -238,33 +238,12 @@ public class ViewPatientInfo extends AppCompatActivity {
                 "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image?iterationId=fff7811b-3659-4221-98f5-ec51985e112b";
         new HttpAsyncTask().execute(customVisionURL);
 
-
-//        RequestPackage rp = new RequestPackage();
-//        rp.setMethod("POST");
-//        rp.setUri(UPLOAD_URL);
-//        rp.setSingleParam("base64", _bytes64String);
-//        rp.setSingleParam("Content-Type", "application/octet-stream");
-//        rp.setSingleParam("Prediction-Key", predictionKey);
-//
-//        uploadToServer uploadServer = new uploadToServer();
-//        uploadServer.execute(rp);
     }
 
     public String POST(String url)
     {
-        Log.e("MINION", "inside POST()");
-
-        InputStream inputStream = null;
         String result = "";
-        byte[] buffer;
-        int bufferSize = 1 * 1024 * 1024;
-//        Bitmap bm;
-//        String imagePath = "/mnt/sdcard/BusinessCard/image.jpg";
-//        String encodedImage = null;
-//        nullFile file = new File(imagePath);
-        String temp = "Vipul Sharma";
         int responseCode=0;
-        String responseMessage = "";
         try {
 
             // 1. create HttpClient
@@ -272,32 +251,6 @@ public class ViewPatientInfo extends AppCompatActivity {
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
-
-
-            //Check if file exists
-//            if (!file.isFile()) {
-//                Log.e("uploadFile", "Source File not exist :"+imagePath);
-//            }
-//
-//            else
-//            {
-//                Log.i("MINION", "image file found");
-//                FileInputStream fileInputStream = new FileInputStream(file);
-//                buffer = new byte[bufferSize];
-//                bm = BitmapFactory.decodeStream(fileInputStream);
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                buffer = baos.toByteArray();	//Image->Byte Array
-
-
-                //Byte Array to base64 image string
-//                encodedImage = Base64.encodeToString(buffer, Base64.DEFAULT);
-//                Log.i("MINION", "image conversted to Base 64 string");
-
-                //Converting encodedImage to String Entity
-                StringEntity se = new StringEntity(_bytes64String);
-//                System.out.println("Image: " + _bytes64String);
-//                StringEntity se = new StringEntity(temp);
-//                Log.i("MINION", "encodedImage to StringEntity");
 
                 //httpPost Entity
                 httpPost.setEntity(new ByteArrayEntity(byteArray));
@@ -308,121 +261,63 @@ public class ViewPatientInfo extends AppCompatActivity {
                 // 8. Execute POST request to the given URL
                 HttpResponse httpResponse = httpclient.execute(httpPost);
                 Log.e("MINION", "Post request successful");
-
-                // 9. receive response as inputStream
-
-
-
-
-                //inputStream = httpResponse.getEntity().getContent();
-
-
                 HttpEntity entity = httpResponse.getEntity();
 
                 String responseText = EntityUtils.toString(entity);
 
 
-
                 responseCode = httpResponse.getStatusLine().getStatusCode();
                 System.out.println("Response Code: " + responseCode);
-
-                //responseMessage = EntityUtils.toString(httpResponse.getEntity());
                 System.out.println("Response Message: " + responseText);
-
-
-	           /* // 10. convert inputstream to string
-	            if(inputStream != null)
-	            {
-	            	Log.i("MINION", "Converting Response to String");
-	            	result = convertInputStreamToString(inputStream);
-	            	Log.i("MINION", "Response to String Sucess");
-	            }
-	            else
-	            	result = "Did not work!";
-
-	            */
-//            }
 
             result = responseText;
         } catch (Exception e) {
             Log.e("InputStream", e.toString());
         }
-
-        // 11. return result
-
-//        result = "Response Code: " + responseCode + "Response Message: " + responseMessage + result;
         System.out.println("Result: " + result);
         return result;
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         private ProgressDialog pd = new ProgressDialog(ViewPatientInfo.this);
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-////            resultText = (TextView) findViewById(R.id.textView);
-////            resultText.setText("New file "+_imageFileName+".jpg created\n");
-//            pd.setMessage("Image uploading! please wait..");
-//            pd.setCancelable(false);
-//            pd.show();
-//        }
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            resultText = (TextView) findViewById(R.id.textView);
+//            resultText.setText("New file "+_imageFileName+".jpg created\n");
+            pd.setMessage("Identifying, please wait..");
+            pd.setCancelable(false);
+            pd.show();
+        }
 
         @Override
         protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
             try {
                 JSONObject json = new JSONObject(result);
                 JSONArray skinResults = json.getJSONArray("predictions");
                 JSONObject skinRes = skinResults.getJSONObject(0);
-                String percentage = Double.toString(Double.parseDouble(skinRes.getString("probability")) * 100.00);
+                double percentageNum = Double.parseDouble(skinRes.getString("probability")) * 100.00;
+                String percentage = String.format("%.2f%%", percentageNum);
                 String skinName = skinRes.getString("tagName");
 
-                toastMessage(percentage + " " + skinName);
+                scannedResult[0] = percentage;
+                scannedResult[1] = skinName;
+
+                showDiagnosisResults(scannedResult[1], scannedResult[0]);
+                pd.dismiss();
+//                toastMessage(percentage + " " + skinName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     }
-
-//    private void logDetails(){
-//        //log all details percentage and skin illness identified most especially
-//        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
-//        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-//        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
-//
-//        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    if (uId.equals(ds.child("uId").getValue().toString())) {
-//                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
-////
-//                    }
-//                }
-//                toastMessage(employeeName);
-//                String logId = databaseLogs.push().getKey();
-//                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
-//                String status = "1";
-//                String age = calculateAge(pbday);
-//                currentDateTimeStored = currentDateTime();
-//                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
-//
-//                databasePatient.child(pId).setValue(patient);
-//                databaseLogs.child(logId).setValue(logSingle);
-//                toastMessage("Logged");
-//
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     private void showDiagnosisResults(String skinIdentify, String percent){
         dialogBuilder = new AlertDialog.Builder(this);
@@ -484,7 +379,7 @@ public class ViewPatientInfo extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (scannedResult[0].equals(ds.child("skin_illness_name").getValue().toString())) {
+                    if (scannedResult[1].equals(ds.child("skin_illness_name").getValue().toString())) {
                         skinIllnessId = ds.child("siId").getValue().toString();
 
                     }
@@ -532,22 +427,6 @@ public class ViewPatientInfo extends AppCompatActivity {
         startActivity(treatments);
     }
 
-//    public void openDiagnosis(){
-//        final String PATIENT_ID = "PATIENT_ID";
-//        final String USER_ID  = "USER_ID";
-//        final String SKINILLNESS = "SKIN_ILLNESS";
-//        final String PERCENTAGE = "PERCENTAGE";
-//
-//        Intent diagnosis = new Intent(this, PostDiagnosis.class);
-//        diagnosis.putExtra(PATIENT_ID, pId);
-//        diagnosis.putExtra(USER_ID, uId);
-//        diagnosis.putExtra(SKINILLNESS, scannedResult[0]);
-//        diagnosis.putExtra(PERCENTAGE, scannedResult[1]);
-//
-//        toastMessage("PID: " + pId + " UID: " + uId);
-//
-//        startActivity(diagnosis);
-//    }
     public void openMaps(View view){
         Intent maps = new Intent(this, MapsActivity.class);
         startActivity(maps);

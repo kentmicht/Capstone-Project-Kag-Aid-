@@ -68,6 +68,7 @@
         android:layout_marginBottom="-141dp"
         android:layout_marginEnd="102dp"
         android:text="Acne"
+        android:paddingLeft="5sp"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
@@ -90,7 +91,7 @@
         android:layout_alignStart="@+id/brand"
         android:layout_marginBottom="-185dp"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -104,7 +105,7 @@
         android:layout_marginStart="122dp"
         android:layout_marginTop="185dp"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textSize="12sp" />
 
     <TextView
@@ -114,7 +115,7 @@
         android:layout_alignBottom="@+id/treatments_image"
         android:layout_alignStart="@+id/medicine_name"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textSize="12sp" />
 
     <ListView
@@ -168,6 +169,17 @@
         android:layout_alignTop="@+id/skin_illness_name"
         android:paddingRight="5sp"
         android:text="Most common for: "
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/treatmentError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="305dp"
+        android:text="There is currently no treatments."
+        android:textSize="16sp"
         android:textStyle="italic" />
 
 </RelativeLayout>

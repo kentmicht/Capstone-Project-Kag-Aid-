@@ -28,6 +28,7 @@ public class TreatmentsPage extends AppCompatActivity {
     TextView brand;
     TextView dosage;
     ListView treatmentsListView;
+    TextView treatmentErr;
 
     DatabaseReference refTreatments;
     DatabaseReference refSkinIllness;
@@ -49,6 +50,8 @@ public class TreatmentsPage extends AppCompatActivity {
             toastMessage("No Internet Connection");
         }
 
+        treatmentErr = (TextView) findViewById(R.id.treatmentError);
+        treatmentErr.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         illnessName = intent.getStringExtra(SkinIllnessPage.SKIN_ILLNESS_NAME);
@@ -81,13 +84,20 @@ public class TreatmentsPage extends AppCompatActivity {
                     }
 
                 }
-                commonTreatment = treatment;
-                medicine_name.setText(commonTreatment.getMedicine_name());
-                brand.setText("Brand: " + commonTreatment.getBrand());
-                dosage.setText("Dosage: " + commonTreatment.getDosage());
 
-                TreatmentsList adapter = new TreatmentsList(TreatmentsPage.this, treatmentsList);
-                treatmentsListView.setAdapter(adapter);
+
+                if(treatmentsList.isEmpty()) {
+                    treatmentErr.setVisibility(View.VISIBLE);
+                }else{
+                    commonTreatment = treatment;
+                    medicine_name.setText(commonTreatment.getMedicine_name());
+                    brand.setText("Brand: " + commonTreatment.getBrand());
+                    dosage.setText("Dosage: " + commonTreatment.getDosage());
+
+                    TreatmentsList adapter = new TreatmentsList(TreatmentsPage.this, treatmentsList);
+                    treatmentsListView.setAdapter(adapter);
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

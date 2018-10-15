@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".SkinIllness.TreatmentsPage">
 
+    <TextView
+        android:id="@+id/treatmentError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="305dp"
+        android:text="There is currently no treatments."
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -90,7 +101,7 @@
         android:layout_alignStart="@+id/brand"
         android:layout_marginBottom="-185dp"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -104,7 +115,7 @@
         android:layout_marginStart="122dp"
         android:layout_marginTop="185dp"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textSize="12sp" />
 
     <TextView
@@ -114,7 +125,7 @@
         android:layout_alignBottom="@+id/treatments_image"
         android:layout_alignStart="@+id/medicine_name"
         android:padding="4sp"
-        android:text="TextView"
+        android:text="No Data"
         android:textSize="12sp" />
 
     <ImageView
