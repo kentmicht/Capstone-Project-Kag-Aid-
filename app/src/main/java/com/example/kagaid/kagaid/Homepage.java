@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Logs.Logs;
@@ -22,6 +25,10 @@ import maes.tech.intentanim.CustomIntent;
 
 public class Homepage extends AppCompatActivity {
     String uId;
+    String bId;
+    String barangayName;
+
+    TextView bName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +44,15 @@ public class Homepage extends AppCompatActivity {
         }
 
         uId = (String) getIntent().getStringExtra("USER_ID");
+        bId = (String) getIntent().getStringExtra("BARANGAY_ID");
+        barangayName = (String) getIntent().getStringExtra("BARANGAY_NAME");
+
+        bName = (TextView) findViewById(R.id.header);
+        bName.setText("Welcome to " + barangayName);
 
 //        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
         toastMessage("User Id:" + uId);
+        toastMessage("Barangay Id:" + bId);
 //        TextView name = (TextView)findViewById(R.id.header);
 //        name.setText("Welcome "+userName+"!");
     }
@@ -90,6 +103,8 @@ public class Homepage extends AppCompatActivity {
     public void openPatientRecord(View view){
         Intent patientRec = new Intent(this, PatientRecords.class);
         patientRec.putExtra("USER_ID", uId);
+        patientRec.putExtra("BARANGAY_ID", bId);
+        patientRec.putExtra("BARANGAY_NAME", barangayName);
         startActivity(patientRec);
         CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }
@@ -107,6 +122,7 @@ public class Homepage extends AppCompatActivity {
     public void openLogs(View view) {
         Intent logs = new Intent(this, Logs.class);
         logs.putExtra("USER_ID", uId);
+        logs.putExtra("BARANGAY_ID", bId);
         startActivity(logs);
         CustomIntent.customType(Homepage.this, "fadein-to-fadeout");
     }

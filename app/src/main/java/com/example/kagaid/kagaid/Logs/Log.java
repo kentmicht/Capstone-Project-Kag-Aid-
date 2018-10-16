@@ -12,6 +12,19 @@ public class Log {
     String employeeName;
     String skinIllness;
     String percentage;
+    String bId;
+
+    public Log(String logId, String logdatetime, String pId, String uId, String patientName, String employeeName, String skinIllness, String percentage, String bId) {
+        this.logId = logId;
+        this.logdatetime = logdatetime;
+        this.pId = pId;
+        this.uId = uId;
+        this.patientName = patientName;
+        this.employeeName = employeeName;
+        this.skinIllness = skinIllness;
+        this.percentage = percentage;
+        this.bId = bId;
+    }
 
     public Log(String logId, String logdatetime, String pId, String uId, String patientName, String employeeName, String skinIllness, String percentage) {
         this.logId = logId;

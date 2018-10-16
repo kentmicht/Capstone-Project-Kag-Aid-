@@ -48,6 +48,7 @@ public class Logs extends AppCompatActivity {
 
     List<Log> logList;
     String uId;
+    String bId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class Logs extends AppCompatActivity {
         logErr.setVisibility(View.INVISIBLE);
 
         uId = (String) getIntent().getStringExtra("USER_ID");
+        bId = (String) getIntent().getStringExtra("BARANGAY_ID");
         listViewLogs = (ListView) findViewById(R.id.listViewLogs);
 
         logList = new ArrayList<>();
@@ -171,24 +173,24 @@ public class Logs extends AppCompatActivity {
                         Log log = logsSnapshot.getValue(Log.class);
                         switch(logCategory){
                             case "Date":
-                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase())){
+                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
                                     logList.add(log);
                                 }
                                 break;
                             case "Time":
-                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase())){
+                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
                                     logList.add(log);
                                 }
                                 break;
                             case "Patient Name":
-                                if(log.getPatientName().toLowerCase().contains(logSearch.toLowerCase())){
+                                if(log.getPatientName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
                                     logList.add(log);
                                 }
                                 break;
                             case "Employee Name":
 //                                toastMessage(log.getEmployeeName());
                                 if(!log.getEmployeeName().isEmpty()){
-                                    if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase())){
+                                    if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
                                         logList.add(log);
                                     }
 //                                    toastMessage(log.getEmployeeName());
@@ -225,17 +227,19 @@ public class Logs extends AppCompatActivity {
                 for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                     Log log = logsSnapshot.getValue(Log.class);
                     String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
-                    if(currentDate[0].equals(logDate[0])){
+                    if(currentDate[0].equals(logDate[0]) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
                         logList.add(log);
                     }
 
                 }
 
-                LogLists adapter = new LogLists(Logs.this, logList);
-                listViewLogs.setAdapter(adapter);
 
-                if(adapter.getCount() <= 0){
+
+                if(logList.isEmpty()){
                     logErr.setVisibility(View.VISIBLE);
+                }else{
+                    LogLists adapter = new LogLists(Logs.this, logList);
+                    listViewLogs.setAdapter(adapter);
                 }
             }
 

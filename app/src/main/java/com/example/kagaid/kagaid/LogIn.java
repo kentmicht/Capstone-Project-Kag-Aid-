@@ -38,6 +38,7 @@ import maes.tech.intentanim.CustomIntent;
 public class LogIn extends AppCompatActivity {
     //Firebase
     DatabaseReference databaseLogin;
+    DatabaseReference databaseBarangay;
     User u = new User();
 
     private static final String TAG = "Login";
@@ -45,6 +46,9 @@ public class LogIn extends AppCompatActivity {
 
     EditText username;
     EditText password;
+
+    String barangayName;
+    String barangayId;
 
 
     @Override
@@ -56,13 +60,6 @@ public class LogIn extends AppCompatActivity {
         if(isNetworkAvailable() == false){
             toastMessage("No Internet Connection");
         }
-//        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-////        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-////                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-////
-////        }else {
-////            toastMessage("No Internet Connection");
-////        }
 
 
         username = (EditText) findViewById(R.id.loginUser);
@@ -70,7 +67,7 @@ public class LogIn extends AppCompatActivity {
 
         //firebase
         databaseLogin = FirebaseDatabase.getInstance().getReference("users");
-
+        databaseBarangay = FirebaseDatabase.getInstance().getReference("barangay");
 
 
     }
@@ -107,9 +104,6 @@ public class LogIn extends AppCompatActivity {
                     boolean pass = false;
                     String uId = null;
 
-                    String string_to_be_converted_to_MD5 = "REPLACE_WITH YOUR_OWN_STRING";
-
-
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String md5HashPass = md5(password.getText().toString());
@@ -125,11 +119,13 @@ public class LogIn extends AppCompatActivity {
                                     pass = true;
                                     if(userName == true && pass == true){
                                         uId = loginSnapshot.child("uId").getValue().toString();
+                                        barangayId = loginSnapshot.child("bId").getValue().toString();
 //                                    toastMessage(uId);
                                     }
                                 }
                             }
                         }
+                        toastMessage(barangayId);
 
                         if(userName == false && pass == false){
                             toastMessage("Unregistered Account or Incorrect username/password");
@@ -138,17 +134,33 @@ public class LogIn extends AppCompatActivity {
                         }else if(userName == true && pass == false){
                             toastMessage("You did not enter a correct password");
                         }else if(userName == true && pass == true){
-                            progressDialog();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent homepage = new Intent(LogIn.this, Homepage.class);
-                                    homepage.putExtra("USER_ID", uId);
-                                    startActivity(homepage);
-                                    finish();
-                                }
-                            }, TIME_OUT);
+                            databaseBarangay.addValueEventListener(new ValueEventListener() {
+                                 @Override
+                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                     for(DataSnapshot barangaySnapshot: dataSnapshot.getChildren()) {
+                                        if(barangayId.equals(barangaySnapshot.child("bId").getValue().toString())){
+                                            barangayName = barangaySnapshot.child("name").getValue().toString();
+                                        }
+                                     }
+                                     progressDialog(barangayName);
+                                     new Handler().postDelayed(new Runnable() {
+                                         @Override
+                                         public void run() {
+                                             Intent homepage = new Intent(LogIn.this, Homepage.class);
+                                             homepage.putExtra("USER_ID", uId);
+                                             homepage.putExtra("BARANGAY_ID", barangayId);
+                                             homepage.putExtra("BARANGAY_NAME", barangayName);
+                                             startActivity(homepage);
+                                             finish();
+                                         }
+                                     }, TIME_OUT);
+                                 }
 
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+//
+                                }
+                            });
                         }
                     }
                     //
@@ -171,9 +183,9 @@ public class LogIn extends AppCompatActivity {
         finish();
     }
 
-    private void progressDialog(){
+    private void progressDialog(String barangayName){
         ProgressDialog pd = new ProgressDialog(LogIn.this);
-        pd.setMessage("Logging In...");
+        pd.setMessage("Logging In to " + barangayName + "...");
         pd.setCancelable(false);
         pd.show();
     }

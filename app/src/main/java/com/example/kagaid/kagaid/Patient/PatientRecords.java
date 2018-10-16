@@ -64,6 +64,9 @@ public class PatientRecords extends AppCompatActivity {
     final String TAG = "PatientRecords";
 
     String uId;
+    String bId;
+    String bName;
+
     DatabaseReference db;
 
     ListView patient_record;
@@ -94,6 +97,8 @@ public class PatientRecords extends AppCompatActivity {
 
 //        toastMessage("Long press to update a patient's information.");
         uId = (String) getIntent().getStringExtra("USER_ID");
+        bId = (String) getIntent().getStringExtra("BARANGAY_ID");
+        bName = (String) getIntent().getStringExtra("BARANGAY_NAME");
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
         pList = new ArrayList<>();
@@ -102,7 +107,8 @@ public class PatientRecords extends AppCompatActivity {
 //        test = (TextView) findViewById(R.id.test);
         patient_names = new ArrayList<String>();
 
-        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
+        toastMessage("User Id:" + uId);
+        toastMessage("Barangay Id: " + bId);
 
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");
@@ -122,6 +128,8 @@ public class PatientRecords extends AppCompatActivity {
                 intent.putExtra(PATIENT_ID, patient.getId());
                 intent.putExtra(PATIENT_LAST_SCAN, patient.getLastscan());
                 intent.putExtra(USER_ID, uId);
+                intent.putExtra("BARANGAY_ID", bId);
+                intent.putExtra("BARANGAY_NAME", bName);
 
                 startActivity(intent);
                 finish();
@@ -277,7 +285,7 @@ public class PatientRecords extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
         String status = "1";
         String age = calculateAge(bday);
-        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan, status, age);
+        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan, status, age, bId);
 
         db.setValue(patient);
         Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();
@@ -290,6 +298,7 @@ public class PatientRecords extends AppCompatActivity {
         Intent addPatientRec = new Intent(this, AddPatientRecord.class);
         //addPatientRec.putExtra("USERNAME", userName);
         addPatientRec.putExtra("USER_ID", uId);
+        addPatientRec.putExtra("BARANGAY_ID", bId);
         startActivity(addPatientRec);
         CustomIntent.customType(PatientRecords.this, "bottom-to-up");
     }
@@ -323,7 +332,7 @@ public class PatientRecords extends AppCompatActivity {
 
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
-                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase())){
+                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && patient.getStatus().equals("1") && bId.equals(pSnapshot.child("bId").getValue().toString())){
                             pList.add(patient);
                         }
 //                    patient_names.add(patient.getFullname());
@@ -357,7 +366,7 @@ public class PatientRecords extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                     Patient patient = pSnapshot.getValue(Patient.class);
-                    if(patient.getStatus().equals("1")){
+                    if(patient.getStatus().equals("1") && bId.equals(pSnapshot.child("bId").getValue().toString())){
                         pList.add(patient);
                     }
 

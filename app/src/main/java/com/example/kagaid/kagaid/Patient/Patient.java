@@ -9,8 +9,20 @@ public class Patient {
     String address;
     String lastscan;
     String status;
+    String bId;
 
 
+    public Patient(String pid, String fullname, String birthday, String age, String gender, String address, String lastscan, String status, String bId) {
+        this.pid = pid;
+        this.fullname = fullname;
+        this.birthday = birthday;
+        this.age = age;
+        this.gender = gender;
+        this.address = address;
+        this.lastscan = lastscan;
+        this.status = status;
+        this.bId = bId;
+    }
 
     public Patient(){
 

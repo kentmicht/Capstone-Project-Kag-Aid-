@@ -99,9 +99,13 @@ public class ViewPatientInfo extends AppCompatActivity {
     TextView textViewPatientBday;
     TextView textviewPatientGender;
     TextView textViewPatientAddress;
+    TextView barangay;
     private Button btnCamera;
+
     String uId;
     String pId;
+    String bId;
+    String bName;
 
     //Image Bitmap
     Bitmap imageBitmap;
@@ -148,6 +152,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         textViewPatientBday = (TextView) findViewById(R.id.textViewPatientBday);
         textviewPatientGender = (TextView) findViewById(R.id.textViewPatientGender);
         textViewPatientAddress = (TextView) findViewById(R.id.textViewPatientAddress);
+        barangay = (TextView) findViewById(R.id.barangayName);
 
         Intent intent = getIntent();
 
@@ -158,6 +163,8 @@ public class ViewPatientInfo extends AppCompatActivity {
         pId = intent.getStringExtra(PatientRecords.PATIENT_ID);
         uId = intent.getStringExtra(PatientRecords.USER_ID);
         lastscan = intent.getStringExtra(PatientRecords.PATIENT_LAST_SCAN);
+        bId = intent.getStringExtra("BARANGAY_ID");
+        bName = intent.getStringExtra("BARANGAY_NAME");
 
         toastMessage(lastscan);
 
@@ -165,8 +172,11 @@ public class ViewPatientInfo extends AppCompatActivity {
         textViewPatientBday.setText(pbday);
         textviewPatientGender.setText(pgender);
         textViewPatientAddress.setText(paddress);
+        barangay.setText(bName);
 
         toastMessage("User Id:" + uId + ", Patient Id: " + pId );
+        toastMessage("Barangay Id: " + bId);
+        toastMessage("Barangay Name: " + bName);
 
         _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
 
@@ -193,6 +203,8 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void openPatientRecords(){
         Intent intent = new Intent(this, PatientRecords.class);
         intent.putExtra("USER_ID", uId);
+        intent.putExtra("BARANGAY_ID", bId);
+        intent.putExtra("BARANGAY_NAME", bName);
         finish();
         startActivity(intent);
         CustomIntent.customType(ViewPatientInfo.this, "right-to-left");
@@ -350,11 +362,11 @@ public class ViewPatientInfo extends AppCompatActivity {
                 }
                 toastMessage(employeeName);
                 String logId = databaseLogs.push().getKey();
-                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[0], scannedResult[1]);
+                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[1], scannedResult[0], bId);
                 String status = "1";
                 String age = calculateAge(pbday);
                 currentDateTimeStored = currentDateTime();
-                Patient patient = new Patient(pId, pfullname, pbday, pgender, paddress, currentDateTimeStored, status, age);
+                Patient patient = new Patient(pId, pfullname, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
 
                 databasePatient.child(pId).setValue(patient);
                 databaseLogs.child(logId).setValue(logSingle);

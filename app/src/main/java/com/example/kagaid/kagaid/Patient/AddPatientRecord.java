@@ -42,6 +42,7 @@ public class AddPatientRecord extends AppCompatActivity {
     Spinner gender;
     Button patientAdd;
     String uId;
+    String bId;
 
     DatabaseReference databasePatient;
     private android.app.DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -63,9 +64,11 @@ public class AddPatientRecord extends AppCompatActivity {
         }
 
         uId = (String) getIntent().getStringExtra("USER_ID");
+        bId = (String) getIntent().getStringExtra("BARANGAY_ID");
         databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
-        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
+        toastMessage("User Id:" + uId);
+        toastMessage("Barangay Id: " + bId);
 
         fullname = (EditText) findViewById(R.id.fullname);
         birthdate = (TextView) findViewById(R.id.birthday);
@@ -137,7 +140,7 @@ public class AddPatientRecord extends AppCompatActivity {
                         String pid = databasePatient.push().getKey();
                         String age = calculateAge(bdayP);
                         //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-                        Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned", status, age);
+                        Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned", status, age, bId);
 
                         databasePatient.child(pid).setValue(patient);
 

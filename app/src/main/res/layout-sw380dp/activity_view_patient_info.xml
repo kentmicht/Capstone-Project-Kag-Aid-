@@ -52,10 +52,10 @@
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="313dp"
-        android:layout_height="281dp"
+        android:layout_height="314dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="206dp"
+        android:layout_marginBottom="173dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@color/backgroundAddPatient"
@@ -274,5 +274,25 @@
         android:textColor="@color/gray"
         android:textSize="12sp"
         android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ad"
+        android:layout_below="@+id/textViewPatientAddress"
+        android:text="Barangay"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/barangayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ad"
+        android:layout_below="@+id/textView46"
+        android:text="Barangay Umapad"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp" />
 
 </RelativeLayout>
