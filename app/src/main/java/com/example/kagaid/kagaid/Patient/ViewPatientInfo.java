@@ -32,8 +32,8 @@ import com.example.kagaid.kagaid.Logs.Log;
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.Patient.ScanningModule.MyHttpURLConnection;
 import com.example.kagaid.kagaid.Patient.ScanningModule.RequestPackage;
-import com.example.kagaid.kagaid.Diagnosis.PostDiagnosis;
 import com.example.kagaid.kagaid.R;
+import com.example.kagaid.kagaid.SkinIllness.SkinIllnessPage;
 import com.example.kagaid.kagaid.SkinIllness.TreatmentsPage;
 import com.example.kagaid.kagaid.User;
 import com.google.android.gms.tasks.Task;
@@ -212,6 +212,8 @@ public class ViewPatientInfo extends AppCompatActivity {
 
 
     public void captureImage() {
+//        Intent maps = new Intent(this, MapsActivity.class);
+//        startActivity(maps);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//
 
         //camera setup
@@ -345,6 +347,11 @@ public class ViewPatientInfo extends AppCompatActivity {
         final ImageView okButton = (ImageView) dialogView.findViewById(R.id.ok_button);
         final ImageView mapsButton = (ImageView) dialogView.findViewById(R.id.find_nearby_doctors2);
         final ImageView treatmentButton = (ImageView) dialogView.findViewById(R.id.common_treatments2);
+        final TextView accuracyNote = (TextView) dialogView.findViewById(R.id.note);
+        final TextView scan = (TextView) dialogView.findViewById(R.id.scan_again);
+
+        accuracyNote.setVisibility(View.INVISIBLE);
+        scan.setVisibility(View.INVISIBLE);
 
         //log all details percentage and skin illness identified most especially
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
@@ -372,9 +379,20 @@ public class ViewPatientInfo extends AppCompatActivity {
                 databaseLogs.child(logId).setValue(logSingle);
                 toastMessage("Logged");
 
+
+
                 skinIllnessTextName.setText(skinIllness);
                 skinIllnessTextPercentage.setText(percentage);
                 lastScannedTextDatetime.setText(currentDateTimeStored);
+
+                if(Double.parseDouble(scannedResult[0].split("%")[0]) < 80.0){
+                    accuracyNote.setVisibility(View.VISIBLE);
+                    scan.setVisibility(View.VISIBLE);
+                }else{
+                    scan.setTextSize(1, 1);
+                    accuracyNote.setVisibility(View.VISIBLE);
+                    accuracyNote.setText("Accuracy is good and may refer to the over-the-counter treatments");
+                }
 
             }
             @Override
@@ -437,6 +455,17 @@ public class ViewPatientInfo extends AppCompatActivity {
         treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
         treatments.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
         startActivity(treatments);
+    }
+
+    public void openSkinIllness(View view){
+        final String SKIN_ILLNESS_NAME = "SKIN_ILLNESS_NAME";
+        final String SKIN_ILLNESS_ID  = "SKIN_ILLNESS_ID";
+        toastMessage(skinIllness);
+
+        Intent skinIllness = new Intent(this, SkinIllnessPage.class);
+        skinIllness.putExtra(SKIN_ILLNESS_NAME, skinIllness);
+        skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        startActivity(skinIllness);
     }
 
     public void openMaps(View view){

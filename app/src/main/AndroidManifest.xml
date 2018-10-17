@@ -85,7 +85,7 @@
                 tools:replace="android:resource" />
         </provider>
 
-        <activity android:name=".Diagnosis.PostDiagnosis"></activity>
+        <activity android:name=".Diagnosis.PostDiagnosis" />
     </application>
 
 </manifest>

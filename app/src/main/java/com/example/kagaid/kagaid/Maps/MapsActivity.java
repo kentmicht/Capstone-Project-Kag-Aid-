@@ -10,6 +10,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,9 +26,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Doctor.Doctor;
+import com.example.kagaid.kagaid.Doctor.DoctorLists;
 import com.example.kagaid.kagaid.Homepage;
+import com.example.kagaid.kagaid.Logs.LogLists;
+import com.example.kagaid.kagaid.Logs.Logs;
 import com.example.kagaid.kagaid.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -41,6 +51,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -50,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 1000;
+    private int PROXIMITY_RADIUS = 10000;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -135,6 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(DataTransfer);
                 Toast.makeText(MapsActivity.this,"Nearby Hospitals/Clinics", Toast.LENGTH_LONG).show();
+
             }
         }
 
@@ -333,6 +353,136 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
+        }
+    }
+
+    DatabaseReference databaseDoctors;
+    List<Doctor> doctorList;
+    TextView doctorErr;
+
+    public void showDoctorDialog(final String markerTitle){
+        databaseDoctors = FirebaseDatabase.getInstance().getReference("doctor");
+        doctorList = new ArrayList<>();
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_nearby_doctors_dialog, null);
+        final ListView listViewDoctor = (ListView) dialogView.findViewById(R.id.doctorListView);
+        doctorErr = (TextView) dialogView.findViewById(R.id.errorDoctor);
+        doctorErr.setVisibility(View.INVISIBLE);
+
+        TextView markerName = (TextView) dialogView.findViewById(R.id.markerName);
+        markerName.setText(markerTitle.split(":")[0]);
+
+        databaseDoctors.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                doctorList.clear();
+                for(DataSnapshot doctorsSnapshot: dataSnapshot.getChildren()){
+                    Doctor doctor = doctorsSnapshot.getValue(Doctor.class);
+                    if(markerTitle.equals(doctorsSnapshot.child("location").getValue())){
+                        doctorList.add(doctor);
+                    }
+
+//                    if(currentDate[0].equals(logDate[0]) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
+//                        logList.add(log);
+//                    }
+                }
+
+                if(doctorList.isEmpty()){
+                    doctorErr.setVisibility(View.VISIBLE);
+                }else{
+                    DoctorLists adapter = new DoctorLists(MapsActivity.this, doctorList);
+                    listViewDoctor.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+    }
+
+    ///////////////////////////////////////////showing markers ///////////////////////////
+    public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
+
+        Context mContext;
+        String googlePlacesData;
+        GoogleMap mMap;
+        String url;
+
+        @Override
+        protected String doInBackground(Object... params) {
+            try {
+                Log.d("GetNearbyPlacesData", "doInBackground entered");
+                mMap = (GoogleMap) params[0];
+                url = (String) params[1];
+                DownloadUrl downloadUrl = new DownloadUrl();
+                googlePlacesData = downloadUrl.readUrl(url);
+                Log.d("GooglePlacesReadTask", "doInBackground Exit");
+            } catch (Exception e) {
+                Log.d("GooglePlacesReadTask", e.toString());
+            }
+            return googlePlacesData;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("GooglePlacesReadTask", "onPostExecute Entered");
+            List<HashMap<String, String>> nearbyPlacesList = null;
+            DataParser dataParser = new DataParser();
+            nearbyPlacesList =  dataParser.parse(result);
+            ShowNearbyPlaces(nearbyPlacesList);
+            Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+        }
+
+        private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+            for (int i = 0; i < nearbyPlacesList.size(); i++) {
+                Log.d("onPostExecute","Entered into showing locations");
+                MarkerOptions markerOptions = new MarkerOptions();
+                HashMap<String, String> googlePlace = nearbyPlacesList.get(i);
+                double lat = Double.parseDouble(googlePlace.get("lat"));
+                double lng = Double.parseDouble(googlePlace.get("lng"));
+                final String placeName = googlePlace.get("place_name");
+                String vicinity = googlePlace.get("vicinity");
+                LatLng latLng = new LatLng(lat, lng);
+                markerOptions.position(latLng);
+                markerOptions.title(placeName + " : " + vicinity);
+
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+
+                        showDoctorDialog(marker.getTitle());
+//
+                        return false;
+                    }
+                });
+
+                mMap.addMarker(markerOptions);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                //move map camera
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+            }
+        }
+
+//    public GetNearbyPlacesData(NearbyDoctorInterface nearbyDoctors) {
+//        this.nearbyDoctors = nearbyDoctors;
+//    }
+
+        public GetNearbyPlacesData() {
+        }
+
+        public GetNearbyPlacesData(Context mContext) {
+            this.mContext = mContext;
         }
     }
 }

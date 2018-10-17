@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -24,17 +25,19 @@ public class SkinIllnessPage extends AppCompatActivity {
     TextView skinIllness_ID;
     TextView skinIllness_name;
     TextView skinIllness_desc;
-    TextView skinIllness_los;
+    TextView skinIllness_symptom;
     ImageView image;
 
     String illnessName;
     String illnessDesc;
     String illnessImage;
     String illnessID;
-    String illnessLOS;
+    String illnessSymptom;
 
-    public static final String SKIN_ILLNESS_NAME = "skin_illness_name";
-    public static final String SKIN_ILLNESS_ID  = "skin_illness_id";
+    public static final String SKIN_ILLNESS_NAME = "SKIN_ILLNESS_NAME";
+    public static final String SKIN_ILLNESS_ID  = "SKIN_ILLNESS_ID";
+
+    DatabaseReference databaseSkinIllness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,33 +47,49 @@ public class SkinIllnessPage extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.image);
         skinIllness_name = (TextView) findViewById(R.id.skinIllness_name);
         skinIllness_desc = (TextView) findViewById(R.id.skinIllness_desc);
-        skinIllness_ID = (TextView) findViewById(R.id.skinIllness_id);
-        skinIllness_los = (TextView) findViewById(R.id.level_of_severity);
+        skinIllness_symptom = (TextView) findViewById(R.id.symptoms);
+//        skinIllness_ID = (TextView) findViewById(R.id.skinIllness_id);
 
         Intent intent = getIntent();
 
-        illnessID = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_ID);
         illnessName = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_NAME);
-        illnessDesc = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_DESC);
-        illnessLOS = intent.getStringExtra(SkinIllnessActivity.LEVEL_OF_SEVERITY);
-        illnessImage = intent.getStringExtra(SkinIllnessActivity.IMAGE);
+        illnessID = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_ID);
+
+        databaseSkinIllness = FirebaseDatabase.getInstance().getReference("skin_illnesses");
+
+        databaseSkinIllness.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (illnessName.equals(ds.child("skin_illness_name").getValue().toString()) && illnessID.equals(ds.child("siId").getValue())) {
+                        illnessDesc = ds.child("skin_illness_desc").getValue().toString();
+                        illnessImage = ds.child("image").getValue().toString();
+                        illnessSymptom = ds.child("skin_illness_symptom").getValue().toString();
+
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         skinIllness_ID.setText(illnessID);
         skinIllness_name.setText(illnessName);
         skinIllness_desc.setText(illnessDesc);
-        skinIllness_los.setText(illnessLOS);
+        skinIllness_symptom.setText("Symptoms: " + illnessSymptom);
         Picasso.get().load(illnessImage).into(image);
 
     }
 
-    public void openTreatments(View view){
-        Intent treatments = new Intent(this, TreatmentsPage.class);
-        treatments.putExtra(SKIN_ILLNESS_NAME, illnessName);
-        treatments.putExtra(SKIN_ILLNESS_ID, illnessID);
-        startActivity(treatments);
+    public void back(View view){
+        finish();
     }
-    public void openMaps(View view){
-        Intent maps = new Intent(this, MapsActivity.class);
-        startActivity(maps);
+
+    @Override
+    public void onBackPressed() {
+        finish();
+
     }
 }

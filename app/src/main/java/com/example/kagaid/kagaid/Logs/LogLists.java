@@ -54,59 +54,6 @@ public class LogLists extends ArrayAdapter<Log>{
 
         log = logList.get(position);
 
-        //Firebase Database
-//        refUser = FirebaseDatabase.getInstance().getReference().child("users");
-//        refPatient = FirebaseDatabase.getInstance().getReference().child("person_information");
-//
-//        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String userFname = null;
-//                String userLname = null;
-//
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    u = ds.getValue(User.class);
-//                    if (log.getuId().equals(u.getUId())) {
-//                        userFname = u.getFirstname();
-//                        userLname = u.getLastname();
-//
-//                    }
-//                }
-//
-//                textViewEmployee.setText("Employee: " + userFname + " " + userLname);
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        refPatient.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String patientFLName = null;
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    p = ds.getValue(Patient.class);
-//                    if (log.getpId().equals(p.getId())) {
-//                        patientFLName = p.getFullname();
-//
-//                    }
-//                }
-//
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
         textViewPatient.setText("Patient: " + log.getPatientName());
         textViewEmployee.setText("Employee: " + log.getEmployeeName());
         textViewName.setText(log.getLogdatetime());
