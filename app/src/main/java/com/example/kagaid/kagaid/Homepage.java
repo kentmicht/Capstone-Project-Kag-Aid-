@@ -51,8 +51,8 @@ public class Homepage extends AppCompatActivity {
         bName.setText("Welcome to " + barangayName);
 
 //        Toast.makeText(this,"User Id:" + uId, Toast.LENGTH_SHORT).show();
-        toastMessage("User Id:" + uId);
-        toastMessage("Barangay Id:" + bId);
+//        toastMessage("User Id:" + uId);
+//        toastMessage("Barangay Id:" + bId);
 //        TextView name = (TextView)findViewById(R.id.header);
 //        name.setText("Welcome "+userName+"!");
     }

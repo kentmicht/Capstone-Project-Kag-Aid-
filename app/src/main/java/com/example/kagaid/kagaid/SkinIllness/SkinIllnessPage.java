@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Maps.MapsActivity;
 import com.example.kagaid.kagaid.R;
@@ -31,8 +32,9 @@ public class SkinIllnessPage extends AppCompatActivity {
     String illnessName;
     String illnessDesc;
     String illnessImage;
-    String illnessID;
     String illnessSymptom;
+
+    boolean existDetails = false;
 
     public static final String SKIN_ILLNESS_NAME = "SKIN_ILLNESS_NAME";
     public static final String SKIN_ILLNESS_ID  = "SKIN_ILLNESS_ID";
@@ -51,23 +53,40 @@ public class SkinIllnessPage extends AppCompatActivity {
 //        skinIllness_ID = (TextView) findViewById(R.id.skinIllness_id);
 
         Intent intent = getIntent();
+        illnessName = intent.getStringExtra("SKIN_ILLNESS_NAME");
 
-        illnessName = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_NAME);
-        illnessID = intent.getStringExtra(SkinIllnessActivity.SKIN_ILLNESS_ID);
+//        toastMessage(illnessName);
 
         databaseSkinIllness = FirebaseDatabase.getInstance().getReference("skin_illnesses");
-
+//
         databaseSkinIllness.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (illnessName.equals(ds.child("skin_illness_name").getValue().toString()) && illnessID.equals(ds.child("siId").getValue())) {
+                    if (illnessName.equals(ds.child("skin_illness_name").getValue().toString())) {
+                        toastMessage("Perfect found it!");
+
+                        illnessName = ds.child("skin_illness_name").getValue().toString();
                         illnessDesc = ds.child("skin_illness_desc").getValue().toString();
                         illnessImage = ds.child("image").getValue().toString();
-                        illnessSymptom = ds.child("skin_illness_symptom").getValue().toString();
-
+                        illnessSymptom = ds.child("skin_illness_symptoms").getValue().toString();
+//                        toastMessage(illnessName);
+//                        toastMessage(illnessDesc);
+//                        toastMessage(illnessSymptom);
+//                        toastMessage(illnessImage);
+                        existDetails = true;
                     }
                 }
+
+                if(existDetails){
+                    skinIllness_name.setText(illnessName);
+                    skinIllness_desc.setText(illnessDesc);
+                    skinIllness_symptom.setText(illnessSymptom);
+                    Picasso.get().load(illnessImage).into(image);
+                }else{
+                    toastMessage("No details for " + illnessName);
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -75,11 +94,15 @@ public class SkinIllnessPage extends AppCompatActivity {
             }
         });
 
-        skinIllness_ID.setText(illnessID);
-        skinIllness_name.setText(illnessName);
-        skinIllness_desc.setText(illnessDesc);
-        skinIllness_symptom.setText("Symptoms: " + illnessSymptom);
-        Picasso.get().load(illnessImage).into(image);
+//        if(existDetails == true){
+//            skinIllness_name.setText(illnessName);
+//            skinIllness_desc.setText(illnessDesc);
+//            skinIllness_symptom.setText("Symptoms: " + illnessSymptom);
+//            Picasso.get().load(illnessImage).into(image);
+//        }else{
+//            toastMessage("No details for " + illnessName);
+//        }
+
 
     }
 
@@ -91,5 +114,9 @@ public class SkinIllnessPage extends AppCompatActivity {
     public void onBackPressed() {
         finish();
 
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -107,8 +107,8 @@ public class PatientRecords extends AppCompatActivity {
 //        test = (TextView) findViewById(R.id.test);
         patient_names = new ArrayList<String>();
 
-        toastMessage("User Id:" + uId);
-        toastMessage("Barangay Id: " + bId);
+//        toastMessage("User Id:" + uId);
+//        toastMessage("Barangay Id: " + bId);
 
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");
@@ -224,7 +224,7 @@ public class PatientRecords extends AppCompatActivity {
 //                int month = cal.get(Calendar.MONTH);
 //                int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                toastMessage("Year:" + dateParts[0] + " Month:" + dateParts[1]);
+//                toastMessage("Year:" + dateParts[0] + " Month:" + dateParts[1]);
 
                 DatePickerDialog dialog = new DatePickerDialog(PatientRecords.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,

@@ -97,7 +97,7 @@ public class LogIn extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             if(TextUtils.isEmpty(username.getText().toString()) == true || TextUtils.isEmpty(password.getText().toString()) == true) {
-                Toast.makeText(LogIn.this, "You did not enter a username/password", Toast.LENGTH_LONG).show();
+                toastMessage("You did not enter a username/password");
             }else{
                 databaseLogin.addValueEventListener(new ValueEventListener() {
                     boolean userName = false;
@@ -125,7 +125,7 @@ public class LogIn extends AppCompatActivity {
                                 }
                             }
                         }
-                        toastMessage(barangayId);
+//                        toastMessage(barangayId);
 
                         if(userName == false && pass == false){
                             toastMessage("Unregistered Account or Incorrect username/password");

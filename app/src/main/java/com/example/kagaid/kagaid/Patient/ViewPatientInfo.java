@@ -166,7 +166,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         bId = intent.getStringExtra("BARANGAY_ID");
         bName = intent.getStringExtra("BARANGAY_NAME");
 
-        toastMessage(lastscan);
+//        toastMessage(lastscan);
 
         textViewPatientName.setText(pfullname);
         textViewPatientBday.setText(pbday);
@@ -174,9 +174,9 @@ public class ViewPatientInfo extends AppCompatActivity {
         textViewPatientAddress.setText(paddress);
         barangay.setText(bName);
 
-        toastMessage("User Id:" + uId + ", Patient Id: " + pId );
-        toastMessage("Barangay Id: " + bId);
-        toastMessage("Barangay Name: " + bName);
+//        toastMessage("User Id:" + uId + ", Patient Id: " + pId );
+//        toastMessage("Barangay Id: " + bId);
+//        toastMessage("Barangay Name: " + bName);
 
         _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
 
@@ -367,7 +367,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 //
                     }
                 }
-                toastMessage(employeeName);
+//                toastMessage(employeeName);
                 String logId = databaseLogs.push().getKey();
                 Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[1], scannedResult[0], bId);
                 String status = "1";
@@ -441,7 +441,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+                openSkinIllness(v);
             }
         });
     }
@@ -449,7 +449,7 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void openTreatments(View view){
         final String SKIN_ILLNESS_NAME = "skin_illness_name";
         final String SKIN_ILLNESS_ID  = "skin_illness_id";
-        toastMessage(skinIllnessId);
+//        toastMessage(skinIllnessId);
 
         Intent treatments = new Intent(this, TreatmentsPage.class);
         treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
@@ -460,11 +460,11 @@ public class ViewPatientInfo extends AppCompatActivity {
     public void openSkinIllness(View view){
         final String SKIN_ILLNESS_NAME = "SKIN_ILLNESS_NAME";
         final String SKIN_ILLNESS_ID  = "SKIN_ILLNESS_ID";
-        toastMessage(skinIllness);
+//        toastMessage(skinIllness);
 
         Intent skinIllness = new Intent(this, SkinIllnessPage.class);
-        skinIllness.putExtra(SKIN_ILLNESS_NAME, skinIllness);
-        skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        skinIllness.putExtra("SKIN_ILLNESS_NAME", scannedResult[1]);
+//        skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
         startActivity(skinIllness);
     }
 

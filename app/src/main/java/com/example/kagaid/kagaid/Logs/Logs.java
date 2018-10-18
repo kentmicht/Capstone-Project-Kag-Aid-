@@ -82,7 +82,7 @@ public class Logs extends AppCompatActivity {
                 Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
                 String logCategory = logCateg.getSelectedItem().toString();
 
-                toastMessage(logCategory);
+//                toastMessage(logCategory);
                 searchLog(logCategory);
             }
         });
