@@ -227,13 +227,24 @@ public class Logs extends AppCompatActivity {
                 for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                     Log log = logsSnapshot.getValue(Log.class);
                     String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
-                    if(currentDate[0].equals(logDate[0]) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
-                        logList.add(log);
-                    }
+//                    toastMessage(bId);
+//                    if(!log.getbId().equals(null)) {
+                        if (currentDate[0].equals(logDate[0])) {
+//                        if(currentDate[0].equals(logDate[0]) && bId.equals(log.getbId())){
+                            if(bId.equals(log.getbId())){
+//                                toastMessage(log.getLogdatetime());
+//                                toastMessage("Log Class:" + log.getbId());
+//                                toastMessage("Passed: " + bId);
+                                logList.add(log);
+                            }
+
+//
+                        }
+//                    }
 
                 }
 
-
+                toastMessage(bId);
 
                 if(logList.isEmpty()){
                     logErr.setVisibility(View.VISIBLE);

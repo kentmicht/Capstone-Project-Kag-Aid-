@@ -106,4 +106,12 @@ public class Log {
 
     public static void e(String rest_response, String s) {
     }
+
+    public String getbId() {
+        return bId;
+    }
+
+    public void setbId(String bId) {
+        this.bId = bId;
+    }
 }

@@ -139,4 +139,12 @@ public class Patient {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getbId() {
+        return bId;
+    }
+
+    public void setbId(String bId) {
+        this.bId = bId;
+    }
 }

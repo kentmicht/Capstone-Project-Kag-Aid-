@@ -366,13 +366,22 @@ public class PatientRecords extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                     Patient patient = pSnapshot.getValue(Patient.class);
-                    if(patient.getStatus().equals("1") && bId.equals(pSnapshot.child("bId").getValue().toString())){
-                        pList.add(patient);
+//                    toastMessage("Firebase:" + pSnapshot.child("bId").getValue().toString());
+//                    toastMessage("Patient Class:" + patient.getbId());
+//                    toastMessage("Passed: " + bId);
+                    if(!patient.getFullname().equals(null)){
+//                        if(patient.getStatus().equals("1")){
+                        if(patient.getStatus().equals("1") && bId.equals(patient.getbId())){
+//                            toastMessage(patient.getFullname() + "is in this Barangay");
+                            pList.add(patient);
+                        }
                     }
+
 
 //                    patient_names.add(patient.getFullname());
                 }
                 //sort the list
+                toastMessage(bId);
                 sortPList();
                 PatientLists adapter = new PatientLists(PatientRecords.this, pList);
                 patient_record.setAdapter(adapter);
