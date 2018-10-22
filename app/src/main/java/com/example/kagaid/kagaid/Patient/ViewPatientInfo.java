@@ -452,8 +452,8 @@ public class ViewPatientInfo extends AppCompatActivity {
 //        toastMessage(skinIllnessId);
 
         Intent treatments = new Intent(this, TreatmentsPage.class);
-        treatments.putExtra(SKIN_ILLNESS_NAME, skinIllness);
-        treatments.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        treatments.putExtra("skin_illness_name", scannedResult[1]);
+        treatments.putExtra("skin_illness_id", skinIllnessId);
         startActivity(treatments);
     }
 
@@ -464,7 +464,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         Intent skinIllness = new Intent(this, SkinIllnessPage.class);
         skinIllness.putExtra("SKIN_ILLNESS_NAME", scannedResult[1]);
-//        skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
+        skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
         startActivity(skinIllness);
     }
 

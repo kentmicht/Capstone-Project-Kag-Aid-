@@ -57,6 +57,6 @@
         android:layout_height="124dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/patientss_1" />
+        android:src="@drawable/doctorss" />
 
 </RelativeLayout>

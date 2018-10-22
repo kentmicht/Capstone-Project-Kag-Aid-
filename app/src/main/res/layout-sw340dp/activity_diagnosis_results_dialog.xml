@@ -39,7 +39,7 @@
             android:layout_below="@+id/textView14"
             android:layout_toEndOf="@+id/common_treatments2"
             android:paddingLeft="5sp"
-            app:srcCompat="@drawable/ok_logo" />
+            app:srcCompat="@drawable/skin_illness_result" />
     </LinearLayout>
 
     <ImageView

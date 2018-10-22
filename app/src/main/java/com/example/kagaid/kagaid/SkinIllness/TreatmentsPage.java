@@ -54,8 +54,8 @@ public class TreatmentsPage extends AppCompatActivity {
         treatmentErr.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
-        illnessName = intent.getStringExtra(SkinIllnessPage.SKIN_ILLNESS_NAME);
-        illnessID = intent.getStringExtra(SkinIllnessPage.SKIN_ILLNESS_ID);
+        illnessName = intent.getStringExtra("skin_illness_name");
+        illnessID = intent.getStringExtra("skin_illness_id");
 
         treatmentsListView = (ListView) findViewById(R.id.ListViewTreatments);
         treatmentsList = new ArrayList<>();
@@ -64,6 +64,8 @@ public class TreatmentsPage extends AppCompatActivity {
         medicine_name = (TextView) findViewById(R.id.medicine_name);
         brand = (TextView) findViewById(R.id.brand);
         dosage = (TextView) findViewById(R.id.dosage);
+
+        skin_illness_name.setText(illnessName);
     }
 
     @Override
@@ -77,18 +79,22 @@ public class TreatmentsPage extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 treatmentsList.clear();
+                boolean ret = false;
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    if(illnessID.equals(ds.child("skin_illness_id").getValue().toString())){
-                        treatment = ds.getValue(Treatments.class);
+                    Treatments treat = ds.getValue(Treatments.class);
+//                    toastMessage(illnessID);
+                    if(illnessID.equals(treat.getSkin_illness_id())){
+//                        toastMessage("here na si me!");
+                        treatment = treat;
                         treatmentsList.add(treatment);
+                        ret = true;
                     }
 
                 }
 
 
-                if(treatmentsList.isEmpty()) {
-                    treatmentErr.setVisibility(View.VISIBLE);
-                }else{
+                if(ret) {
+//                    toastMessage("There's treatment");
                     commonTreatment = treatment;
                     medicine_name.setText(commonTreatment.getMedicine_name());
                     brand.setText("Brand: " + commonTreatment.getBrand());
@@ -96,6 +102,10 @@ public class TreatmentsPage extends AppCompatActivity {
 
                     TreatmentsList adapter = new TreatmentsList(TreatmentsPage.this, treatmentsList);
                     treatmentsListView.setAdapter(adapter);
+//
+                }else{
+//                    toastMessage("No treatment");
+                    treatmentErr.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -105,22 +115,22 @@ public class TreatmentsPage extends AppCompatActivity {
             }
         });
 
-        refSkinIllness.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    if(illnessID.equals(ds.child("siId").getValue().toString())){
-                        illnessName = ds.child("skin_illness_name").getValue().toString();
-                    }
-
-                }
-                skin_illness_name.setText(illnessName);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        refSkinIllness.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds: dataSnapshot.getChildren()){
+//                    if(illnessID.equals(ds.child("siId").getValue().toString())){
+//                        illnessName = ds.child("skin_illness_name").getValue().toString();
+//                    }
+//
+//                }
+//
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
     public void back(View view){
         finish();

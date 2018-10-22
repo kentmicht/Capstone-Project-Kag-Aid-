@@ -64,7 +64,7 @@ public class SkinIllnessPage extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (illnessName.equals(ds.child("skin_illness_name").getValue().toString())) {
-                        toastMessage("Perfect found it!");
+//                        toastMessage("Perfect found it!");
 
                         illnessName = ds.child("skin_illness_name").getValue().toString();
                         illnessDesc = ds.child("skin_illness_desc").getValue().toString();

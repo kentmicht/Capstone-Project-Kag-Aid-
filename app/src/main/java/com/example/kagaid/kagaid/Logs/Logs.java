@@ -244,7 +244,7 @@ public class Logs extends AppCompatActivity {
 
                 }
 
-                toastMessage(bId);
+//                toastMessage(bId);
 
                 if(logList.isEmpty()){
                     logErr.setVisibility(View.VISIBLE);

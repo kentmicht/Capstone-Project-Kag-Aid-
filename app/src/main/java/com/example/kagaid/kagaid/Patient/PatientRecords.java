@@ -381,7 +381,7 @@ public class PatientRecords extends AppCompatActivity {
 //                    patient_names.add(patient.getFullname());
                 }
                 //sort the list
-                toastMessage(bId);
+//                toastMessage(bId);
                 sortPList();
                 PatientLists adapter = new PatientLists(PatientRecords.this, pList);
                 patient_record.setAdapter(adapter);
