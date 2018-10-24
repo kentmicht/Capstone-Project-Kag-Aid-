@@ -53,15 +53,15 @@
         tools:layout_editor_absoluteY="6dp" />
 
     <LinearLayout
+        android:id="@+id/accuracy_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:id="@+id/accuracy_layout"
         android:layout_below="@+id/skin_illness_name">
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="164dp"
+            android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/skin_illness_name"
@@ -72,12 +72,15 @@
             android:textStyle="bold"
             tools:layout_editor_absoluteX="210dp"
             tools:layout_editor_absoluteY="138dp" />
+
         <TextView
             android:id="@+id/skin_illness_accuracy"
-            android:layout_width="171dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/datetime_scanned"
             android:layout_alignTop="@+id/textView7"
+            android:baselineAligned="false"
+            android:paddingLeft="0sp"
             android:text="80%"
             android:textAlignment="textStart"
             android:textSize="14sp"
@@ -107,7 +110,7 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="165dp"
+            android:layout_width="124dp"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/textView7"
             android:layout_below="@+id/textView7"
@@ -121,10 +124,11 @@
 
         <TextView
             android:id="@+id/datetime_scanned"
-            android:layout_width="172dp"
+            android:layout_width="194dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:paddingLeft="10sp"
             android:text="Aug 29, 2018	2:30:39 PM"
             android:textAlignment="textStart"
             android:textStyle="italic" />
@@ -140,11 +144,11 @@
 
         <TextView
             android:id="@+id/note"
-            android:layout_width="336dp"
-            android:paddingLeft="10sp"
+            android:layout_width="308dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:paddingLeft="5sp"
             android:text="Accuracy isn't too strong, the system recommends to refer to a doctor immediately or "
             android:textAlignment="center"
             android:textStyle="italic"
