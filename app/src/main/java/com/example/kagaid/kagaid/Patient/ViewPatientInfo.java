@@ -86,13 +86,15 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     private static final int CAMERA_PIC_REQUEST = 1111;
     private ImageView selectedImageView;
-//    private static final String UPLOAD_URL = "https://kag-aid.000webhostapp.com/uploads/uploadimage.php";
-//    private static final String RETRIEVE_URL = "https://kag-aid.000webhostapp.com/uploads/resultFile.txt";
+
     private static String _bytes64String, _imageFileName;
     private static String[] scannedResult = new String[2];
 
     //Custom Vision Prediction API
     private static final String predictionKey = "1289ea1f967b43c0ba970bc485e1c869";
+    String customVisionURL =
+            "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image?iterationId=1205ff28-a348-4c44-b9c1-a9eb2e664938";
+
 
 
     TextView textViewPatientName;
@@ -248,8 +250,6 @@ public class ViewPatientInfo extends AppCompatActivity {
         byteArray = bao.toByteArray();
         _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-        String customVisionURL =
-                "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image?iterationId=fff7811b-3659-4221-98f5-ec51985e112b";
         new HttpAsyncTask().execute(customVisionURL);
 
     }
