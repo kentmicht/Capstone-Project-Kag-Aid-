@@ -170,29 +170,39 @@ public class Logs extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     logList.clear();
+                    String currentDate[] = currentDateTime().split("(?<=\\d{3})\\s");
                     for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                         Log log = logsSnapshot.getValue(Log.class);
+                        String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
                         switch(logCategory){
                             case "Date":
                                 if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
-                                    logList.add(log);
+                                    if (currentDate[0].equals(logDate[0])) {
+                                        logList.add(log);
+                                    }
                                 }
                                 break;
                             case "Time":
                                 if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
-                                    logList.add(log);
+                                    if (currentDate[0].equals(logDate[0])) {
+                                        logList.add(log);
+                                    }
                                 }
                                 break;
                             case "Patient Name":
                                 if(log.getPatientName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
-                                    logList.add(log);
+                                    if (currentDate[0].equals(logDate[0])) {
+                                        logList.add(log);
+                                    }
                                 }
                                 break;
                             case "Employee Name":
 //                                toastMessage(log.getEmployeeName());
                                 if(!log.getEmployeeName().isEmpty()){
                                     if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
-                                        logList.add(log);
+                                        if (currentDate[0].equals(logDate[0])) {
+                                            logList.add(log);
+                                        }
                                     }
 //                                    toastMessage(log.getEmployeeName());
                                 }
