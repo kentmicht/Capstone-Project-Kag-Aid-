@@ -66,8 +66,8 @@ public class AddPatientRecord extends AppCompatActivity {
         bId = (String) getIntent().getStringExtra("BARANGAY_ID");
         databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
-        toastMessage("User Id:" + uId);
-        toastMessage("Barangay Id: " + bId);
+//        toastMessage("User Id:" + uId);
+//        toastMessage("Barangay Id: " + bId);
 
         fullname = (EditText) findViewById(R.id.fullname);
         birthdate = (TextView) findViewById(R.id.birthday);
@@ -122,7 +122,6 @@ public class AddPatientRecord extends AppCompatActivity {
         final String bdayP = birthdate.getText().toString();
         final String addressP = address.getText().toString();
         final String genderP = gender.getSelectedItem().toString();
-        final String status = "1";
 
         if(!TextUtils.isEmpty(fullnameP) && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP)){
             //checking if there's unique
@@ -138,8 +137,9 @@ public class AddPatientRecord extends AppCompatActivity {
                     if(duplicatePatient == false){
                         String pid = databasePatient.push().getKey();
                         String age = calculateAge(bdayP);
+                        String status = "1";
                         //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-                        Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP, "Not yet scanned", status, age, bId);
+                        Patient patient = new Patient(pid, fullnameP, bdayP, age, genderP, addressP, "Not yet scanned", status, bId);
 
                         databasePatient.child(pid).setValue(patient);
 
@@ -153,6 +153,7 @@ public class AddPatientRecord extends AppCompatActivity {
                             public void run() {
                                 toastMessage("Patient Record Added");
                                 finish();
+                                CustomIntent.customType(AddPatientRecord.this, "fadein-to-fadeout");
                             }
                         }, 2000);
                     }else{
@@ -173,7 +174,7 @@ public class AddPatientRecord extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-
+        CustomIntent.customType(AddPatientRecord.this, "fadein-to-fadeout");
     }
 
     public String currentDate(){
@@ -195,6 +196,7 @@ public class AddPatientRecord extends AppCompatActivity {
 
     public void back(View view){
         finish();
+        CustomIntent.customType(AddPatientRecord.this, "fadein-to-fadeout");
     }
 
     private void toastMessage(String message){
@@ -207,6 +209,8 @@ public class AddPatientRecord extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
     }
+
+
 
 
 }

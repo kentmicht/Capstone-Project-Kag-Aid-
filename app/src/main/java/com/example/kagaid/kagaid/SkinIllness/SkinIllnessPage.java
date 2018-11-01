@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kagaid.kagaid.Maps.MapsActivity;
+import com.example.kagaid.kagaid.Patient.ViewPatientInfo;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
+
+import maes.tech.intentanim.CustomIntent;
 
 public class SkinIllnessPage extends AppCompatActivity {
 
@@ -108,12 +111,13 @@ public class SkinIllnessPage extends AppCompatActivity {
 
     public void back(View view){
         finish();
+        CustomIntent.customType(SkinIllnessPage.this, "fadein-to-fadeout");
     }
 
     @Override
     public void onBackPressed() {
         finish();
-
+        CustomIntent.customType(SkinIllnessPage.this, "fadein-to-fadeout");
     }
 
     private void toastMessage(String message){

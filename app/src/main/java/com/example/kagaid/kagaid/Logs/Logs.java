@@ -142,6 +142,7 @@ public class Logs extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        CustomIntent.customType(Logs.this, "fadein-to-fadeout");
     }
 
     public void openHomepage(){
@@ -269,6 +270,7 @@ public class Logs extends AppCompatActivity {
 
     public void back(View view){
         finish();
+        CustomIntent.customType(Logs.this, "fadein-to-fadeout");
     }
 
 

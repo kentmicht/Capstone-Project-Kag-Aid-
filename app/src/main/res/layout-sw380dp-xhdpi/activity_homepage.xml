@@ -76,18 +76,6 @@
         android:onClick="logOut"
         app:srcCompat="@drawable/logout" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="102dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="62dp"
-        android:background="@drawable/loginshape"
-        android:text="Logs"
-        android:onClick="openLogs"
-        android:textColor="@color/textHomepage" />
-
     <TextView
         android:id="@+id/textView17"
         android:layout_width="386dp"
@@ -120,5 +108,27 @@
         android:layout_centerHorizontal="true"
         android:text="@string/homepage_instruction"
         android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/imageView24"
+        android:layout_width="73dp"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="132dp"
+        android:onClick="openPatientRecord"
+        android:paddingLeft="5sp"
+        app:srcCompat="@drawable/patients_homepage" />
+
+    <ImageView
+        android:id="@+id/imageView25"
+        android:layout_width="74dp"
+        android:layout_height="76dp"
+        android:layout_alignTop="@+id/imageView24"
+        android:layout_toStartOf="@+id/imageView24"
+        android:onClick="openLogs"
+        android:paddingRight="5sp"
+        app:srcCompat="@drawable/logs_homepage" />
 
 </RelativeLayout>

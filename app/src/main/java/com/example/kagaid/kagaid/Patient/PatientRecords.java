@@ -133,6 +133,7 @@ public class PatientRecords extends AppCompatActivity {
 
                 startActivity(intent);
                 finish();
+                CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
             }
         });
 
@@ -143,7 +144,7 @@ public class PatientRecords extends AppCompatActivity {
 
                 Patient patient = pList.get(position);
 
-                showUpdateDialog(patient.getId(), patient.getFullname(), patient.getBirthday(), patient.getGender(), patient.getAddress(), patient.getLastscan());
+                showUpdateDialog(patient.getId(), patient.getFullname(), patient.getBirthday(), patient.getGender(), patient.getAddress(), patient.getLastscan(), patient.getbId());
 
                 return false;
             }
@@ -171,7 +172,7 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     //Show the update Dialog
-    private void showUpdateDialog(final String pid, final String fullname, final String bday, final String gender, final String address, final String lastscan)
+    private void showUpdateDialog(final String pid, final String fullname, final String bday, final String gender, final String address, final String lastscan, final String bid)
     {
 
 
@@ -201,8 +202,8 @@ public class PatientRecords extends AppCompatActivity {
 
 
         final AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.setCancelable(false);
+//        alertDialog.setCanceledOnTouchOutside(false);
+//        alertDialog.setCancelable(false);
         alertDialog.show();
 
         //Setting the values from the db to the fields
@@ -243,6 +244,8 @@ public class PatientRecords extends AppCompatActivity {
                 String pbday = editTextBday.getText().toString();
                 String pgender = spinnerGender.getSelectedItem().toString();
                 String paddress = editTextAddress.getText().toString();
+                String status = "1";
+                String pAge = calculateAge(pbday);
 
                 if(TextUtils.isEmpty(pname)){
                     editTextName.setError("Name is required");
@@ -255,7 +258,7 @@ public class PatientRecords extends AppCompatActivity {
                     return;
                 }
 
-                updatePatient(pid, pname, pbday, pgender, paddress, lastscan);
+                updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid);
                 alertDialog.dismiss();
             }
         });
@@ -278,14 +281,13 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     //Actual updating in the database
-    private boolean updatePatient(String pid, String fullname, String bday, String gender, String address, String lastscan){
+    private boolean updatePatient(String pid, String fullname, String bday, String age, String gender, String address, String lastscan, String status, String bid){
 
         println(pid);
 
         db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
-        String status = "1";
-        String age = calculateAge(bday);
-        Patient patient = new Patient(pid, fullname, bday, gender, address, lastscan, status, age, bId);
+
+        Patient patient = new Patient(pid, fullname, bday, age, gender, address, lastscan, status, bid);
 
         db.setValue(patient);
         Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();
@@ -300,12 +302,13 @@ public class PatientRecords extends AppCompatActivity {
         addPatientRec.putExtra("USER_ID", uId);
         addPatientRec.putExtra("BARANGAY_ID", bId);
         startActivity(addPatientRec);
-        CustomIntent.customType(PatientRecords.this, "bottom-to-up");
+        CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 
     @Override
     public void onBackPressed() {
         finish();
+        CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 
     public void openHomepage(){
@@ -421,5 +424,6 @@ public class PatientRecords extends AppCompatActivity {
 
     public void back(View view){
         finish();
+        CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 }

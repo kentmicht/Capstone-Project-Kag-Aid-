@@ -209,7 +209,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         intent.putExtra("BARANGAY_NAME", bName);
         finish();
         startActivity(intent);
-        CustomIntent.customType(ViewPatientInfo.this, "right-to-left");
+        CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
 
@@ -221,6 +221,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         //camera setup
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAMERA_PIC_REQUEST);
+            CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
         }
     }
 
@@ -455,6 +456,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         treatments.putExtra("skin_illness_name", scannedResult[1]);
         treatments.putExtra("skin_illness_id", skinIllnessId);
         startActivity(treatments);
+        CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
     public void openSkinIllness(View view){
@@ -466,11 +468,13 @@ public class ViewPatientInfo extends AppCompatActivity {
         skinIllness.putExtra("SKIN_ILLNESS_NAME", scannedResult[1]);
         skinIllness.putExtra(SKIN_ILLNESS_ID, skinIllnessId);
         startActivity(skinIllness);
+        CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
     public void openMaps(View view){
         Intent maps = new Intent(this, MapsActivity.class);
         startActivity(maps);
+        CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
 

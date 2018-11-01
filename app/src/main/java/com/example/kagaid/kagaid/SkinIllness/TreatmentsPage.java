@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Patient.ViewPatientInfo;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import maes.tech.intentanim.CustomIntent;
 
 public class TreatmentsPage extends AppCompatActivity {
 
@@ -134,9 +137,18 @@ public class TreatmentsPage extends AppCompatActivity {
     }
     public void back(View view){
         finish();
+        CustomIntent.customType(TreatmentsPage.this, "fadein-to-fadeout");
     }
 
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        CustomIntent.customType(TreatmentsPage.this, "fadein-to-fadeout");
+
+    }
+
 }

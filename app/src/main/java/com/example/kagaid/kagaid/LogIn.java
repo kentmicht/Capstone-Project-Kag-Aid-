@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kagaid.kagaid.Patient.PatientRecords;
 import com.example.kagaid.kagaid.Patient.ViewPatientInfo;
 import com.example.kagaid.kagaid.R;
 import com.google.firebase.database.DataSnapshot;
@@ -152,6 +153,7 @@ public class LogIn extends AppCompatActivity {
                                              homepage.putExtra("BARANGAY_NAME", barangayName);
                                              startActivity(homepage);
                                              finish();
+                                             CustomIntent.customType(LogIn.this, "fadein-to-fadeout");
                                          }
                                      }, TIME_OUT);
                                  }

@@ -36,7 +36,9 @@ import com.example.kagaid.kagaid.Doctor.DoctorLists;
 import com.example.kagaid.kagaid.Homepage;
 import com.example.kagaid.kagaid.Logs.LogLists;
 import com.example.kagaid.kagaid.Logs.Logs;
+import com.example.kagaid.kagaid.Patient.ViewPatientInfo;
 import com.example.kagaid.kagaid.R;
+import com.example.kagaid.kagaid.SkinIllness.SkinIllnessPage;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -61,6 +63,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -69,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 5000;
+    private int PROXIMITY_RADIUS = 1000;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -166,6 +170,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void goToHomepage(View view){
         finish();
+        CustomIntent.customType(MapsActivity.this, "fadein-to-fadeout");
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        CustomIntent.customType(MapsActivity.this, "fadein-to-fadeout");
     }
 
     private boolean CheckGooglePlayServices() {

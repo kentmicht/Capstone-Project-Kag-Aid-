@@ -94,7 +94,9 @@
         android:text="No Data"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/brand"
@@ -106,6 +108,8 @@
         android:layout_marginTop="185dp"
         android:padding="4sp"
         android:text="No Data"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="12sp" />
 
     <TextView
@@ -116,6 +120,8 @@
         android:layout_alignStart="@+id/medicine_name"
         android:padding="4sp"
         android:text="No Data"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="12sp" />
 
     <ListView
