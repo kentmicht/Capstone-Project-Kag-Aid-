@@ -128,34 +128,88 @@ public class AddPatientRecord extends AppCompatActivity {
             databasePatient.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    //error handlings
                     boolean duplicatePatient = false;
+                    boolean yearBeyondCurrent = false;
+                    boolean fullNameAllNumbers = false;
+                    boolean fullNameAllSpecial = false;
+                    boolean fullNameContainsNumber = false;
+                    boolean fullNameContainsSpecial = false;
+                    boolean addressAllNumbers = false;
+                    boolean addressAllSpecial = false;
+                    boolean addressContainsSpecial = false;
+
                     for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
                         if(fullnameP.equals(dsPatient.child("fullname").getValue().toString())){
                             duplicatePatient = true;
                         }
                     }
+//                    toastMessage(String.valueOf(duplicatePatient));
                     if(duplicatePatient == false){
-                        String pid = databasePatient.push().getKey();
-                        String age = calculateAge(bdayP);
-                        String status = "1";
-                        //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-                        Patient patient = new Patient(pid, fullnameP, bdayP, age, genderP, addressP, "Not yet scanned", status, bId);
 
-                        databasePatient.child(pid).setValue(patient);
+                        if(checkBirthdateYear(bdayP) == false) {
+                            yearBeyondCurrent = true;
+                            toastMessage("Patient’s Birthdate year exceeds the current year");
+                        }
 
-                        fullname.setText("");
-                        birthdate.setText("");
-                        address.setText("");
+                        if(checkFullNameAllNumbers(fullnameP)) {
+                            fullNameAllNumbers = true;
+                            toastMessage("Patient’s name is not valid");
+                        }else if(checkFullNameAllSpecial(fullnameP)) {
+                            fullNameAllSpecial  = true;
+                            toastMessage("Patient’s name is not valid");
+                        }else if(checkFullNameContainsNumber(fullnameP)) {
+                            fullNameContainsNumber  = true;
+                            toastMessage("Patient’s name is not valid");
+                        }else if(checkFullNameContainsSpecial(fullnameP)){
+                            fullNameContainsSpecial = true;
+                            toastMessage("Patient’s name is not valid");
+                        }
 
-                        progressDialog();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                toastMessage("Patient Record Added");
-                                finish();
-                                CustomIntent.customType(AddPatientRecord.this, "fadein-to-fadeout");
-                            }
-                        }, 2000);
+                        if(checkAddressAllNumbers(addressP)) {
+                            addressAllNumbers = true;
+                            toastMessage("Patient’s address is not valid");
+                        }else if(checkAddressSpecial(addressP)) {
+                            addressAllSpecial  = true;
+                            toastMessage("Patient's address is not valid");
+                        }else if(checkAddressContainsNumber(addressP)){
+                            addressContainsSpecial  = true;
+                            toastMessage("Patient's address is not valid");
+                        }
+
+                        if(yearBeyondCurrent == false &&
+                                fullNameAllSpecial == false &&
+                                fullNameAllNumbers == false &&
+                                addressAllNumbers == false &&
+                                addressAllSpecial == false &&
+                                fullNameContainsNumber == false &&
+                                addressContainsSpecial == false &&
+                                fullNameContainsSpecial == false){
+                            String pid = databasePatient.push().getKey();
+                            String age = calculateAge(bdayP);
+                            String status = "1";
+//                            String fullnameFormatted = formatFullname(fullnameP);
+//                            toastMessage(fullnameFormatted);
+                            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
+                            Patient patient = new Patient(pid, fullnameP, bdayP, age, genderP, addressP, "Not yet scanned", status, bId);
+
+                            databasePatient.child(pid).setValue(patient);
+
+                            fullname.setText("");
+                            birthdate.setText("");
+                            address.setText("");
+
+                            progressDialog();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    toastMessage("Patient Record Added");
+                                    finish();
+                                    CustomIntent.customType(AddPatientRecord.this, "fadein-to-fadeout");
+                                }
+                            }, 2000);
+                        }
+
                     }else{
                         toastMessage("Patient has been added already");
                     }
@@ -170,6 +224,90 @@ public class AddPatientRecord extends AppCompatActivity {
             toastMessage("Please don't leave any field empty.");
         }
     }
+
+    public boolean checkBirthdateYear(String bday){
+        boolean ret = false;
+        String age = null;
+        String year = bday.substring(0, 4);
+
+        if(Calendar.getInstance().get(Calendar.YEAR) >= Integer.parseInt(year)){
+            ret = true;
+        }
+
+
+        return ret;
+    }
+
+    public boolean checkFullNameAllSpecial(String fullname){
+        boolean ret = false;
+        if(fullname.matches("[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameAllNumbers(String fullname){
+        boolean ret = false;
+        if(fullname.matches("[0-9]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameContainsNumber(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*\\d+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameContainsSpecial(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkAddressSpecial(String address){
+        boolean ret = false;
+            if(address.matches("[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkAddressAllNumbers(String address){
+        boolean ret = false;
+        if(address.matches("[0-9]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkAddressContainsNumber(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
+//    public String formatFullname(String fullname){
+//        String[] strArray = fullname.split(" ");
+//        StringBuilder builder = new StringBuilder();
+//        int count = 0;
+//        for (String s : strArray) {
+//            String cap = s.substring(0, 1).toUpperCase() + s.substring(1);
+//            if(count < strArray.length-1){
+//                builder.append(cap + " ");
+//            }
+//            count++;
+//        }
+//
+//        return builder.toString();
+//    }
 
     @Override
     public void onBackPressed() {

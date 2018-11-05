@@ -247,18 +247,65 @@ public class PatientRecords extends AppCompatActivity {
                 String status = "1";
                 String pAge = calculateAge(pbday);
 
+                //error handlings
+                boolean duplicatePatient = false;
+                boolean yearBeyondCurrent = false;
+                boolean fullNameAllNumbers = false;
+                boolean fullNameAllSpecial = false;
+                boolean fullNameContainsNumber = false;
+                boolean fullNameContainsSpecial = false;
+                boolean addressAllNumbers = false;
+                boolean addressAllSpecial = false;
+                boolean addressContainsSpecial = false;
+
                 if(TextUtils.isEmpty(pname)){
                     editTextName.setError("Name is required");
-                    return;
-                }else if(TextUtils.isEmpty(pbday)){
-                    editTextBday.setError("Birthday is required");
                     return;
                 }else if(TextUtils.isEmpty(paddress)){
                     editTextAddress.setError("Address is required");
                     return;
                 }
 
-                updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid);
+                if(checkBirthdateYear(pbday) == false) {
+                    yearBeyondCurrent = true;
+                    toastMessage("Not Updated: Patient’s Birthdate year exceeds the current year");
+                }
+
+                if(checkFullNameAllNumbers(pname)) {
+                    fullNameAllNumbers = true;
+                    toastMessage("Not Updated: Patient’s name is not valid");
+                }else if(checkFullNameAllSpecial(pname)) {
+                    fullNameAllSpecial  = true;
+                    toastMessage("Not Updated: Patient’s name is not valid");
+                }else if(checkFullNameContainsNumber(pname)) {
+                    addressAllSpecial  = true;
+                    toastMessage("Not Updated: Patient’s name is not valid");
+                }else if(checkFullNameContainsSpecial(pname)){
+                    fullNameContainsSpecial = true;
+                    toastMessage("Not Updated: Patient’s name is not valid");
+                }
+
+                if(checkAddressAllNumbers(paddress)) {
+                    addressAllNumbers = true;
+                    toastMessage("Not Updated: Patient’s address is not valid");
+                }else if(checkAddressSpecial(paddress)) {
+                    fullNameAllSpecial  = true;
+                    toastMessage("Not Updated: Patient's address is not valid");
+                }else if(checkAddressContainsNumber(paddress)){
+                    addressContainsSpecial  = true;
+                    toastMessage("Not Updated: Patient's address is not valid");
+                }
+
+                if(yearBeyondCurrent == false &&
+                        fullNameAllSpecial == false &&
+                        fullNameAllNumbers == false &&
+                        addressAllNumbers == false &&
+                        addressAllSpecial == false &&
+                        fullNameContainsNumber == false &&
+                        addressContainsSpecial == false &&
+                        fullNameContainsSpecial == false){
+                    updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid);
+                }
                 alertDialog.dismiss();
             }
         });
@@ -280,19 +327,123 @@ public class PatientRecords extends AppCompatActivity {
         };
     }
 
+    public boolean checkBirthdateYear(String bday){
+        boolean ret = false;
+        String age = null;
+        String year = bday.substring(0, 4);
+
+        if(Calendar.getInstance().get(Calendar.YEAR) >= Integer.parseInt(year)){
+            ret = true;
+        }
+
+
+        return ret;
+    }
+
+    public boolean checkFullNameAllSpecial(String fullname){
+        boolean ret = false;
+        if(fullname.matches("[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameAllNumbers(String fullname){
+        boolean ret = false;
+        if(fullname.matches("[0-9]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameContainsNumber(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*\\d+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkFullNameContainsSpecial(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkAddressSpecial(String address){
+        boolean ret = false;
+        if(address.matches("[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public boolean checkAddressAllNumbers(String address){
+        boolean ret = false;
+        if(address.matches("[0-9]+")){
+            ret = true;
+        }
+        return ret;
+    }
+
+    public String formatFullname(String fullname){
+        String[] strArray = fullname.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String s : strArray) {
+            String cap = s.substring(0, 1).toUpperCase() + s.substring(1);
+            builder.append(cap);
+        }
+
+        return builder.toString();
+    }
+
+    public boolean checkAddressContainsNumber(String fullname){
+        boolean ret = false;
+        if(fullname.matches(".*[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+.*")){
+            ret = true;
+        }
+        return ret;
+    }
+
     //Actual updating in the database
-    private boolean updatePatient(String pid, String fullname, String bday, String age, String gender, String address, String lastscan, String status, String bid){
+    private boolean updatePatient(final String pid, final String fullname, final String bday, final String age, final String gender, final String address, final String lastscan, final String status, final String bid){
+        final boolean[] ret = {false};
+//        println(pid);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot) {
+                  boolean duplicatePatient = false;
+                  for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
+                      Patient patient = dsPatient.getValue(Patient.class);
+                      if(fullname.equals(patient.getFullname())){
+                          if(!pid.equals(patient.getId())){
+                              duplicatePatient = true;
+                          }
 
-        println(pid);
+                      }
+                  }
 
-        db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
+                  if(duplicatePatient == false){
+                      db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
 
-        Patient patient = new Patient(pid, fullname, bday, age, gender, address, lastscan, status, bid);
+                      Patient patient = new Patient(pid, fullname, bday, age, gender, address, lastscan, status, bid);
 
-        db.setValue(patient);
-        Toast.makeText(this, "Patient Record Updated", Toast.LENGTH_LONG).show();
+                      db.setValue(patient);
+                      toastMessage("Patient Record Updated");
+                      ret[0] = true;
+                  }else{
+                      toastMessage("Patient has been added already");
+                  }
+              }
 
-        return true;
+              @Override
+              public void onCancelled(DatabaseError databaseError) {
+
+              }
+        });
+        return ret[0];
     }
 
     //Showing new window for adding

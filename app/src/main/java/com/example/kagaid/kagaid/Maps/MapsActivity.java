@@ -73,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 1000;
+    private int PROXIMITY_RADIUS = 50000;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -455,6 +455,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+            String markerArray[] = new String[100];
             for (int i = 0; i < nearbyPlacesList.size(); i++) {
                 Log.d("onPostExecute","Entered into showing locations");
                 MarkerOptions markerOptions = new MarkerOptions();
@@ -467,6 +468,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 markerOptions.position(latLng);
                 markerOptions.title(placeName + " : " + vicinity);
 
+                markerArray[i] = placeName + " : " + vicinity;
+                System.out.println(placeName + " : " + vicinity);
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
@@ -483,6 +486,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
             }
+
+            System.out.println(markerArray);
+
         }
 
 //    public GetNearbyPlacesData(NearbyDoctorInterface nearbyDoctors) {

@@ -84,7 +84,8 @@
         android:ems="10"
         android:hint="Fullname"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
     <Button
         android:id="@+id/addPatientBtn"
