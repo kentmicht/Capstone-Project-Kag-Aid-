@@ -150,31 +150,32 @@ public class AddPatientRecord extends AppCompatActivity {
                         if(checkBirthdateYear(bdayP) == false) {
                             yearBeyondCurrent = true;
                             toastMessage("Patient’s Birthdate year exceeds the current year");
+                            birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
                         if(checkFullNameAllNumbers(fullnameP)) {
                             fullNameAllNumbers = true;
-                            toastMessage("Patient’s name is not valid");
+                            fullname.setError("Patient's name is all digits");
                         }else if(checkFullNameAllSpecial(fullnameP)) {
                             fullNameAllSpecial  = true;
-                            toastMessage("Patient’s name is not valid");
+                            fullname.setError("Patient's name is all special characters");
                         }else if(checkFullNameContainsNumber(fullnameP)) {
                             fullNameContainsNumber  = true;
-                            toastMessage("Patient’s name is not valid");
+                            fullname.setError("Patient’s name contains a digit");
                         }else if(checkFullNameContainsSpecial(fullnameP)){
                             fullNameContainsSpecial = true;
-                            toastMessage("Patient’s name is not valid");
+                            fullname.setError("Patient's name contains an invalid special character");
                         }
 
                         if(checkAddressAllNumbers(addressP)) {
                             addressAllNumbers = true;
-                            toastMessage("Patient’s address is not valid");
+                            address.setError("Patient’s address is all digits");
                         }else if(checkAddressSpecial(addressP)) {
                             addressAllSpecial  = true;
-                            toastMessage("Patient's address is not valid");
+                            address.setError("Patient's address contains all invalid special character");
                         }else if(checkAddressContainsNumber(addressP)){
                             addressContainsSpecial  = true;
-                            toastMessage("Patient's address is not valid");
+                            address.setError("Patient's address contains an invalid special character");
                         }
 
                         if(yearBeyondCurrent == false &&

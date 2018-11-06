@@ -259,7 +259,7 @@ public class PatientRecords extends AppCompatActivity {
                 boolean addressContainsSpecial = false;
 
                 if(TextUtils.isEmpty(pname)){
-                    editTextName.setError("Name is required");
+                    editTextName.setError("Fullname is required");
                     return;
                 }else if(TextUtils.isEmpty(paddress)){
                     editTextAddress.setError("Address is required");
@@ -273,27 +273,27 @@ public class PatientRecords extends AppCompatActivity {
 
                 if(checkFullNameAllNumbers(pname)) {
                     fullNameAllNumbers = true;
-                    toastMessage("Not Updated: Patient’s name is not valid");
+                    toastMessage("Not Updated: Patient’s name is all digits");
                 }else if(checkFullNameAllSpecial(pname)) {
                     fullNameAllSpecial  = true;
-                    toastMessage("Not Updated: Patient’s name is not valid");
+                    toastMessage("Not Updated: Patient’s Name is all special characters");
                 }else if(checkFullNameContainsNumber(pname)) {
                     addressAllSpecial  = true;
-                    toastMessage("Not Updated: Patient’s name is not valid");
+                    toastMessage("Not Updated: Patient’s name contains a digit");
                 }else if(checkFullNameContainsSpecial(pname)){
                     fullNameContainsSpecial = true;
-                    toastMessage("Not Updated: Patient’s name is not valid");
+                    toastMessage("Not Updated: Patient’s Name contains invalid special characters");
                 }
 
                 if(checkAddressAllNumbers(paddress)) {
                     addressAllNumbers = true;
-                    toastMessage("Not Updated: Patient’s address is not valid");
+                    toastMessage("Not Updated: Patient’s Address is all digits");
                 }else if(checkAddressSpecial(paddress)) {
                     fullNameAllSpecial  = true;
-                    toastMessage("Not Updated: Patient's address is not valid");
+                    toastMessage("Not Updated: Patient's address is all special characters");
                 }else if(checkAddressContainsNumber(paddress)){
                     addressContainsSpecial  = true;
-                    toastMessage("Not Updated: Patient's address is not valid");
+                    toastMessage("Not Updated: Patient's address contains invalid special characters");
                 }
 
                 if(yearBeyondCurrent == false &&
@@ -434,7 +434,7 @@ public class PatientRecords extends AppCompatActivity {
                       toastMessage("Patient Record Updated");
                       ret[0] = true;
                   }else{
-                      toastMessage("Patient has been added already");
+                      toastMessage("Not Updated: Patient has been added already");
                   }
               }
 
@@ -486,7 +486,7 @@ public class PatientRecords extends AppCompatActivity {
 
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
-                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && patient.getStatus().equals("1") && bId.equals(pSnapshot.child("bId").getValue().toString())){
+                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && bId.equals(patient.getbId())){
                             pList.add(patient);
                         }
 //                    patient_names.add(patient.getFullname());

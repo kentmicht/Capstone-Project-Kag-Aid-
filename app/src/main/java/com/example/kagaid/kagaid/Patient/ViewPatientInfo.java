@@ -389,6 +389,7 @@ public class ViewPatientInfo extends AppCompatActivity {
                 if(Double.parseDouble(scannedResult[0].split("%")[0]) < 80.0){
                     accuracyNote.setVisibility(View.VISIBLE);
                     scan.setVisibility(View.VISIBLE);
+
                 }else{
                     scan.setTextSize(1, 1);
                     accuracyNote.setVisibility(View.VISIBLE);
@@ -432,7 +433,11 @@ public class ViewPatientInfo extends AppCompatActivity {
         treatmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTreatments(v);
+                if(Double.parseDouble(scannedResult[0].split("%")[0]) < 80.0) {
+                    toastMessage("Accuracy is below 80% and may not recommend an over-the-counter treatment");
+                }else{
+                    openTreatments(v);
+                }
             }
         });
 
