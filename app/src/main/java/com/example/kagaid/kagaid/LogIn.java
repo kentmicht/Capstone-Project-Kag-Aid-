@@ -71,24 +71,24 @@ public class LogIn extends AppCompatActivity {
         databaseLogin = FirebaseDatabase.getInstance().getReference("users");
         databaseBarangay = FirebaseDatabase.getInstance().getReference("barangay");
 
-        password.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_ENTER:
-                            goToHomepage();
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
+//        password.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN)
+//                {
+//                    switch (keyCode)
+//                    {
+//                        case KeyEvent.KEYCODE_ENTER:
+//                            goToHomepage();
+//                            return true;
+//                        default:
+//                            break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 
     }

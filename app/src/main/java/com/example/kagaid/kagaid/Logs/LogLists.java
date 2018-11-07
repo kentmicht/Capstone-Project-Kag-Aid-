@@ -34,6 +34,7 @@ public class LogLists extends ArrayAdapter<Log>{
     Patient p = new Patient();
     Patient logP = new Patient();
     Log log = new Log();
+    Log logPatient = new Log();
 
     String patientName;
 
@@ -57,18 +58,17 @@ public class LogLists extends ArrayAdapter<Log>{
 
 
         log = logList.get(position);
-
+        logPatient = log;
         refPatient = FirebaseDatabase.getInstance().getReference("person_information");
         refPatient.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                log = logList.get(position);
                 for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
                     p = patientSnapshot.getValue(Patient.class);
-                    System.out.println(log.getpId());
-                    if(p.getPid().equals(log.getpId())){
+//                    System.out.println(logPatient.getpId());
+                    if(p.getPid().equals(logPatient.getpId())){
                         patientName = p.getFullname();
-                        System.out.println("Found it");
+//                        System.out.println("Found it");
                     }
 
                 }

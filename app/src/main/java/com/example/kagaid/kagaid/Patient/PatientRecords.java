@@ -154,6 +154,31 @@ public class PatientRecords extends AppCompatActivity {
         });
 
         fullNameSearch = (EditText) findViewById(R.id.patientSearch);
+        onSearchEnter(fullNameSearch);
+    }
+
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+
+    //Viewing all the Patient records inside a listview
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        viewAllPatients();
+
+        ImageView search = (ImageView) findViewById(R.id.patientSearchBtn);
+//        search.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                searchPatient();
+//            }
+//        });
+        onSearchEnter(fullNameSearch);
+    }
+
+    private void onSearchEnter(EditText fullNameSearch){
         fullNameSearch.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -170,26 +195,6 @@ public class PatientRecords extends AppCompatActivity {
                     }
                 }
                 return false;
-            }
-        });
-    }
-
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-    }
-
-    //Viewing all the Patient records inside a listview
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        viewAllPatients();
-
-        ImageView search = (ImageView) findViewById(R.id.patientSearchBtn);
-        search.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                searchPatient();
             }
         });
     }

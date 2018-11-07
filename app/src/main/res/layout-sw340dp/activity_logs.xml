@@ -18,18 +18,9 @@
         android:textSize="18sp"
         android:textStyle="italic" />
 
-    <ImageView
-        android:id="@+id/logSearchBtn"
-        android:layout_width="36dp"
-        android:layout_height="34dp"
-        android:layout_alignBottom="@+id/logSearch"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="19dp"
-        app:srcCompat="@drawable/ic_search_black_24dp" />
-
     <EditText
         android:id="@+id/logSearch"
-        android:layout_width="166dp"
+        android:layout_width="251dp"
         android:layout_height="35dp"
         android:layout_alignStart="@+id/copyright13"
         android:layout_alignTop="@+id/logCategory"
@@ -89,9 +80,9 @@
         android:id="@+id/textViewDoctorName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/logSearchBtn"
+        android:layout_alignEnd="@+id/logSearch"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="30dp"
         android:text="Logs"
         android:textColor="@color/textHomepage1"
         android:textSize="24sp"

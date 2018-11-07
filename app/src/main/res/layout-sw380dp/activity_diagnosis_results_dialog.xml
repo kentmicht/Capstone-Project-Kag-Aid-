@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/skin_illness_name"
-            android:text="Accuracy: "
+            android:text="Confidence: "
             android:textAlignment="textEnd"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"

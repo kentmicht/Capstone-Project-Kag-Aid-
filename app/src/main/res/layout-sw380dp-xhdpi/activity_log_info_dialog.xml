@@ -12,7 +12,7 @@
         android:layout_below="@+id/textView34"
         android:layout_toStartOf="@+id/textView42"
         android:paddingTop="5sp"
-        android:text="Accuracy: "
+        android:text="Confidence: "
         android:textAlignment="textEnd"
         android:textSize="15sp"
         android:textStyle="bold"

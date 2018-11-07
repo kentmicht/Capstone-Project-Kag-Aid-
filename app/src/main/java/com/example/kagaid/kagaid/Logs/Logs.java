@@ -47,6 +47,7 @@ public class Logs extends AppCompatActivity {
     DatabaseReference databaseLogs;
     TextView logErr;
     EditText logS;
+    Spinner logCateg;
 
     List<Log> logList;
     String uId;
@@ -78,17 +79,18 @@ public class Logs extends AppCompatActivity {
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
 
         ImageView search = (ImageView) findViewById(R.id.logSearchBtn);
-        final Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
+        logCateg= (Spinner) findViewById(R.id.logCategory);
 
-        search.setOnClickListener(new View.OnClickListener() {
+//        search.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+////                toastMessage(logCategory);
+//                String logCategory = logCateg.getSelectedItem().toString();
+//                searchLog(logCategory);
+//            }
+//        });
 
-            public void onClick(View v) {
-//                toastMessage(logCategory);
-                String logCategory = logCateg.getSelectedItem().toString();
-                searchLog(logCategory);
-            }
-        });
-
+        onSearchLogs(logS);
         logS.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -126,6 +128,28 @@ public class Logs extends AppCompatActivity {
 
                 showLogDialog(log.getLogId(), log.getPatientName(), log.getEmployeeName(), log.getLogdatetime(), log.getPercentage(), log.getSkinIllness(), log.getpId());
 
+            }
+        });
+    }
+
+    public void onSearchLogs(EditText logS){
+        logS.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_ENTER:
+                            String logCategory = logCateg.getSelectedItem().toString();
+                            searchLog(logCategory);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
     }
