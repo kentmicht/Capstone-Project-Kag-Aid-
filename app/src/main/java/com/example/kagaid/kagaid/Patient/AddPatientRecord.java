@@ -140,7 +140,8 @@ public class AddPatientRecord extends AppCompatActivity {
                     boolean addressContainsSpecial = false;
 
                     for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
-                        if(fullnameP.equals(dsPatient.child("fullname").getValue().toString())){
+                        Patient patient = dsPatient.getValue(Patient.class);
+                        if(fullnameP.equals(patient.getFullname())){
                             duplicatePatient = true;
                         }
                     }
@@ -294,21 +295,6 @@ public class AddPatientRecord extends AppCompatActivity {
         }
         return ret;
     }
-
-//    public String formatFullname(String fullname){
-//        String[] strArray = fullname.split(" ");
-//        StringBuilder builder = new StringBuilder();
-//        int count = 0;
-//        for (String s : strArray) {
-//            String cap = s.substring(0, 1).toUpperCase() + s.substring(1);
-//            if(count < strArray.length-1){
-//                builder.append(cap + " ");
-//            }
-//            count++;
-//        }
-//
-//        return builder.toString();
-//    }
 
     @Override
     public void onBackPressed() {

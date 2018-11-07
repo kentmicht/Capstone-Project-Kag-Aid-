@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -68,6 +69,7 @@ public class PatientRecords extends AppCompatActivity {
     String bName;
 
     DatabaseReference db;
+    DatabaseReference dbLogs;
 
     ListView patient_record;
     List<Patient> pList;
@@ -77,6 +79,7 @@ public class PatientRecords extends AppCompatActivity {
     PatientLists pLadapter;
 
     TextView test;
+    EditText fullNameSearch;
 //    ArrayAdapter<Patient> adapter;
     private ArrayAdapter pAdapter;
     
@@ -146,6 +149,26 @@ public class PatientRecords extends AppCompatActivity {
 
                 showUpdateDialog(patient.getId(), patient.getFullname(), patient.getBirthday(), patient.getGender(), patient.getAddress(), patient.getLastscan(), patient.getbId());
 
+                return false;
+            }
+        });
+
+        fullNameSearch = (EditText) findViewById(R.id.patientSearch);
+        fullNameSearch.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_ENTER:
+                            searchPatient();
+                            return true;
+                        default:
+                            break;
+                    }
+                }
                 return false;
             }
         });
@@ -427,7 +450,7 @@ public class PatientRecords extends AppCompatActivity {
 
                   if(duplicatePatient == false){
                       db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
-
+                      dbLogs = FirebaseDatabase.getInstance().getReference("logs");
                       Patient patient = new Patient(pid, fullname, bday, age, gender, address, lastscan, status, bid);
 
                       db.setValue(patient);
@@ -471,7 +494,6 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     public void searchPatient(){
-        EditText fullNameSearch = (EditText) findViewById(R.id.patientSearch);
         final String fullnameS = fullNameSearch.getText().toString();
 
         if(fullnameS.matches("")){
@@ -486,7 +508,7 @@ public class PatientRecords extends AppCompatActivity {
 
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
-                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && bId.equals(patient.getbId())){
+                        if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && bId.equals(patient.getbId()) && patient.getStatus().equals("1")){
                             pList.add(patient);
                         }
 //                    patient_names.add(patient.getFullname());

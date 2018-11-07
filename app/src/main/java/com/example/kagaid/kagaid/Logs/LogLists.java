@@ -32,7 +32,10 @@ public class LogLists extends ArrayAdapter<Log>{
     DatabaseReference refPatient;
     User u = new User();
     Patient p = new Patient();
+    Patient logP = new Patient();
     Log log = new Log();
+
+    String patientName;
 
 
     public LogLists(Activity context, List logList){
@@ -43,7 +46,7 @@ public class LogLists extends ArrayAdapter<Log>{
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
 
         final View listViewItem = inflater.inflate(R.layout.activity_log_list_layout, null, true);
@@ -52,13 +55,39 @@ public class LogLists extends ArrayAdapter<Log>{
         final TextView textViewPatient = (TextView) listViewItem.findViewById(R.id.textView_log_patient);
         final TextView textViewDateTime = (TextView) listViewItem.findViewById(R.id.textView_log_datetime);
 
+
         log = logList.get(position);
 
-        textViewPatient.setText("Patient: " + log.getPatientName());
+        refPatient = FirebaseDatabase.getInstance().getReference("person_information");
+        refPatient.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                log = logList.get(position);
+                for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
+                    p = patientSnapshot.getValue(Patient.class);
+                    System.out.println(log.getpId());
+                    if(p.getPid().equals(log.getpId())){
+                        patientName = p.getFullname();
+                        System.out.println("Found it");
+                    }
+
+                }
+
+                textViewPatient.setText("Patient: " + patientName);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         textViewEmployee.setText("Employee: " + log.getEmployeeName());
-        textViewName.setText(log.getLogdatetime());
-        textViewPatient.setText("Patient: " + log.getPatientName());
+        textViewName.setText( log.getLogdatetime());
         textViewDateTime.setText("Date and Time: " + log.getLogdatetime());
+
 
         return listViewItem;
 

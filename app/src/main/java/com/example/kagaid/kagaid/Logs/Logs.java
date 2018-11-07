@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +46,7 @@ public class Logs extends AppCompatActivity {
     ListView listViewLogs;
     DatabaseReference databaseLogs;
     TextView logErr;
+    EditText logS;
 
     List<Log> logList;
     String uId;
@@ -66,6 +68,7 @@ public class Logs extends AppCompatActivity {
 
         logErr = (TextView) findViewById(R.id.logError);
         logErr.setVisibility(View.INVISIBLE);
+        logS = (EditText) findViewById(R.id.logSearch);
 
         uId = (String) getIntent().getStringExtra("USER_ID");
         bId = (String) getIntent().getStringExtra("BARANGAY_ID");
@@ -75,15 +78,34 @@ public class Logs extends AppCompatActivity {
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
 
         ImageView search = (ImageView) findViewById(R.id.logSearchBtn);
+        final Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
 
         search.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Spinner logCateg= (Spinner) findViewById(R.id.logCategory);
-                String logCategory = logCateg.getSelectedItem().toString();
-
 //                toastMessage(logCategory);
+                String logCategory = logCateg.getSelectedItem().toString();
                 searchLog(logCategory);
+            }
+        });
+
+        logS.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_ENTER:
+                            String logCategory = logCateg.getSelectedItem().toString();
+                            searchLog(logCategory);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
     }
@@ -102,13 +124,13 @@ public class Logs extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log log = logList.get(position);
 
-                showLogDialog(log.getLogId(), log.getPatientName(), log.getEmployeeName(), log.getLogdatetime(), log.getPercentage(), log.getSkinIllness());
+                showLogDialog(log.getLogId(), log.getPatientName(), log.getEmployeeName(), log.getLogdatetime(), log.getPercentage(), log.getSkinIllness(), log.getpId());
 
             }
         });
     }
 
-    private void showLogDialog(String logId, String patientName, String empName, String logDateTime, String percentage, String skinIllness){
+    private void showLogDialog(String logId, String patientName, String empName, String logDateTime, String percentage, String skinIllness, final String pId){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_log_info_dialog, null);
@@ -121,9 +143,29 @@ public class Logs extends AppCompatActivity {
         final TextView employee = (TextView) dialogView.findViewById(R.id.textView42);
         final TextView dateTime = (TextView) dialogView.findViewById(R.id.textView43);
 
+        DatabaseReference refPatient;
+        refPatient = FirebaseDatabase.getInstance().getReference("person_information");
+        refPatient.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String patientName = null;
+                for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
+                    Patient p = patientSnapshot.getValue(Patient.class);
+                    if(p.getPid().equals(pId)){
+                        patientName = p.getFullname();
+                    }
+
+                }
+                patient.setText(patientName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         skinIdentify.setText(skinIllness);
         percent.setText(percentage);
-        patient.setText(patientName);
         employee.setText(empName);
         dateTime.setText(logDateTime);
 
@@ -159,7 +201,6 @@ public class Logs extends AppCompatActivity {
 
 
     public void searchLog(final String logCategory){
-        EditText logS = (EditText) findViewById(R.id.logSearch);
         final String logSearch = logS.getText().toString();
 
         if(logSearch.matches("")) {
