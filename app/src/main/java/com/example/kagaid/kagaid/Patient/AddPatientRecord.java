@@ -130,6 +130,7 @@ public class AddPatientRecord extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //error handlings
                     boolean duplicatePatient = false;
+                    boolean duplicateBarangayPatient = false;
                     boolean yearBeyondCurrent = false;
                     boolean fullNameAllNumbers = false;
                     boolean fullNameAllSpecial = false;
@@ -143,50 +144,53 @@ public class AddPatientRecord extends AppCompatActivity {
                         Patient patient = dsPatient.getValue(Patient.class);
                         if(fullnameP.equals(patient.getFullname())){
                             duplicatePatient = true;
+                            if(!patient.getbId().equals(bId)){
+                                duplicateBarangayPatient = true;
+                            }
                         }
                     }
 //                    toastMessage(String.valueOf(duplicatePatient));
-                    if(duplicatePatient == false){
+                    if(duplicatePatient == false) {
 
-                        if(checkBirthdateYear(bdayP) == false) {
+                        if (checkBirthdateYear(bdayP) == false) {
                             yearBeyondCurrent = true;
                             toastMessage("Patient’s Birthdate year exceeds the current year");
                             birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
-                        if(checkFullNameAllNumbers(fullnameP)) {
+                        if (checkFullNameAllNumbers(fullnameP)) {
                             fullNameAllNumbers = true;
                             fullname.setError("Patient's name is all digits");
-                        }else if(checkFullNameAllSpecial(fullnameP)) {
-                            fullNameAllSpecial  = true;
+                        } else if (checkFullNameAllSpecial(fullnameP)) {
+                            fullNameAllSpecial = true;
                             fullname.setError("Patient's name is all special characters");
-                        }else if(checkFullNameContainsNumber(fullnameP)) {
-                            fullNameContainsNumber  = true;
+                        } else if (checkFullNameContainsNumber(fullnameP)) {
+                            fullNameContainsNumber = true;
                             fullname.setError("Patient’s name contains a digit");
-                        }else if(checkFullNameContainsSpecial(fullnameP)){
+                        } else if (checkFullNameContainsSpecial(fullnameP)) {
                             fullNameContainsSpecial = true;
                             fullname.setError("Patient's name contains an invalid special character");
                         }
 
-                        if(checkAddressAllNumbers(addressP)) {
+                        if (checkAddressAllNumbers(addressP)) {
                             addressAllNumbers = true;
                             address.setError("Patient’s address is all digits");
-                        }else if(checkAddressSpecial(addressP)) {
-                            addressAllSpecial  = true;
+                        } else if (checkAddressSpecial(addressP)) {
+                            addressAllSpecial = true;
                             address.setError("Patient's address contains all invalid special character");
-                        }else if(checkAddressContainsNumber(addressP)){
-                            addressContainsSpecial  = true;
+                        } else if (checkAddressContainsNumber(addressP)) {
+                            addressContainsSpecial = true;
                             address.setError("Patient's address contains an invalid special character");
                         }
 
-                        if(yearBeyondCurrent == false &&
+                        if (yearBeyondCurrent == false &&
                                 fullNameAllSpecial == false &&
                                 fullNameAllNumbers == false &&
                                 addressAllNumbers == false &&
                                 addressAllSpecial == false &&
                                 fullNameContainsNumber == false &&
                                 addressContainsSpecial == false &&
-                                fullNameContainsSpecial == false){
+                                fullNameContainsSpecial == false) {
                             String pid = databasePatient.push().getKey();
                             String age = calculateAge(bdayP);
                             String status = "1";
@@ -211,7 +215,8 @@ public class AddPatientRecord extends AppCompatActivity {
                                 }
                             }, 2000);
                         }
-
+                    }else if(duplicateBarangayPatient == true){
+                        toastMessage("Patient exists in another barangay");
                     }else{
                         toastMessage("Patient has been added already");
                     }
