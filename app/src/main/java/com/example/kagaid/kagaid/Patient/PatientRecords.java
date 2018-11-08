@@ -73,6 +73,7 @@ public class PatientRecords extends AppCompatActivity {
 
     ListView patient_record;
     List<Patient> pList;
+    TextView patientErr;
 //    EditText search_patient;
 //    ImageView search_patient_btn;
     ArrayList<String> patient_names;
@@ -97,6 +98,9 @@ public class PatientRecords extends AppCompatActivity {
         }else {
             toastMessage("No Internet Connection");
         }
+
+        patientErr = (TextView) findViewById(R.id.noPatientRecord);
+        patientErr.setVisibility(View.INVISIBLE);
 
 //        toastMessage("Long press to update a patient's information.");
         uId = (String) getIntent().getStringExtra("USER_ID");
@@ -203,7 +207,7 @@ public class PatientRecords extends AppCompatActivity {
     private void showUpdateDialog(final String pid, final String fullname, final String bday, final String gender, final String address, final String lastscan, final String bid)
     {
 
-
+        final String oldName = fullname;
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_update_patient_info_dialog, null);
@@ -332,7 +336,7 @@ public class PatientRecords extends AppCompatActivity {
                         fullNameContainsNumber == false &&
                         addressContainsSpecial == false &&
                         fullNameContainsSpecial == false){
-                    updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid);
+                    updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid, oldName);
                 }
                 alertDialog.dismiss();
             }
@@ -436,7 +440,7 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     //Actual updating in the database
-    private boolean updatePatient(final String pid, final String fullname, final String bday, final String age, final String gender, final String address, final String lastscan, final String status, final String bid){
+    private boolean updatePatient(final String pid, final String fullname, final String bday, final String age, final String gender, final String address, final String lastscan, final String status, final String bid, final String oldName){
         final boolean[] ret = {false};
 //        println(pid);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -563,9 +567,14 @@ public class PatientRecords extends AppCompatActivity {
                 }
                 //sort the list
 //                toastMessage(bId);
-                sortPList();
-                PatientLists adapter = new PatientLists(PatientRecords.this, pList);
-                patient_record.setAdapter(adapter);
+                if(pList.isEmpty()){
+                    patientErr.setVisibility(View.VISIBLE);
+                }else{
+                    sortPList();
+                    PatientLists adapter = new PatientLists(PatientRecords.this, pList);
+                    patient_record.setAdapter(adapter);
+                }
+
             }
 
             @Override

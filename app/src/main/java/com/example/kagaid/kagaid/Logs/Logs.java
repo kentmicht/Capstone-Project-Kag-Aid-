@@ -241,21 +241,21 @@ public class Logs extends AppCompatActivity {
                         String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
                         switch(logCategory){
                             case "Date":
-                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
+                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(log.getbId())){
                                     if (currentDate[0].equals(logDate[0])) {
                                         logList.add(log);
                                     }
                                 }
                                 break;
                             case "Time":
-                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
+                                if(log.getLogdatetime().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(log.getbId())){
                                     if (currentDate[0].equals(logDate[0])) {
                                         logList.add(log);
                                     }
                                 }
                                 break;
                             case "Patient Name":
-                                if(log.getPatientName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
+                                if(log.getPatientName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(log.getbId())){
                                     if (currentDate[0].equals(logDate[0])) {
                                         logList.add(log);
                                     }
@@ -264,7 +264,7 @@ public class Logs extends AppCompatActivity {
                             case "Employee Name":
 //                                toastMessage(log.getEmployeeName());
                                 if(!log.getEmployeeName().isEmpty()){
-                                    if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(logsSnapshot.child("bId").getValue().toString())){
+                                    if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(log.getbId())){
                                         if (currentDate[0].equals(logDate[0])) {
                                             logList.add(log);
                                         }
@@ -281,7 +281,13 @@ public class Logs extends AppCompatActivity {
                         viewAllLogs();
                     }else {
                         LogLists adapter = new LogLists(Logs.this, logList);
-                        listViewLogs.setAdapter(adapter);
+                        if(adapter.isEmpty()){
+                            toastMessage("No Match");
+                            viewAllLogs();
+                        }else{
+                            listViewLogs.setAdapter(adapter);
+                        }
+
                     }
                 }
 

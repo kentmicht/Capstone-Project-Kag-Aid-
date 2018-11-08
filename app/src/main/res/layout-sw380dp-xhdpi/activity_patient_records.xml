@@ -133,6 +133,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView36" />
 
+    <TextView
+        android:id="@+id/noPatientRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="224dp"
+        android:text="@string/patient_no_records"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/patient_records"-->
         <!--andr-->

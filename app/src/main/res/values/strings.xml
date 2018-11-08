@@ -82,6 +82,10 @@
         Long press then slide down to update patient's information
     </string>
 
+    <string name="patient_no_records">
+        No Patient Record
+    </string>
+
     <!--- Patient Information -->
     <string name="patient_info_dec">
         The patient personal information are shown here.

@@ -56,37 +56,37 @@ public class LogLists extends ArrayAdapter<Log>{
         final TextView textViewPatient = (TextView) listViewItem.findViewById(R.id.textView_log_patient);
         final TextView textViewDateTime = (TextView) listViewItem.findViewById(R.id.textView_log_datetime);
 
-
         log = logList.get(position);
-        logPatient = log;
-        refPatient = FirebaseDatabase.getInstance().getReference("person_information");
-        refPatient.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
-                    p = patientSnapshot.getValue(Patient.class);
-//                    System.out.println(logPatient.getpId());
-                    if(p.getPid().equals(logPatient.getpId())){
-                        patientName = p.getFullname();
-//                        System.out.println("Found it");
-                    }
+//            refPatient = FirebaseDatabase.getInstance().getReference("person_information");
+//            refPatient.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot patientSnapshot : dataSnapshot.getChildren()) {
+//                        p = patientSnapshot.getValue(Patient.class);
+//                        logPatient = logList.get(position);
+////                    System.out.println(logPatient.getpId());
+//                        if (p.getPid().equals(logPatient.getpId())) {
+//                            patientName = p.getFullname();
+////                        System.out.println("Found it");
+//                        }
+//
+//                    }
+//                    textViewPatient.setText("Patient: " + patientName);
+//
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
 
-                }
-
-                textViewPatient.setText("Patient: " + patientName);
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        textViewPatient.setText("Patient: " + log.getPatientName());
         textViewEmployee.setText("Employee: " + log.getEmployeeName());
         textViewName.setText( log.getLogdatetime());
         textViewDateTime.setText("Date and Time: " + log.getLogdatetime());
+
 
 
         return listViewItem;

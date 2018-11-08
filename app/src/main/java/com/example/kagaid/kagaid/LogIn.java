@@ -2,6 +2,7 @@ package com.example.kagaid.kagaid;
 /**
  * Created by TEAM4RA (Alcantara, Genelsa, Mozo, Talisaysay)
  **/
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -172,8 +173,8 @@ public class LogIn extends AppCompatActivity {
                                              homepage.putExtra("BARANGAY_ID", barangayId);
                                              homepage.putExtra("BARANGAY_NAME", barangayName);
                                              startActivity(homepage);
-                                             finish();
                                              CustomIntent.customType(LogIn.this, "fadein-to-fadeout");
+                                             finish();
                                          }
                                      }, TIME_OUT);
                                  }
