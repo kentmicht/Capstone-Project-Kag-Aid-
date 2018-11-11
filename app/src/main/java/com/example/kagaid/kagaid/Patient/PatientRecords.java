@@ -336,7 +336,11 @@ public class PatientRecords extends AppCompatActivity {
                         fullNameContainsNumber == false &&
                         addressContainsSpecial == false &&
                         fullNameContainsSpecial == false){
-                    updatePatient(pid, pname, pbday, pAge, pgender, paddress, lastscan, status, bid, oldName);
+                    //capitalize First Letter of string
+                    pname = captializeFirstLetter(pname);
+                    paddress = captializeFirstLetter(paddress);
+
+                    updatePatient(pid, captializeFirstLetter(pname), pbday, pAge, pgender, captializeFirstLetter(paddress), lastscan, status, bid, oldName);
                 }
                 alertDialog.dismiss();
             }
@@ -357,6 +361,19 @@ public class PatientRecords extends AppCompatActivity {
 
             }
         };
+    }
+
+    public String captializeFirstLetter(String capitalize){
+        String capitalized = null;
+        String[] splitStr = capitalize.toLowerCase().split(" ");
+
+        for(int i = 0; i<splitStr.length; i++){
+            splitStr[i] = splitStr[i].toUpperCase().charAt(0) + splitStr[i].substring(1);
+        }
+
+        capitalized = TextUtils.join(" ", splitStr);
+
+        return capitalized;
     }
 
     public boolean checkBirthdateYear(String bday){
@@ -420,17 +437,6 @@ public class PatientRecords extends AppCompatActivity {
         return ret;
     }
 
-    public String formatFullname(String fullname){
-        String[] strArray = fullname.split(" ");
-        StringBuilder builder = new StringBuilder();
-        for (String s : strArray) {
-            String cap = s.substring(0, 1).toUpperCase() + s.substring(1);
-            builder.append(cap);
-        }
-
-        return builder.toString();
-    }
-
     public boolean checkAddressContainsNumber(String fullname){
         boolean ret = false;
         if(fullname.matches(".*[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+.*")){
@@ -460,6 +466,7 @@ public class PatientRecords extends AppCompatActivity {
                   if(duplicatePatient == false){
                       db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
                       dbLogs = FirebaseDatabase.getInstance().getReference("logs");
+
                       Patient patient = new Patient(pid, fullname, bday, age, gender, address, lastscan, status, bid);
 
                       db.setValue(patient);

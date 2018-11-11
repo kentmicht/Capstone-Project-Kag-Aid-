@@ -118,12 +118,13 @@ public class AddPatientRecord extends AppCompatActivity {
     }
 
     private void addPatient(){
-        final String fullnameP = fullname.getText().toString().trim();
+        final String[] fullnameP = {fullname.getText().toString().trim()};
         final String bdayP = birthdate.getText().toString();
-        final String addressP = address.getText().toString();
+        final String[] addressP = {address.getText().toString()};
         final String genderP = gender.getSelectedItem().toString();
 
-        if(!TextUtils.isEmpty(fullnameP) && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP)){
+
+        if(!TextUtils.isEmpty(fullnameP[0]) && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP[0])){
             //checking if there's unique
             databasePatient.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -142,7 +143,7 @@ public class AddPatientRecord extends AppCompatActivity {
 
                     for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
                         Patient patient = dsPatient.getValue(Patient.class);
-                        if(fullnameP.equals(patient.getFullname())){
+                        if(fullnameP[0].equals(patient.getFullname())){
                             duplicatePatient = true;
                             if(!patient.getbId().equals(bId)){
                                 duplicateBarangayPatient = true;
@@ -158,27 +159,27 @@ public class AddPatientRecord extends AppCompatActivity {
                             birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
-                        if (checkFullNameAllNumbers(fullnameP)) {
+                        if (checkFullNameAllNumbers(fullnameP[0])) {
                             fullNameAllNumbers = true;
                             fullname.setError("Patient's name is all digits");
-                        } else if (checkFullNameAllSpecial(fullnameP)) {
+                        } else if (checkFullNameAllSpecial(fullnameP[0])) {
                             fullNameAllSpecial = true;
                             fullname.setError("Patient's name is all special characters");
-                        } else if (checkFullNameContainsNumber(fullnameP)) {
+                        } else if (checkFullNameContainsNumber(fullnameP[0])) {
                             fullNameContainsNumber = true;
                             fullname.setError("Patient’s name contains a digit");
-                        } else if (checkFullNameContainsSpecial(fullnameP)) {
+                        } else if (checkFullNameContainsSpecial(fullnameP[0])) {
                             fullNameContainsSpecial = true;
                             fullname.setError("Patient's name contains an invalid special character");
                         }
 
-                        if (checkAddressAllNumbers(addressP)) {
+                        if (checkAddressAllNumbers(addressP[0])) {
                             addressAllNumbers = true;
                             address.setError("Patient’s address is all digits");
-                        } else if (checkAddressSpecial(addressP)) {
+                        } else if (checkAddressSpecial(addressP[0])) {
                             addressAllSpecial = true;
                             address.setError("Patient's address contains all invalid special character");
-                        } else if (checkAddressContainsNumber(addressP)) {
+                        } else if (checkAddressContainsNumber(addressP[0])) {
                             addressContainsSpecial = true;
                             address.setError("Patient's address contains an invalid special character");
                         }
@@ -194,10 +195,13 @@ public class AddPatientRecord extends AppCompatActivity {
                             String pid = databasePatient.push().getKey();
                             String age = calculateAge(bdayP);
                             String status = "1";
+
+                            //capitalizing First Letter
+                            fullnameP[0] = captializeFirstLetter(fullnameP[0]);
+                            addressP[0] = captializeFirstLetter(addressP[0]);
 //                            String fullnameFormatted = formatFullname(fullnameP);
 //                            toastMessage(fullnameFormatted);
-                            //Patient patient = new Patient(pid, fullnameP, bdayP, genderP, addressP);
-                            Patient patient = new Patient(pid, fullnameP, bdayP, age, genderP, addressP, "Not yet scanned", status, bId);
+                            Patient patient = new Patient(pid, fullnameP[0], bdayP, age, genderP, addressP[0], "Not yet scanned", status, bId);
 
                             databasePatient.child(pid).setValue(patient);
 
@@ -230,6 +234,19 @@ public class AddPatientRecord extends AppCompatActivity {
         }else{
             toastMessage("Please don't leave any field empty.");
         }
+    }
+
+    public String captializeFirstLetter(String capitalize){
+        String capitalized = null;
+        String[] splitStr = capitalize.toLowerCase().split(" ");
+
+        for(int i = 0; i<splitStr.length; i++){
+            splitStr[i] = splitStr[i].toUpperCase().charAt(0) + splitStr[i].substring(1);
+        }
+
+        capitalized = TextUtils.join(" ", splitStr);
+
+        return capitalized;
     }
 
     public boolean checkBirthdateYear(String bday){

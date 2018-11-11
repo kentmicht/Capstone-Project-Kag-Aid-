@@ -99,7 +99,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             toastMessage("No Internet Connection");
         }
 
-        Toast.makeText(MapsActivity.this,"Shake for Nearby Doctors", Toast.LENGTH_LONG).show();
         //Shake phone to retrieve nearby doctors
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -284,7 +283,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(MapsActivity.this,"Shake for Nearby Doctors", Toast.LENGTH_LONG).show();
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
         //stop location updates
