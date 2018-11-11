@@ -73,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 50000;
+    private int PROXIMITY_RADIUS = 50000; //how far is the meters to be checked by the map to show nearby doctors
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -420,7 +420,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    ///////////////////////////////////////////showing markers ///////////////////////////
+    //getting nearby places data after shaking the phone
     public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
         Context mContext;
@@ -490,15 +490,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-//    public GetNearbyPlacesData(NearbyDoctorInterface nearbyDoctors) {
-//        this.nearbyDoctors = nearbyDoctors;
-//    }
-
         public GetNearbyPlacesData() {
-        }
-
-        public GetNearbyPlacesData(Context mContext) {
-            this.mContext = mContext;
         }
     }
 }

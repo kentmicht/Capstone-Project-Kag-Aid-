@@ -74,14 +74,11 @@ public class PatientRecords extends AppCompatActivity {
     ListView patient_record;
     List<Patient> pList;
     TextView patientErr;
-//    EditText search_patient;
-//    ImageView search_patient_btn;
     ArrayList<String> patient_names;
     PatientLists pLadapter;
 
     TextView test;
     EditText fullNameSearch;
-//    ArrayAdapter<Patient> adapter;
     private ArrayAdapter pAdapter;
     
     @Override
@@ -109,13 +106,7 @@ public class PatientRecords extends AppCompatActivity {
 
         patient_record = (ListView) findViewById(R.id.listViewPatient);
         pList = new ArrayList<>();
-//        search_patient = (EditText) findViewById(R.id.editTextSearchPatient);
-//        search_patient_btn = (ImageView) findViewById(R.id.searchPatientButton);
-//        test = (TextView) findViewById(R.id.test);
         patient_names = new ArrayList<String>();
-
-//        toastMessage("User Id:" + uId);
-//        toastMessage("Barangay Id: " + bId);
 
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");
@@ -173,15 +164,10 @@ public class PatientRecords extends AppCompatActivity {
         viewAllPatients();
 
         ImageView search = (ImageView) findViewById(R.id.patientSearchBtn);
-//        search.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                searchPatient();
-//            }
-//        });
         onSearchEnter(fullNameSearch);
     }
 
+    //using the enter key to search patients
     private void onSearchEnter(EditText fullNameSearch){
         fullNameSearch.setOnKeyListener(new View.OnKeyListener()
         {
@@ -216,32 +202,25 @@ public class PatientRecords extends AppCompatActivity {
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
         final TextView editTextBday = (TextView) dialogView.findViewById(R.id.editTextBirthday);
-        //final TextView textViewGender = (TextView) dialogView.findViewById(R.id.patient_gender); //for displaying the current gender
         final Spinner spinnerGender = (Spinner) dialogView.findViewById(R.id.spinnerGender); //for the updating of teh gender
         final EditText editTextAddress = (EditText) dialogView.findViewById(R.id.editTextAddress);
         final Button updatePatientBtn = (Button) dialogView.findViewById(R.id.updatePatientBtn);
 
         dialogBuilder.setTitle(fullname);
 
-        //toastMessage("Position: " + Integer.toString(spinnerGender.getSelectedItemPosition()) + "Gender: " + gender);
-
         if(gender.equals("Female")) {
             spinnerGender.setSelection(1, true);
-            //toastMessage("Laban");
         }
 
 
 
 
         final AlertDialog alertDialog = dialogBuilder.create();
-//        alertDialog.setCanceledOnTouchOutside(false);
-//        alertDialog.setCancelable(false);
         alertDialog.show();
 
         //Setting the values from the db to the fields
         editTextName.setText(fullname);
         editTextBday.setText(bday);
-        //textViewGender.setText(gender);
         editTextAddress.setText(address);
 
         editTextBday.setOnClickListener(new View.OnClickListener(){
@@ -252,12 +231,6 @@ public class PatientRecords extends AppCompatActivity {
                 int month = Integer.parseInt(dateParts[1]) - 1;
                 int day = Integer.parseInt(dateParts[2]);
 
-//                Calendar cal = Calendar.getInstance();
-//                int year = cal.get(Calendar.YEAR);
-//                int month = cal.get(Calendar.MONTH);
-//                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-//                toastMessage("Year:" + dateParts[0] + " Month:" + dateParts[1]);
 
                 DatePickerDialog dialog = new DatePickerDialog(PatientRecords.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -336,6 +309,7 @@ public class PatientRecords extends AppCompatActivity {
                         fullNameContainsNumber == false &&
                         addressContainsSpecial == false &&
                         fullNameContainsSpecial == false){
+
                     //capitalize First Letter of string
                     pname = captializeFirstLetter(pname);
                     paddress = captializeFirstLetter(paddress);
@@ -363,6 +337,7 @@ public class PatientRecords extends AppCompatActivity {
         };
     }
 
+    ////////////////////////ERROR HANDLINGS IN UPDATING///////////////////////////////////////////////
     public String captializeFirstLetter(String capitalize){
         String capitalized = null;
         String[] splitStr = capitalize.toLowerCase().split(" ");
@@ -444,11 +419,12 @@ public class PatientRecords extends AppCompatActivity {
         }
         return ret;
     }
+    ////////////////////////ERROR HANDLINGS IN UPDATING///////////////////////////////////////////////
 
     //Actual updating in the database
     private boolean updatePatient(final String pid, final String fullname, final String bday, final String age, final String gender, final String address, final String lastscan, final String status, final String bid, final String oldName){
         final boolean[] ret = {false};
-//        println(pid);
+
         db.addListenerForSingleValueEvent(new ValueEventListener() {
               @Override
               public void onDataChange(DataSnapshot dataSnapshot) {
@@ -459,7 +435,6 @@ public class PatientRecords extends AppCompatActivity {
                           if(!pid.equals(patient.getId())){
                               duplicatePatient = true;
                           }
-
                       }
                   }
 
@@ -488,7 +463,7 @@ public class PatientRecords extends AppCompatActivity {
     //Showing new window for adding
     public void addPatientRecord(View view){
         Intent addPatientRec = new Intent(this, AddPatientRecord.class);
-        //addPatientRec.putExtra("USERNAME", userName);
+
         addPatientRec.putExtra("USER_ID", uId);
         addPatientRec.putExtra("BARANGAY_ID", bId);
         startActivity(addPatientRec);
@@ -509,6 +484,7 @@ public class PatientRecords extends AppCompatActivity {
         CustomIntent.customType(PatientRecords.this, "fadein-to-fadeout");
     }
 
+    //search patient records based from the list within the barangay only
     public void searchPatient(){
         final String fullnameS = fullNameSearch.getText().toString();
 
@@ -524,10 +500,10 @@ public class PatientRecords extends AppCompatActivity {
 
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
+                        //patient has to be in the same barangay and status is 1
                         if(patient.getFullname().toLowerCase().contains(fullnameS.toLowerCase()) && bId.equals(patient.getbId()) && patient.getStatus().equals("1")){
                             pList.add(patient);
                         }
-//                    patient_names.add(patient.getFullname());
                     }
 
                     if(pList.isEmpty()){
@@ -549,6 +525,7 @@ public class PatientRecords extends AppCompatActivity {
 
     }
 
+    //view all patient records from the specific barangay
     public void viewAllPatients(){
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -558,22 +535,12 @@ public class PatientRecords extends AppCompatActivity {
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                     Patient patient = pSnapshot.getValue(Patient.class);
-//                    toastMessage("Firebase:" + pSnapshot.child("bId").getValue().toString());
-//                    toastMessage("Patient Class:" + patient.getbId());
-//                    toastMessage("Passed: " + bId);
                     if(!patient.getFullname().equals(null)){
-//                        if(patient.getStatus().equals("1")){
                         if(patient.getStatus().equals("1") && bId.equals(patient.getbId())){
-//                            toastMessage(patient.getFullname() + "is in this Barangay");
                             pList.add(patient);
                         }
                     }
-
-
-//                    patient_names.add(patient.getFullname());
                 }
-                //sort the list
-//                toastMessage(bId);
                 if(pList.isEmpty()){
                     patientErr.setVisibility(View.VISIBLE);
                 }else{
@@ -591,6 +558,7 @@ public class PatientRecords extends AppCompatActivity {
         });
     }
 
+    //sorting the patient record alphabetically
     public void sortPList(){
         if (pList.size() > 0) {
             Collections.sort(pList, new Comparator<Patient>() {

@@ -73,10 +73,6 @@ public class SkinIllnessPage extends AppCompatActivity {
                         illnessDesc = ds.child("skin_illness_desc").getValue().toString();
                         illnessImage = ds.child("image").getValue().toString();
                         illnessSymptom = ds.child("skin_illness_symptoms").getValue().toString();
-//                        toastMessage(illnessName);
-//                        toastMessage(illnessDesc);
-//                        toastMessage(illnessSymptom);
-//                        toastMessage(illnessImage);
                         existDetails = true;
                     }
                 }

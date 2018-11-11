@@ -56,7 +56,6 @@ public class AddPatientRecord extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            //Add Patient Records
 
         }else {
             toastMessage("No Internet Connection");
@@ -66,8 +65,6 @@ public class AddPatientRecord extends AppCompatActivity {
         bId = (String) getIntent().getStringExtra("BARANGAY_ID");
         databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
-//        toastMessage("User Id:" + uId);
-//        toastMessage("Barangay Id: " + bId);
 
         fullname = (EditText) findViewById(R.id.fullname);
         birthdate = (TextView) findViewById(R.id.birthday);
@@ -150,7 +147,7 @@ public class AddPatientRecord extends AppCompatActivity {
                             }
                         }
                     }
-//                    toastMessage(String.valueOf(duplicatePatient));
+
                     if(duplicatePatient == false) {
 
                         if (checkBirthdateYear(bdayP) == false) {
@@ -199,8 +196,6 @@ public class AddPatientRecord extends AppCompatActivity {
                             //capitalizing First Letter
                             fullnameP[0] = captializeFirstLetter(fullnameP[0]);
                             addressP[0] = captializeFirstLetter(addressP[0]);
-//                            String fullnameFormatted = formatFullname(fullnameP);
-//                            toastMessage(fullnameFormatted);
                             Patient patient = new Patient(pid, fullnameP[0], bdayP, age, genderP, addressP[0], "Not yet scanned", status, bId);
 
                             databasePatient.child(pid).setValue(patient);
@@ -236,6 +231,7 @@ public class AddPatientRecord extends AppCompatActivity {
         }
     }
 
+    ////////////////////////ERROR HANDLINGS IN ADDING PATIENT///////////////////////////////////////////////
     public String captializeFirstLetter(String capitalize){
         String capitalized = null;
         String[] splitStr = capitalize.toLowerCase().split(" ");
@@ -317,6 +313,7 @@ public class AddPatientRecord extends AppCompatActivity {
         }
         return ret;
     }
+    ////////////////////////ERROR HANDLINGS IN ADDING PATIENT///////////////////////////////////////////////
 
     @Override
     public void onBackPressed() {

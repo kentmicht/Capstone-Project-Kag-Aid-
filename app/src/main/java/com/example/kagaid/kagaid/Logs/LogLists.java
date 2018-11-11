@@ -28,15 +28,7 @@ public class LogLists extends ArrayAdapter<Log>{
 
     private Activity context;
     private List<Log> logList;
-    DatabaseReference refUser;
-    DatabaseReference refPatient;
-    User u = new User();
-    Patient p = new Patient();
-    Patient logP = new Patient();
     Log log = new Log();
-    Log logPatient = new Log();
-
-    String patientName;
 
 
     public LogLists(Activity context, List logList){
@@ -56,31 +48,8 @@ public class LogLists extends ArrayAdapter<Log>{
         final TextView textViewPatient = (TextView) listViewItem.findViewById(R.id.textView_log_patient);
         final TextView textViewDateTime = (TextView) listViewItem.findViewById(R.id.textView_log_datetime);
 
+        //getting a specific location in the list view then adding the details
         log = logList.get(position);
-//            refPatient = FirebaseDatabase.getInstance().getReference("person_information");
-//            refPatient.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    for (DataSnapshot patientSnapshot : dataSnapshot.getChildren()) {
-//                        p = patientSnapshot.getValue(Patient.class);
-//                        logPatient = logList.get(position);
-////                    System.out.println(logPatient.getpId());
-//                        if (p.getPid().equals(logPatient.getpId())) {
-//                            patientName = p.getFullname();
-////                        System.out.println("Found it");
-//                        }
-//
-//                    }
-//                    textViewPatient.setText("Patient: " + patientName);
-//
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
 
         textViewPatient.setText("Patient: " + log.getPatientName());
         textViewEmployee.setText("Employee: " + log.getEmployeeName());

@@ -71,27 +71,6 @@ public class LogIn extends AppCompatActivity {
         //firebase
         databaseLogin = FirebaseDatabase.getInstance().getReference("users");
         databaseBarangay = FirebaseDatabase.getInstance().getReference("barangay");
-
-//        password.setOnKeyListener(new View.OnKeyListener()
-//        {
-//            public boolean onKey(View v, int keyCode, KeyEvent event)
-//            {
-//                if (event.getAction() == KeyEvent.ACTION_DOWN)
-//                {
-//                    switch (keyCode)
-//                    {
-//                        case KeyEvent.KEYCODE_ENTER:
-//                            goToHomepage();
-//                            return true;
-//                        default:
-//                            break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-
     }
 
     @Override
@@ -110,9 +89,6 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void goToHomepage() {
-        //toastMessage("You are here!");
-//        DatabaseReference usernameRef = ref.child(username.getText().toString());
-//        final DatabaseReference passwordDetailsRef = usernameRef.child(password.getText().toString());
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -128,21 +104,19 @@ public class LogIn extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        //hasing the password
                         String md5HashPass = md5(password.getText().toString());
-//                    toastMessage("Inputted Password:" + md5HashPass);
 
                         for(DataSnapshot loginSnapshot: dataSnapshot.getChildren()){
                             if(username.getText().toString().equals(loginSnapshot.child("username").getValue().toString())){
-                                //toastMessage("Got it Username!");
                                 userName = true;
 
                                 if(md5HashPass.equals(loginSnapshot.child("password").getValue().toString())){
-                                    //toastMessage("Got it Password!");
                                     pass = true;
                                     if(userName == true && pass == true){
                                         uId = loginSnapshot.child("uId").getValue().toString();
                                         barangayId = loginSnapshot.child("bId").getValue().toString();
-//                                    toastMessage(uId);
                                     }
                                 }
                             }

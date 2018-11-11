@@ -132,6 +132,7 @@ public class Logs extends AppCompatActivity {
         });
     }
 
+    //using the enter key to search for the logs
     public void onSearchLogs(EditText logS){
         logS.setOnKeyListener(new View.OnKeyListener()
         {
@@ -154,6 +155,7 @@ public class Logs extends AppCompatActivity {
         });
     }
 
+    //showing the logs dialog the moment a log is clicked.
     private void showLogDialog(String logId, String patientName, String empName, String logDateTime, String percentage, String skinIllness, final String pId){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -188,6 +190,8 @@ public class Logs extends AppCompatActivity {
 
             }
         });
+
+        //placing the details on the logs dialog box
         skinIdentify.setText(skinIllness);
         percent.setText(percentage);
         employee.setText(empName);
@@ -224,6 +228,7 @@ public class Logs extends AppCompatActivity {
     }
 
 
+    //search log function that searches for the inputted given data based from a category (Date, Time, Employee Name and Patient Name)
     public void searchLog(final String logCategory){
         final String logSearch = logS.getText().toString();
 
@@ -262,14 +267,12 @@ public class Logs extends AppCompatActivity {
                                 }
                                 break;
                             case "Employee Name":
-//                                toastMessage(log.getEmployeeName());
                                 if(!log.getEmployeeName().isEmpty()){
                                     if(log.getEmployeeName().toLowerCase().contains(logSearch.toLowerCase()) && bId.equals(log.getbId())){
                                         if (currentDate[0].equals(logDate[0])) {
                                             logList.add(log);
                                         }
                                     }
-//                                    toastMessage(log.getEmployeeName());
                                 }
                                 break;
                         }
@@ -300,6 +303,7 @@ public class Logs extends AppCompatActivity {
         }
     }
 
+    //viewing all the logs in a list view item
     public void viewAllLogs(){
         databaseLogs.addValueEventListener(new ValueEventListener() {
             @Override
@@ -309,28 +313,18 @@ public class Logs extends AppCompatActivity {
                 for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                     Log log = logsSnapshot.getValue(Log.class);
                     String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
-//                    toastMessage(bId);
-//                    if(!log.getbId().equals(null)) {
                         if (currentDate[0].equals(logDate[0])) {
-//                        if(currentDate[0].equals(logDate[0]) && bId.equals(log.getbId())){
                             if(bId.equals(log.getbId())){
-//                                toastMessage(log.getLogdatetime());
-//                                toastMessage("Log Class:" + log.getbId());
-//                                toastMessage("Passed: " + bId);
                                 logList.add(log);
                             }
-
-//
                         }
-//                    }
 
                 }
-
-//                toastMessage(bId);
 
                 if(logList.isEmpty()){
                     logErr.setVisibility(View.VISIBLE);
                 }else{
+                    //making use of the LogLists to set all details in an adapter
                     LogLists adapter = new LogLists(Logs.this, logList);
                     listViewLogs.setAdapter(adapter);
                 }

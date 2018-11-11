@@ -31,7 +31,7 @@ public class MainScreen extends AppCompatActivity {
         squareLoaderView=(SlidingSquareLoaderView)findViewById(R.id.loader);
         squareLoaderView.start();
 
-        Thread xyz=new Thread(new Runnable() {
+        Thread loaderThread=new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
@@ -51,7 +51,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        xyz.start();
+        loaderThread.start();
     }
     @Override
     protected void onPause(){

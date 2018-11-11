@@ -85,7 +85,6 @@ import okhttp3.RequestBody;
 public class ViewPatientInfo extends AppCompatActivity {
 
     private static final int CAMERA_PIC_REQUEST = 1111;
-    private ImageView selectedImageView;
 
     private static String _bytes64String, _imageFileName;
     private static String[] scannedResult = new String[2];
@@ -148,8 +147,6 @@ public class ViewPatientInfo extends AppCompatActivity {
             toastMessage("No Internet Connection");
         }
 
-        //uId = (String) getIntent().getStringExtra("USER_ID");
-
         textViewPatientName = (TextView) findViewById(R.id.textViewPatientName);
         textViewPatientBday = (TextView) findViewById(R.id.textViewPatientBday);
         textviewPatientGender = (TextView) findViewById(R.id.textViewPatientGender);
@@ -168,17 +165,11 @@ public class ViewPatientInfo extends AppCompatActivity {
         bId = intent.getStringExtra("BARANGAY_ID");
         bName = intent.getStringExtra("BARANGAY_NAME");
 
-//        toastMessage(lastscan);
-
         textViewPatientName.setText(pfullname);
         textViewPatientBday.setText(pbday);
         textviewPatientGender.setText(pgender);
         textViewPatientAddress.setText(paddress);
         barangay.setText(bName);
-
-//        toastMessage("User Id:" + uId + ", Patient Id: " + pId );
-//        toastMessage("Barangay Id: " + bId);
-//        toastMessage("Barangay Name: " + bName);
 
         _imageFileName = currentDateTime().replaceAll("\\s+","").replaceAll(",","").replaceAll(":","");
 
@@ -202,6 +193,7 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     }
 
+    //open the Individual Patient Records page
     public void openPatientRecords(){
         Intent intent = new Intent(this, PatientRecords.class);
         intent.putExtra("USER_ID", uId);
@@ -212,10 +204,8 @@ public class ViewPatientInfo extends AppCompatActivity {
         CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
-
+    //opens the camera for image capture
     public void captureImage() {
-//        Intent maps = new Intent(this, MapsActivity.class);
-//        startActivity(maps);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//
 
         //camera setup
@@ -233,7 +223,6 @@ public class ViewPatientInfo extends AppCompatActivity {
             if(requestCode == CAMERA_PIC_REQUEST){
                 Bundle extras = data.getExtras();
                 imageBitmap = (Bitmap) extras.get("data");
-//                toastMessage("Laban besh! nakasulod oks" + _imagefileUri.getPath());
                 uploadImage(imageBitmap);
             }
         }else if(resultCode == RESULT_CANCELED){
@@ -245,7 +234,6 @@ public class ViewPatientInfo extends AppCompatActivity {
     }
 
     private void uploadImage(Bitmap picture) {
-//        Bitmap bm = BitmapFactory.decodeFile(picturePath);
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         picture.compress(Bitmap.CompressFormat.JPEG, 100, bao);
         byteArray = bao.toByteArray();
@@ -269,22 +257,24 @@ public class ViewPatientInfo extends AppCompatActivity {
 
                 //httpPost Entity
                 httpPost.setEntity(new ByteArrayEntity(byteArray));
-                // 7. Set some headers to inform server about the type of the content
+
+                //set some headers to inform server about the type of the content
                 httpPost.setHeader("Content-Type", "application/octet-stream");
                 httpPost.setHeader("Prediction-Key", predictionKey);
 
-                // 8. Execute POST request to the given URL
+                //execute POST request to the given URL
                 HttpResponse httpResponse = httpclient.execute(httpPost);
                 Log.e("MINION", "Post request successful");
                 HttpEntity entity = httpResponse.getEntity();
 
+                //retrieveing the response of the server api
                 String responseText = EntityUtils.toString(entity);
-
 
                 responseCode = httpResponse.getStatusLine().getStatusCode();
                 System.out.println("Response Code: " + responseCode);
                 System.out.println("Response Message: " + responseText);
 
+            //retrieving the json file of the skin illness results
             result = responseText;
         } catch (Exception e) {
             Log.e("InputStream", e.toString());
@@ -295,10 +285,10 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         private ProgressDialog pd = new ProgressDialog(ViewPatientInfo.this);
+
+        //showing the dialog on retrieving the result of the captured image
         protected void onPreExecute() {
             super.onPreExecute();
-//            resultText = (TextView) findViewById(R.id.textView);
-//            resultText.setText("New file "+_imageFileName+".jpg created\n");
             pd.setMessage("Identifying, please wait..");
             pd.setCancelable(false);
             pd.show();
@@ -309,10 +299,10 @@ public class ViewPatientInfo extends AppCompatActivity {
             return POST(urls[0]);
         }
 
-        // onPostExecute displays the results of the AsyncTask.
+        // onPostExecute displays the results of the AsyncTask and the identified skin illness.
         @Override
         protected void onPostExecute(String result) {
-//            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+            //retrieving the json file and getting the highest confidence
             try {
                 JSONObject json = new JSONObject(result);
                 JSONArray skinResults = json.getJSONArray("predictions");
@@ -326,7 +316,6 @@ public class ViewPatientInfo extends AppCompatActivity {
 
                 showDiagnosisResults(scannedResult[1], scannedResult[0]);
                 pd.dismiss();
-//                toastMessage(percentage + " " + skinName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -334,6 +323,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         }
     }
 
+    //showing the diagnosis result of the identified skin illness
     private void showDiagnosisResults(String skinIdentify, String percent){
         dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -452,10 +442,10 @@ public class ViewPatientInfo extends AppCompatActivity {
         });
     }
 
+    //open the treatments page based from the skin illness result name
     public void openTreatments(View view){
         final String SKIN_ILLNESS_NAME = "skin_illness_name";
         final String SKIN_ILLNESS_ID  = "skin_illness_id";
-//        toastMessage(skinIllnessId);
 
         Intent treatments = new Intent(this, TreatmentsPage.class);
         treatments.putExtra("skin_illness_name", scannedResult[1]);
@@ -464,10 +454,10 @@ public class ViewPatientInfo extends AppCompatActivity {
         CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
+    //open the skin illness page based from the skin illness result name
     public void openSkinIllness(View view){
         final String SKIN_ILLNESS_NAME = "SKIN_ILLNESS_NAME";
         final String SKIN_ILLNESS_ID  = "SKIN_ILLNESS_ID";
-//        toastMessage(skinIllness);
 
         Intent skinIllness = new Intent(this, SkinIllnessPage.class);
         skinIllness.putExtra("SKIN_ILLNESS_NAME", scannedResult[1]);
@@ -476,6 +466,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         CustomIntent.customType(ViewPatientInfo.this, "fadein-to-fadeout");
     }
 
+    //open the maps page
     public void openMaps(View view){
         Intent maps = new Intent(this, MapsActivity.class);
         startActivity(maps);
