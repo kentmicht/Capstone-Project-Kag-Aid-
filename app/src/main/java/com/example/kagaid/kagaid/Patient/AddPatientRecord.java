@@ -162,14 +162,18 @@ public class AddPatientRecord extends AppCompatActivity {
                 }else if(TextUtils.isEmpty(editLastName.getText().toString())){
                     editLastName.setError("Last Name is required");
                     return;
-                }else if(TextUtils.isEmpty(editMiddleName.getText().toString())){
-                    editMiddleName.setText(" ");
                 }
 
                 //fullname format
-                final String fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
-                        captializeFirstLetter(editFirstName.getText().toString()) + " " +
-                        captializeFirstLetter(editMiddleName.getText().toString());
+                final String fullNameFormat;
+                if(TextUtils.isEmpty(editMiddleName.getText().toString())){
+                    fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
+                            captializeFirstLetter(editFirstName.getText().toString()) + " ";
+                }else{
+                    fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
+                            captializeFirstLetter(editFirstName.getText().toString()) + " " +
+                            captializeFirstLetter(editMiddleName.getText().toString());
+                }
 
                 //error handling confirmation
                 if (checkFullNameAllNumbers(fullNameFormat)) {
@@ -191,12 +195,19 @@ public class AddPatientRecord extends AppCompatActivity {
                         fullNameContainsNumber == false &&
                         fullNameContainsSpecial == false) {
 
-
                     fullnamePatient[0] = captializeFirstLetter(editFirstName.getText().toString());
                     fullnamePatient[1] = captializeFirstLetter(editLastName.getText().toString());
-                    fullnamePatient[2] = captializeFirstLetter(editMiddleName.getText().toString());
-                    fullname.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0));
-//                    toastMessage(fullnamePatient[0] + fullnamePatient[1] + fullnamePatient[2]);
+
+                    if(TextUtils.isEmpty(editMiddleName.getText().toString())){
+                        fullnamePatient[2] = " ";
+                    }else{
+                        fullnamePatient[2] = captializeFirstLetter(editMiddleName.getText().toString());
+                    }
+                    if(fullnamePatient[2].equals(" ")){
+                        fullname.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2]);
+                    }else{
+                        fullname.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0) + ".");
+                    }
                     alertDialog.dismiss();
                 }
             }

@@ -170,7 +170,12 @@ public class ViewPatientInfo extends AppCompatActivity {
         bId = intent.getStringExtra("BARANGAY_ID");
         bName = intent.getStringExtra("BARANGAY_NAME");
 
-        pfullname = plastname + ", " + pfirstname + " " + pmiddlename.charAt(0) + ".";
+        if(pmiddlename.equals(" ")){
+            pfullname = plastname + ", " + pfirstname + " " + pmiddlename;
+        }else{
+            pfullname = plastname + ", " + pfirstname + " " + pmiddlename.charAt(0) + ".";
+        }
+
 
         textViewPatientName.setText(pfullname);
         textViewPatientBday.setText(pbday);

@@ -198,7 +198,12 @@ public class PatientRecords extends AppCompatActivity {
     private void showUpdateDialog(final String pid, final String firstname, final String lastname, final String middlename, final String bday, final String gender, final String address, final String lastscan, final String bid)
     {
 
-        final String oldName = lastname + ", " + firstname + " " + middlename.charAt(0) + ".";
+        final String oldName;
+        if(middlename.equals(" ")){
+            oldName = lastname + ", " + firstname + " " + middlename;
+        }else{
+            oldName = lastname + ", " + firstname + " " + middlename.charAt(0) + ".";
+        }
         fullnamePatient[0] = firstname;
         fullnamePatient[1] = lastname;
         fullnamePatient[2] = middlename;
@@ -215,7 +220,12 @@ public class PatientRecords extends AppCompatActivity {
         final EditText editTextAddress = (EditText) dialogView.findViewById(R.id.editTextAddress);
         final Button updatePatientBtn = (Button) dialogView.findViewById(R.id.updatePatientBtn);
 
-        dialogBuilder.setTitle(lastname + ", " + firstname + " " + middlename.charAt(0) + ".");
+        if(middlename.equals(" ")){
+            dialogBuilder.setTitle(lastname + ", " + firstname + " " + middlename);
+        }else{
+            dialogBuilder.setTitle(lastname + ", " + firstname + " " + middlename.charAt(0) + ".");
+        }
+
 
         if(gender.equals("Female")) {
             spinnerGender.setSelection(1, true);
@@ -228,7 +238,12 @@ public class PatientRecords extends AppCompatActivity {
         alertDialog.show();
 
         //Setting the values from the db to the fields
-        editTextName.setText(lastname + ", " + firstname + " " + middlename.charAt(0) + ".");
+        if(middlename.equals(" ")){
+            editTextName.setText(lastname + ", " + firstname + " " + middlename);
+        }else{
+            editTextName.setText(lastname + ", " + firstname + " " + middlename.charAt(0) + ".");
+        }
+
         editTextBday.setText(bday);
         editTextAddress.setText(address);
 
@@ -326,8 +341,6 @@ public class PatientRecords extends AppCompatActivity {
                         addressContainsSpecial == false &&
                         fullNameContainsSpecial == false){
 
-                    //capitalize First Letter of string
-                    pname = captializeFirstLetter(pname);
                     paddress = captializeFirstLetter(paddress);
 
                     updatePatient(pid, fullnamePatient[0], fullnamePatient[1], fullnamePatient[2], pbday, pAge, pgender, captializeFirstLetter(paddress), lastscan, status, bid, oldName);
@@ -354,7 +367,7 @@ public class PatientRecords extends AppCompatActivity {
     }
 
     //show dialog box for seperating fullname (First Name, Last Name and Middle Name)
-    public void showFullNameSeperatorDialog(String firstname, String lastname, String middlename){
+    public void showFullNameSeperatorDialog(String firstname, String lastname, final String middlename){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_fullname_seperation_dialog, null);
@@ -368,7 +381,12 @@ public class PatientRecords extends AppCompatActivity {
 
         editFirstName.setText(firstname);
         editLastName.setText(lastname);
-        editMiddleName.setText(middlename);
+        if(middlename.equals(" ")){
+            editMiddleName.setText("");
+        }else{
+            editMiddleName.setText(middlename);
+        }
+
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -387,14 +405,19 @@ public class PatientRecords extends AppCompatActivity {
                 }else if(TextUtils.isEmpty(editLastName.getText().toString())){
                     editLastName.setError("Last Name is required");
                     return;
-                }else if(TextUtils.isEmpty(editMiddleName.getText().toString())){
-                    editMiddleName.setText(" ");
                 }
 
                 //fullname format
-                final String fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
-                        captializeFirstLetter(editFirstName.getText().toString()) + " " +
-                        captializeFirstLetter(editMiddleName.getText().toString());
+                final String fullNameFormat;
+                if(TextUtils.isEmpty(editMiddleName.getText().toString())){
+                    fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
+                            captializeFirstLetter(editFirstName.getText().toString()) + " ";
+                }else{
+                    fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
+                            captializeFirstLetter(editFirstName.getText().toString()) + " " +
+                            captializeFirstLetter(editMiddleName.getText().toString());
+                }
+
 
                 //error handling confirmation
                 if (checkFullNameAllNumbers(fullNameFormat)) {
@@ -418,11 +441,19 @@ public class PatientRecords extends AppCompatActivity {
 
                     fullnamePatient[0] = captializeFirstLetter(editFirstName.getText().toString());
                     fullnamePatient[1] = captializeFirstLetter(editLastName.getText().toString());
-                    fullnamePatient[2] = captializeFirstLetter(editMiddleName.getText().toString());
 
-                    editTextName.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0) + ".");
+                    if(TextUtils.isEmpty(editMiddleName.getText().toString())){
+                        fullnamePatient[2] = " ";
+                    }else{
+                        fullnamePatient[2] = captializeFirstLetter(editMiddleName.getText().toString());
+                    }
 
-//                    toastMessage(fullnamePatient[0] + fullnamePatient[1] + fullnamePatient[2]);
+                    if(fullnamePatient[2].equals(" ")){
+                        editTextName.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2]);
+                    }else{
+                        editTextName.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0) + ".");
+                    }
+                    
                     alertDialog.dismiss();
                 }
             }
@@ -592,7 +623,12 @@ public class PatientRecords extends AppCompatActivity {
 
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
-                        String pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename().charAt(0) + ".";
+                        String pfullname;
+                        if(patient.getMiddlename().equals(" ")){
+                            pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename();
+                        }else{
+                            pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename().charAt(0) + ".";
+                        }
                         //patient has to be in the same barangay and status is 1
                         if(pfullname.toLowerCase().contains(fullnameS.toLowerCase()) && bId.equals(patient.getbId()) && patient.getStatus().equals("1")){
                             pList.add(patient);

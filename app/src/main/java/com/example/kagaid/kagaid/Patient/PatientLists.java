@@ -35,8 +35,14 @@ public class PatientLists extends ArrayAdapter<Patient> {
         TextView plastscan = (TextView) listViewItem.findViewById(R.id.textView_patient_last_scanned);
 
         Patient patient = patientList.get(position);
+        String pfullname;
+        if(patient.getMiddlename().equals(" ")){
+            pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename();
+        }else{
+            pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename().charAt(0) + ".";
 
-        pname.setText(patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename().charAt(0) + ".");
+        }
+        pname.setText(pfullname);
         plastscan.setText("Last Scan: "+ patient.getLastscan());
         return listViewItem;
     }
