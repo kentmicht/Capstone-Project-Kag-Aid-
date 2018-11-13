@@ -3,6 +3,9 @@ package com.example.kagaid.kagaid.Patient;
 public class Patient {
     String pid;
     String fullname;
+    String firstname;
+    String lastname;
+    String middlename;
     String birthday;
     String age;
     String gender;
@@ -11,6 +14,19 @@ public class Patient {
     String status;
     String bId;
 
+    public Patient(String pid, String firstname, String lastname, String middlename, String birthday, String age, String gender, String address, String lastscan, String status, String bId) {
+        this.pid = pid;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.middlename = middlename;
+        this.birthday = birthday;
+        this.age = age;
+        this.gender = gender;
+        this.address = address;
+        this.lastscan = lastscan;
+        this.status = status;
+        this.bId = bId;
+    }
 
     public Patient(String pid, String fullname, String birthday, String age, String gender, String address, String lastscan, String status, String bId) {
         this.pid = pid;
@@ -146,5 +162,29 @@ public class Patient {
 
     public void setbId(String bId) {
         this.bId = bId;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getMiddlename() {
+        return middlename;
+    }
+
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
     }
 }

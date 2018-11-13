@@ -81,15 +81,6 @@ public class Logs extends AppCompatActivity {
         ImageView search = (ImageView) findViewById(R.id.logSearchBtn);
         logCateg= (Spinner) findViewById(R.id.logCategory);
 
-//        search.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-////                toastMessage(logCategory);
-//                String logCategory = logCateg.getSelectedItem().toString();
-//                searchLog(logCategory);
-//            }
-//        });
-
         onSearchLogs(logS);
         logS.setOnKeyListener(new View.OnKeyListener()
         {
@@ -178,7 +169,7 @@ public class Logs extends AppCompatActivity {
                 for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
                     Patient p = patientSnapshot.getValue(Patient.class);
                     if(p.getPid().equals(pId)){
-                        patientName = p.getFullname();
+                        patientName = p.getLastname() + ", " + p.getFirstname() + " " + p.getMiddlename().charAt(0) + ".";
                     }
 
                 }

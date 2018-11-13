@@ -36,7 +36,7 @@ public class PatientLists extends ArrayAdapter<Patient> {
 
         Patient patient = patientList.get(position);
 
-        pname.setText(patient.getFullname());
+        pname.setText(patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename().charAt(0) + ".");
         plastscan.setText("Last Scan: "+ patient.getLastscan());
         return listViewItem;
     }

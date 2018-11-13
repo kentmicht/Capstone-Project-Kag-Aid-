@@ -19,26 +19,13 @@
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="1dp" />
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView31"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter New Fullname"
-        android:textColor="@color/place_autocomplete_prediction_primary_text_highlight"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="20dp" />
-
     <TextView
         android:id="@+id/textView21"
         android:layout_width="328dp"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_marginTop="231dp"
         android:text="Address"
         android:textColor="@color/textHomepage"
         android:textStyle="bold"
@@ -116,7 +103,7 @@
 
     <TextView
         android:id="@+id/editTextBirthday"
-        android:layout_width="wrap_content"
+        android:layout_width="358dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView20"
         android:layout_below="@+id/textView22"
@@ -142,4 +129,13 @@
         android:text="LastName, FirstName M.I"
         android:textSize="10sp"
         android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/fullNameSeperate"
+        android:layout_width="361dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_below="@+id/textView31"
+        android:text="Full Name"
+        android:textSize="20sp" />
 </RelativeLayout>

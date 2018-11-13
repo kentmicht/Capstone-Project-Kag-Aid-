@@ -121,6 +121,9 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     String employeeName = null;
     String pfullname = null;
+    String pfirstname = null;
+    String plastname = null;
+    String pmiddlename = null;
     String pbday = null;
     String pgender = null;
     String paddress = null;
@@ -155,7 +158,9 @@ public class ViewPatientInfo extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        pfullname = intent.getStringExtra(PatientRecords.PATIENT_FULLNAME);
+        pfirstname = intent.getStringExtra("PATIENT_FIRSTNAME");
+        plastname = intent.getStringExtra("PATIENT_LASTNAME");
+        pmiddlename = intent.getStringExtra("PATIENT_MIDDLENAME");
         pbday = intent.getStringExtra(PatientRecords.PATIENT_BIRTHDAY);
         pgender = intent.getStringExtra(PatientRecords.PATIENT_GENDER);
         paddress = intent.getStringExtra(PatientRecords.PATIENT_ADDRESS);
@@ -164,6 +169,8 @@ public class ViewPatientInfo extends AppCompatActivity {
         lastscan = intent.getStringExtra(PatientRecords.PATIENT_LAST_SCAN);
         bId = intent.getStringExtra("BARANGAY_ID");
         bName = intent.getStringExtra("BARANGAY_NAME");
+
+        pfullname = plastname + ", " + pfirstname + " " + pmiddlename.charAt(0) + ".";
 
         textViewPatientName.setText(pfullname);
         textViewPatientBday.setText(pbday);
@@ -360,11 +367,12 @@ public class ViewPatientInfo extends AppCompatActivity {
                 }
 //                toastMessage(employeeName);
                 String logId = databaseLogs.push().getKey();
+
                 Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[1], scannedResult[0], bId);
                 String status = "1";
                 String age = calculateAge(pbday);
                 currentDateTimeStored = currentDateTime();
-                Patient patient = new Patient(pId, pfullname, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
+                Patient patient = new Patient(pId, pfirstname, plastname, pmiddlename, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
 
                 databasePatient.child(pId).setValue(patient);
                 databaseLogs.child(logId).setValue(logSingle);

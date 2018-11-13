@@ -75,16 +75,15 @@
         android:inputType="textPersonName"
         android:textSize="12sp" />
 
-    <EditText
-        android:id="@+id/fullname"
-        android:layout_width="230dp"
+    <TextView
+        android:id="@+id/fullNameSeperated"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView6"
+        android:layout_below="@+id/textView30"
         android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="Fullname"
-        android:inputType="textPersonName"
-        android:textSize="14sp"/>
+        android:text="Full Name"
+        android:textSize="14sp"
+        tools:text="Full Name" />
 
     <Button
         android:id="@+id/addPatientBtn"
@@ -138,8 +137,9 @@
         android:id="@+id/textView8"
         android:layout_width="231dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView30"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="249dp"
         android:text="Fullname "
         android:textColor="@color/textHomepage"
         android:textStyle="bold" />
@@ -159,8 +159,8 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fullname"
         android:layout_alignStart="@+id/address"
+        android:layout_below="@+id/textView8"
         android:text="LastName, FirstName M.I"
         android:textColor="@color/gray"
         android:textSize="10sp"

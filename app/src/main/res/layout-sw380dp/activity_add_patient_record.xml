@@ -74,16 +74,16 @@
         android:hint="Address"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/fullname"
-        android:layout_width="230dp"
+    <TextView
+        android:id="@+id/fullNameSeperated"
+        android:layout_width="234dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="322dp"
-        android:ems="10"
-        android:hint="Fullname"
-        android:inputType="textPersonName"/>
+        android:layout_marginTop="331dp"
+        android:text="Full Name"
+        android:textSize="20sp"
+        tools:text="Full Name" />
 
     <Button
         android:id="@+id/addPatientBtn"
@@ -157,9 +157,9 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fullname"
+        android:layout_above="@+id/fullNameSeperated"
         android:layout_alignStart="@+id/address"
-        android:layout_marginBottom="-319dp"
+        android:layout_marginBottom="-331dp"
         android:text="LastName, FirstName M.I"
         android:textColor="@color/gray"
         android:textSize="12sp"
@@ -199,7 +199,7 @@
         android:id="@+id/birthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/fullname"
+        android:layout_alignStart="@+id/textView8"
         android:layout_below="@+id/textView6"
         android:ems="10"
         android:text="Birthdate"

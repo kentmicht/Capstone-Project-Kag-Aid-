@@ -11,10 +11,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,12 +38,14 @@ import maes.tech.intentanim.CustomIntent;
 
 public class AddPatientRecord extends AppCompatActivity {
 
-    EditText fullname, address;
-    TextView birthdate;
+    EditText address;
+    TextView birthdate, fullname;
     Spinner gender;
     Button patientAdd;
     String uId;
     String bId;
+
+    String[] fullnamePatient = new String[3];
 
     DatabaseReference databasePatient;
     private android.app.DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -66,7 +70,7 @@ public class AddPatientRecord extends AppCompatActivity {
         databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
 
 
-        fullname = (EditText) findViewById(R.id.fullname);
+        fullname = (TextView) findViewById(R.id.fullNameSeperated);
         birthdate = (TextView) findViewById(R.id.birthday);
         address = (EditText) findViewById(R.id.address);
         gender = (Spinner) findViewById(R.id.gender);
@@ -96,6 +100,14 @@ public class AddPatientRecord extends AppCompatActivity {
             }
         });
 
+        fullname.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                showFullNameSeperatorDialog(fullnamePatient[0], fullnamePatient[1], fullnamePatient[2]);
+            }
+        });
+
         mDateSetListener = new android.app.DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -112,16 +124,93 @@ public class AddPatientRecord extends AppCompatActivity {
 
             }
         };
+
+
+    }
+
+    //show dialog box for seperating fullname (First Name, Last Name and Middle Name)
+    public void showFullNameSeperatorDialog(final String firstName, final String lastName, final String middleName){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_fullname_seperation_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        final EditText editFirstName = (EditText) dialogView.findViewById(R.id.firstNameSep);
+        final EditText editLastName = (EditText) dialogView.findViewById(R.id.lastNameSep);
+        final EditText editMiddleName = (EditText) dialogView.findViewById(R.id.midNameSep);
+        final Button fullNameBtn = (Button) dialogView.findViewById(R.id.fullnameButton);
+
+        editFirstName.setText(firstName);
+        editLastName.setText(lastName);
+        editMiddleName.setText(middleName);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        fullNameBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boolean fullNameAllNumbers = false;
+                boolean fullNameAllSpecial = false;
+                boolean fullNameContainsNumber = false;
+                boolean fullNameContainsSpecial = false;
+
+                if(TextUtils.isEmpty(editFirstName.getText().toString())){
+                    editFirstName.setError("First Name is required");
+                    return;
+                }else if(TextUtils.isEmpty(editLastName.getText().toString())){
+                    editLastName.setError("Last Name is required");
+                    return;
+                }else if(TextUtils.isEmpty(editMiddleName.getText().toString())){
+                    editMiddleName.setText(" ");
+                }
+
+                //fullname format
+                final String fullNameFormat = captializeFirstLetter(editLastName.getText().toString()) + ", " +
+                        captializeFirstLetter(editFirstName.getText().toString()) + " " +
+                        captializeFirstLetter(editMiddleName.getText().toString());
+
+                //error handling confirmation
+                if (checkFullNameAllNumbers(fullNameFormat)) {
+                    fullNameAllNumbers = true;
+                    toastMessage("Patient's name (First, Middle, or Last) is all digits");
+                } else if (checkFullNameAllSpecial(fullNameFormat)) {
+                    fullNameAllSpecial = true;
+                    toastMessage("Patient's name (First, Middle, or Last) is all special characters");
+                } else if (checkFullNameContainsNumber(fullNameFormat)) {
+                    fullNameContainsNumber = true;
+                    toastMessage("Patient’s name (First, Middle, or Last) contains a digit");
+                } else if (checkFullNameContainsSpecial(fullNameFormat)) {
+                    fullNameContainsSpecial = true;
+                    toastMessage("Patient's name (First, Middle, or Last) contains an invalid special character");
+                }
+
+                if (fullNameAllSpecial == false &&
+                        fullNameAllNumbers == false &&
+                        fullNameContainsNumber == false &&
+                        fullNameContainsSpecial == false) {
+
+
+                    fullnamePatient[0] = captializeFirstLetter(editFirstName.getText().toString());
+                    fullnamePatient[1] = captializeFirstLetter(editLastName.getText().toString());
+                    fullnamePatient[2] = captializeFirstLetter(editMiddleName.getText().toString());
+                    fullname.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0));
+//                    toastMessage(fullnamePatient[0] + fullnamePatient[1] + fullnamePatient[2]);
+                    alertDialog.dismiss();
+                }
+            }
+        });
     }
 
     private void addPatient(){
-        final String[] fullnameP = {fullname.getText().toString().trim()};
         final String bdayP = birthdate.getText().toString();
         final String[] addressP = {address.getText().toString()};
         final String genderP = gender.getSelectedItem().toString();
+        final String fullnameP = fullname.getText().toString();
 
 
-        if(!TextUtils.isEmpty(fullnameP[0]) && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP[0])){
+        if(!fullnameP.matches("Full Name") && !bdayP.matches("Birthdate") && !TextUtils.isEmpty(addressP[0])){
             //checking if there's unique
             databasePatient.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -130,17 +219,13 @@ public class AddPatientRecord extends AppCompatActivity {
                     boolean duplicatePatient = false;
                     boolean duplicateBarangayPatient = false;
                     boolean yearBeyondCurrent = false;
-                    boolean fullNameAllNumbers = false;
-                    boolean fullNameAllSpecial = false;
-                    boolean fullNameContainsNumber = false;
-                    boolean fullNameContainsSpecial = false;
                     boolean addressAllNumbers = false;
                     boolean addressAllSpecial = false;
                     boolean addressContainsSpecial = false;
 
                     for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
                         Patient patient = dsPatient.getValue(Patient.class);
-                        if(fullnameP[0].equals(patient.getFullname())){
+                        if(fullnamePatient[0].equals(patient.getFirstname()) && fullnamePatient[1].equals(patient.getLastname()) && fullnamePatient[2].equals(patient.getMiddlename())){
                             duplicatePatient = true;
                             if(!patient.getbId().equals(bId)){
                                 duplicateBarangayPatient = true;
@@ -156,20 +241,6 @@ public class AddPatientRecord extends AppCompatActivity {
                             birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
-                        if (checkFullNameAllNumbers(fullnameP[0])) {
-                            fullNameAllNumbers = true;
-                            fullname.setError("Patient's name is all digits");
-                        } else if (checkFullNameAllSpecial(fullnameP[0])) {
-                            fullNameAllSpecial = true;
-                            fullname.setError("Patient's name is all special characters");
-                        } else if (checkFullNameContainsNumber(fullnameP[0])) {
-                            fullNameContainsNumber = true;
-                            fullname.setError("Patient’s name contains a digit");
-                        } else if (checkFullNameContainsSpecial(fullnameP[0])) {
-                            fullNameContainsSpecial = true;
-                            fullname.setError("Patient's name contains an invalid special character");
-                        }
-
                         if (checkAddressAllNumbers(addressP[0])) {
                             addressAllNumbers = true;
                             address.setError("Patient’s address is all digits");
@@ -182,27 +253,22 @@ public class AddPatientRecord extends AppCompatActivity {
                         }
 
                         if (yearBeyondCurrent == false &&
-                                fullNameAllSpecial == false &&
-                                fullNameAllNumbers == false &&
                                 addressAllNumbers == false &&
                                 addressAllSpecial == false &&
-                                fullNameContainsNumber == false &&
-                                addressContainsSpecial == false &&
-                                fullNameContainsSpecial == false) {
+                                addressContainsSpecial == false) {
                             String pid = databasePatient.push().getKey();
                             String age = calculateAge(bdayP);
                             String status = "1";
 
                             //capitalizing First Letter
-                            fullnameP[0] = captializeFirstLetter(fullnameP[0]);
                             addressP[0] = captializeFirstLetter(addressP[0]);
-                            Patient patient = new Patient(pid, fullnameP[0], bdayP, age, genderP, addressP[0], "Not yet scanned", status, bId);
+                            Patient patient = new Patient(pid, fullnamePatient[0], fullnamePatient[1], fullnamePatient[2], bdayP, age, genderP, addressP[0], "Not yet scanned", status, bId);
 
                             databasePatient.child(pid).setValue(patient);
 
-                            fullname.setText("");
-                            birthdate.setText("");
-                            address.setText("");
+//                            fullname.setText("");
+//                            birthdate.setText("");
+//                            address.setText("");
 
                             progressDialog();
                             new Handler().postDelayed(new Runnable() {
@@ -260,7 +326,7 @@ public class AddPatientRecord extends AppCompatActivity {
 
     public boolean checkFullNameAllSpecial(String fullname){
         boolean ret = false;
-        if(fullname.matches("[+×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
+        if(fullname.matches("[+.-×÷=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
             ret = true;
         }
         return ret;
