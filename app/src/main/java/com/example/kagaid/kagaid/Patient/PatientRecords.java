@@ -453,7 +453,7 @@ public class PatientRecords extends AppCompatActivity {
                     }else{
                         editTextName.setText(fullnamePatient[1] + ", " + fullnamePatient[0] + " " + fullnamePatient[2].charAt(0) + ".");
                     }
-                    
+
                     alertDialog.dismiss();
                 }
             }

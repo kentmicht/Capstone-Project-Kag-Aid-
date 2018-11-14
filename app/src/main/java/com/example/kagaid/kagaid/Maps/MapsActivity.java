@@ -73,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 50000; //how far is the meters to be checked by the map to show nearby doctors
+    private int PROXIMITY_RADIUS = 5000; //how far is the meters to be checked by the map to show nearby doctors
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -147,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(shake > 12){
 //                Toast toast = Toast.makeText(getApplicationContext(), "Do not shake me!", Toast.LENGTH_LONG);
 //                toast.show();
-                String Hospital = "hospital";
+                String Hospital = "hospital"; //type of the category to be shown in the map
                 mMap.clear();
                 String url = getUrl(latitude, longitude, Hospital);
                 Object[] DataTransfer = new Object[2];
@@ -155,6 +155,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 DataTransfer[1] = url;
 
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                //Finally markers are added on nearby hospitals using getNearbyPlacesData.execute(DataTransfer).
+                //refer to the function of GetNearbyPlacesData extends AsyncTask<Object, String, String>
                 getNearbyPlacesData.execute(DataTransfer);
                 Toast.makeText(MapsActivity.this,"Nearby Hospitals/Clinics", Toast.LENGTH_LONG).show();
 
@@ -245,12 +247,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
 
-        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        //Nearby Search Request - A Nearby Search lets you search for places within a specified area.
+        //You can refine your search request by supplying keywords or specifying the type of place you are searching for.
+        //Nearby Search Format >> https://maps.googleapis.com/maps/api/place/nearbysearch/output?parameters
+        //Nearby Search Link Reference >> https://developers.google.com/places/web-service/search
+        //Nearby Search Example >> https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?"); //Nearby Search request HTTP URL
         googlePlacesUrl.append("location=" + latitude + "," + longitude);
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
-        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&type=" + nearbyPlace); //type of the category to be shown in the map
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + "AIzaSyATuUiZUkEc_UgHuqsBJa1oqaODI-3mLs0");
+        googlePlacesUrl.append("&key=" + "AIzaSyA34xxBTqW9or4_gxIu1vevDv7SBYCEWdo"); //google maps specifically places api key
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -366,6 +373,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    //showing the nearby doctors based from the firebase
     DatabaseReference databaseDoctors;
     List<Doctor> doctorList;
     TextView doctorErr;
@@ -432,8 +440,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected String doInBackground(Object... params) {
             try {
                 Log.d("GetNearbyPlacesData", "doInBackground entered");
+
+                //object send by the SensorEventListener
                 mMap = (GoogleMap) params[0];
                 url = (String) params[1];
+
+                //refer to the DownloadURL.java file to read the URL
                 DownloadUrl downloadUrl = new DownloadUrl();
                 googlePlacesData = downloadUrl.readUrl(url);
                 Log.d("GooglePlacesReadTask", "doInBackground Exit");
@@ -464,7 +476,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 final String placeName = googlePlace.get("place_name");
                 String vicinity = googlePlace.get("vicinity");
                 LatLng latLng = new LatLng(lat, lng);
+
+                //position of the marker
                 markerOptions.position(latLng);
+
+                //title to be shown when a marker is clicked
                 markerOptions.title(placeName + " : " + vicinity);
 
                 markerArray[i] = placeName + " : " + vicinity;

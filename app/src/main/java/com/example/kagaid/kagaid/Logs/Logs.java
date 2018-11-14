@@ -169,7 +169,11 @@ public class Logs extends AppCompatActivity {
                 for(DataSnapshot patientSnapshot: dataSnapshot.getChildren()){
                     Patient p = patientSnapshot.getValue(Patient.class);
                     if(p.getPid().equals(pId)){
-                        patientName = p.getLastname() + ", " + p.getFirstname() + " " + p.getMiddlename().charAt(0) + ".";
+                        if(p.getMiddlename().equals(" ")){
+                            patientName = p.getLastname() + ", " + p.getFirstname() + " " + p.getMiddlename();
+                        }else{
+                            patientName = p.getLastname() + ", " + p.getFirstname() + " " + p.getMiddlename().charAt(0) + ".";
+                        }
                     }
 
                 }

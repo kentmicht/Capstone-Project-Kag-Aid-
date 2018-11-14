@@ -251,6 +251,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         byteArray = bao.toByteArray();
         _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
+        //calling the Custom Vision URL
         new HttpAsyncTask().execute(customVisionURL);
 
     }
@@ -274,17 +275,17 @@ public class ViewPatientInfo extends AppCompatActivity {
                 httpPost.setHeader("Content-Type", "application/octet-stream");
                 httpPost.setHeader("Prediction-Key", predictionKey);
 
-                //execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPost);
-                Log.e("MINION", "Post request successful");
-                HttpEntity entity = httpResponse.getEntity();
+            //3. execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            Log.e("MINION", "Post request successful");
+            HttpEntity entity = httpResponse.getEntity();
 
-                //retrieveing the response of the server api
-                String responseText = EntityUtils.toString(entity);
+            //4. retrieveing the response of the server api
+            String responseText = EntityUtils.toString(entity);
 
-                responseCode = httpResponse.getStatusLine().getStatusCode();
-                System.out.println("Response Code: " + responseCode);
-                System.out.println("Response Message: " + responseText);
+            responseCode = httpResponse.getStatusLine().getStatusCode();
+            System.out.println("Response Code: " + responseCode);
+            System.out.println("Response Message: " + responseText);
 
             //retrieving the json file of the skin illness results
             result = responseText;
@@ -306,6 +307,7 @@ public class ViewPatientInfo extends AppCompatActivity {
             pd.show();
         }
 
+        //retrieving the json file returned by Custom Vision
         @Override
         protected String doInBackground(String... urls) {
             return POST(urls[0]);
@@ -318,14 +320,21 @@ public class ViewPatientInfo extends AppCompatActivity {
             try {
                 JSONObject json = new JSONObject(result);
                 JSONArray skinResults = json.getJSONArray("predictions");
+
+                //first/highest confidence among all the skin illness that's why it's 0
                 JSONObject skinRes = skinResults.getJSONObject(0);
+
+                //converting the confidence into a percentage because json is decimal
                 double percentageNum = Double.parseDouble(skinRes.getString("probability")) * 100.00;
+
+                //placing data into the global variables to be accessed by the specific functions (dialog box)
                 String percentage = String.format("%.2f%%", percentageNum);
                 String skinName = skinRes.getString("tagName");
-
                 scannedResult[0] = percentage;
                 scannedResult[1] = skinName;
+                ///////////////////////////////////////////////////////////////////////////////////////////////
 
+                //popping the dialog box containing the identified skin illness, confidence percentage and three buttons
                 showDiagnosisResults(scannedResult[1], scannedResult[0]);
                 pd.dismiss();
             } catch (JSONException e) {
@@ -367,16 +376,18 @@ public class ViewPatientInfo extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (uId.equals(ds.child("uId").getValue().toString())) {
                         employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
-//
                     }
                 }
-//                toastMessage(employeeName);
+                //toastMessage(employeeName);
                 String logId = databaseLogs.push().getKey();
 
+                //after getting the result, log the identified skin illness and percentage be placed in database Logs
                 Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, scannedResult[1], scannedResult[0], bId);
                 String status = "1";
                 String age = calculateAge(pbday);
                 currentDateTimeStored = currentDateTime();
+
+                //update the patient's last scan
                 Patient patient = new Patient(pId, pfirstname, plastname, pmiddlename, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
 
                 databasePatient.child(pId).setValue(patient);
@@ -384,15 +395,14 @@ public class ViewPatientInfo extends AppCompatActivity {
                 toastMessage("Logged");
 
 
-
                 skinIllnessTextName.setText(skinIllness);
                 skinIllnessTextPercentage.setText(percentage);
                 lastScannedTextDatetime.setText(currentDateTimeStored);
 
+                //checking if the skin illness confidence is greater than or less than 80%
                 if(Double.parseDouble(scannedResult[0].split("%")[0]) < 80.0){
                     accuracyNote.setVisibility(View.VISIBLE);
                     scan.setVisibility(View.VISIBLE);
-
                 }else{
                     scan.setTextSize(1, 1);
                     accuracyNote.setVisibility(View.VISIBLE);

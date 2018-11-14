@@ -105,12 +105,13 @@
     <TextView
         android:id="@+id/skinIllness_desc"
         android:layout_width="327dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/skinIllness_name"
         android:layout_centerHorizontal="true"
-
+        android:lines="4"
+        android:maxLines="4"
         android:padding="5sp"
-        android:text="No Description AvailableNo Description Available"
+        android:text="No Description Available"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"

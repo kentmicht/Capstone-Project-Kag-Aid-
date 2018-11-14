@@ -105,16 +105,17 @@
     <TextView
         android:id="@+id/skinIllness_desc"
         android:layout_width="340dp"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/skinIllness_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-315dp"
         android:padding="5sp"
-        android:text="No Description Available"
+        android:text="No Description"
         android:textAlignment="textStart"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
-
+        android:maxLines="4"
+        android:lines="4"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -134,7 +135,7 @@
     <TextView
         android:id="@+id/symptoms"
         android:layout_width="342dp"
-        android:layout_height="162dp"
+        android:layout_height="96dp"
         android:layout_below="@+id/skinIllness_desc"
         android:layout_centerHorizontal="true"
         android:paddingLeft="5sp"
