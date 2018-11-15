@@ -267,6 +267,7 @@ public class AddPatientRecord extends AppCompatActivity {
                                 addressAllNumbers == false &&
                                 addressAllSpecial == false &&
                                 addressContainsSpecial == false) {
+                            //generating a new id for new patient
                             String pid = databasePatient.push().getKey();
                             String age = calculateAge(bdayP);
                             String status = "1";
@@ -275,11 +276,8 @@ public class AddPatientRecord extends AppCompatActivity {
                             addressP[0] = captializeFirstLetter(addressP[0]);
                             Patient patient = new Patient(pid, fullnamePatient[0], fullnamePatient[1], fullnamePatient[2], bdayP, age, genderP, addressP[0], "Not yet scanned", status, bId);
 
+                            //adding a new patient based from the generated new pid
                             databasePatient.child(pid).setValue(patient);
-
-//                            fullname.setText("");
-//                            birthdate.setText("");
-//                            address.setText("");
 
                             progressDialog();
                             new Handler().postDelayed(new Runnable() {

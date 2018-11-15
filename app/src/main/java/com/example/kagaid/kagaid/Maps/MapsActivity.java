@@ -257,8 +257,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlace); //type of the category to be shown in the map
         googlePlacesUrl.append("&sensor=true");
-        
-        googlePlacesUrl.append("&key=" + "AIzaSyATuUiZUkEc_UgHuqsBJa1oqaODI-3mLs0"); //google maps specifically places api key
+        googlePlacesUrl.append("&key=" + "AIzaSyA34xxBTqW9or4_gxIu1vevDv7SBYCEWdo"); //google maps specifically places api key
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -430,6 +429,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //getting nearby places data after shaking the phone
+    //AsyncTask allows us to perform heavy tasks in the background while keeping the UI Thread light/unaffected. Running on different thread.
+    //AsyncTask enables proper and easy use of the UI thread. This class allows you to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers.
     public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
         Context mContext;
@@ -437,6 +438,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleMap mMap;
         String url;
 
+        //invoked on the background thread immediately after onPreExecute() finishes executing.
         @Override
         protected String doInBackground(Object... params) {
             try {
@@ -456,6 +458,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return googlePlacesData;
         }
 
+        // invoked on the UI thread after the background computation finishes.
         @Override
         protected void onPostExecute(String result) {
             Log.d("GooglePlacesReadTask", "onPostExecute Entered");
@@ -489,15 +492,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-
                         showDoctorDialog(marker.getTitle());
-//
                         return false;
                     }
                 });
 
                 mMap.addMarker(markerOptions);
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
                 //move map camera
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(11));

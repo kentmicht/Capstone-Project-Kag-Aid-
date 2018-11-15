@@ -113,7 +113,7 @@ public class PatientRecords extends AppCompatActivity {
         //Firebase Database
         db = FirebaseDatabase.getInstance().getReference("person_information");
 
-        //Show individual patient record
+        //Show individual patient record through passing patient records to the IndivPatient page
         patient_record.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -562,11 +562,13 @@ public class PatientRecords extends AppCompatActivity {
                   }
 
                   if(duplicatePatient == false){
+                      //finds the specific child given the pid
                       db = FirebaseDatabase.getInstance().getReference("person_information").child(pid);
                       dbLogs = FirebaseDatabase.getInstance().getReference("logs");
 
                       Patient patient = new Patient(pid, firstname, lastname, middlename, bday, age, gender, address, lastscan, status, bid);
 
+                      //setting the value of the patient
                       db.setValue(patient);
                       toastMessage("Patient Record Updated");
                       ret[0] = true;
@@ -660,6 +662,7 @@ public class PatientRecords extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //clearing the list of patients
                 pList.clear();
 
                 for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
@@ -675,6 +678,8 @@ public class PatientRecords extends AppCompatActivity {
                 }else{
                     sortPList();
                     PatientLists adapter = new PatientLists(PatientRecords.this, pList);
+
+                    //setting the retrieved data to the listview
                     patient_record.setAdapter(adapter);
                 }
 
