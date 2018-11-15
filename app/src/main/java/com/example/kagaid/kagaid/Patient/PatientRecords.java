@@ -286,6 +286,7 @@ public class PatientRecords extends AppCompatActivity {
                 //error handlings
                 boolean duplicatePatient = false;
                 boolean yearBeyondCurrent = false;
+                boolean yearBeyondCurrentEqual = false;
                 boolean fullNameAllNumbers = false;
                 boolean fullNameAllSpecial = false;
                 boolean fullNameContainsNumber = false;
@@ -305,6 +306,11 @@ public class PatientRecords extends AppCompatActivity {
                 if(checkBirthdateYear(pbday) == false) {
                     yearBeyondCurrent = true;
                     toastMessage("Not Updated: Patient’s Birthdate year exceeds the current year");
+                }
+
+                if(checkBirthdateYearEqual(pbday) == true) {
+                    yearBeyondCurrentEqual = true;
+                    toastMessage("Not Updated: Patient’s Birthdate Year must not be equal the current year");
                 }
 
                 if(checkFullNameAllNumbers(pname)) {
@@ -333,6 +339,7 @@ public class PatientRecords extends AppCompatActivity {
                 }
 
                 if(yearBeyondCurrent == false &&
+                        yearBeyondCurrentEqual == false &&
                         fullNameAllSpecial == false &&
                         fullNameAllNumbers == false &&
                         addressAllNumbers == false &&
@@ -487,6 +494,19 @@ public class PatientRecords extends AppCompatActivity {
         return ret;
     }
 
+    public boolean checkBirthdateYearEqual(String bday){
+        boolean ret = false;
+        String age = null;
+        String year = bday.substring(0, 4);
+
+        if(Calendar.getInstance().get(Calendar.YEAR) == Integer.parseInt(year)){
+            ret = true;
+        }
+
+
+        return ret;
+    }
+
     public boolean checkFullNameAllSpecial(String fullname){
         boolean ret = false;
         if(fullname.matches("[+×÷.-=/_€£¥₩!@#$%^&*()'\":;?`~<>¡¿]+")){
@@ -554,7 +574,7 @@ public class PatientRecords extends AppCompatActivity {
                   boolean duplicatePatient = false;
                   for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
                       Patient patient = dsPatient.getValue(Patient.class);
-                      if(firstname.equals(patient.getFirstname()) && lastname.equals(patient.getLastname()) && middlename.equals(patient.getMiddlename())){
+                      if(firstname.equals(patient.getFirstname()) && lastname.equals(patient.getLastname()) && middlename.equals(patient.getMiddlename()) && patient.status.equals("1")){
                           if(!pid.equals(patient.getId())){
                               duplicatePatient = true;
                           }

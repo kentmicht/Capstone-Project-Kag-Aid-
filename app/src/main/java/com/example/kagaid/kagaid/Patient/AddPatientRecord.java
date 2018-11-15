@@ -230,13 +230,14 @@ public class AddPatientRecord extends AppCompatActivity {
                     boolean duplicatePatient = false;
                     boolean duplicateBarangayPatient = false;
                     boolean yearBeyondCurrent = false;
+                    boolean yearBeyondCurrentEqual = false;
                     boolean addressAllNumbers = false;
                     boolean addressAllSpecial = false;
                     boolean addressContainsSpecial = false;
 
                     for (DataSnapshot dsPatient : dataSnapshot.getChildren()) {
                         Patient patient = dsPatient.getValue(Patient.class);
-                        if(fullnamePatient[0].equals(patient.getFirstname()) && fullnamePatient[1].equals(patient.getLastname()) && fullnamePatient[2].equals(patient.getMiddlename())){
+                        if(fullnamePatient[0].equals(patient.getFirstname()) && fullnamePatient[1].equals(patient.getLastname()) && fullnamePatient[2].equals(patient.getMiddlename())  && patient.status.equals("1")){
                             duplicatePatient = true;
                             if(!patient.getbId().equals(bId)){
                                 duplicateBarangayPatient = true;
@@ -252,6 +253,12 @@ public class AddPatientRecord extends AppCompatActivity {
                             birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
+                        if (checkBirthdateYearEqual(bdayP) == true) {
+                            yearBeyondCurrentEqual = true;
+                            toastMessage("Patient’s Birthdate Year must not be equal the current year");
+                            birthdate.setError("Patient’s Birthdate Year must not be equal the current year");
+                        }
+
                         if (checkAddressAllNumbers(addressP[0])) {
                             addressAllNumbers = true;
                             address.setError("Patient’s address is all digits");
@@ -264,6 +271,7 @@ public class AddPatientRecord extends AppCompatActivity {
                         }
 
                         if (yearBeyondCurrent == false &&
+                                yearBeyondCurrentEqual == false &&
                                 addressAllNumbers == false &&
                                 addressAllSpecial == false &&
                                 addressContainsSpecial == false) {
@@ -326,6 +334,19 @@ public class AddPatientRecord extends AppCompatActivity {
         String year = bday.substring(0, 4);
 
         if(Calendar.getInstance().get(Calendar.YEAR) >= Integer.parseInt(year)){
+            ret = true;
+        }
+
+
+        return ret;
+    }
+
+    public boolean checkBirthdateYearEqual(String bday){
+        boolean ret = false;
+        String age = null;
+        String year = bday.substring(0, 4);
+
+        if(Calendar.getInstance().get(Calendar.YEAR) == Integer.parseInt(year)){
             ret = true;
         }
 
