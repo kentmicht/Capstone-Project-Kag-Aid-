@@ -286,7 +286,7 @@ public class PatientRecords extends AppCompatActivity {
                 //error handlings
                 boolean duplicatePatient = false;
                 boolean yearBeyondCurrent = false;
-                boolean yearBeyondCurrentEqual = false;
+                boolean yearBeyondCurrentDate = false;
                 boolean fullNameAllNumbers = false;
                 boolean fullNameAllSpecial = false;
                 boolean fullNameContainsNumber = false;
@@ -308,9 +308,9 @@ public class PatientRecords extends AppCompatActivity {
                     toastMessage("Not Updated: Patient’s Birthdate year exceeds the current year");
                 }
 
-                if(checkBirthdateYearEqual(pbday) == true) {
-                    yearBeyondCurrentEqual = true;
-                    toastMessage("Not Updated: Patient’s Birthdate Year must not be equal the current year");
+                if(checkBirthdateEqualCurrentDate(pbday) == true) {
+                    yearBeyondCurrentDate = true;
+                    toastMessage("Not Updated: Patient’s Birthdate must be below the current date");
                 }
 
                 if(checkFullNameAllNumbers(pname)) {
@@ -339,7 +339,7 @@ public class PatientRecords extends AppCompatActivity {
                 }
 
                 if(yearBeyondCurrent == false &&
-                        yearBeyondCurrentEqual == false &&
+                        yearBeyondCurrentDate == false &&
                         fullNameAllSpecial == false &&
                         fullNameAllNumbers == false &&
                         addressAllNumbers == false &&
@@ -494,12 +494,14 @@ public class PatientRecords extends AppCompatActivity {
         return ret;
     }
 
-    public boolean checkBirthdateYearEqual(String bday){
+    public boolean checkBirthdateEqualCurrentDate(String bday){
         boolean ret = false;
-        String age = null;
-        String year = bday.substring(0, 4);
+        String[] date = bday.split("-");
 
-        if(Calendar.getInstance().get(Calendar.YEAR) == Integer.parseInt(year)){
+        int agemonth = (Calendar.getInstance().get(Calendar.MONTH)+1) - Integer.parseInt(date[1]);
+        int ageday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(date[2]);
+
+        if(agemonth < 0 || (agemonth == 0 &&  ageday < 0)){
             ret = true;
         }
 

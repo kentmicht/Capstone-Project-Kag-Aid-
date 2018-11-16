@@ -82,29 +82,39 @@ public class AddPatientRecord extends AppCompatActivity {
                 addPatient();
             }
         });
-        birthdate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(AddPatientRecord.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year, month, day);
-
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
         fullname.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
                 showFullNameSeperatorDialog(fullnamePatient[0], fullnamePatient[1], fullnamePatient[2]);
+            }
+        });
+
+        birthdate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year;
+                int month;
+                int day;
+
+                if(birthdate.getText().equals("Birthdate")) {
+                    year = cal.get(Calendar.YEAR);
+                    month = cal.get(Calendar.MONTH);
+                    day = cal.get(Calendar.DAY_OF_MONTH);
+                }else {
+                    String[] dateParts = birthdate.getText().toString().split("-");
+                    year = Integer.parseInt(dateParts[0]);
+                    month = Integer.parseInt(dateParts[1]) - 1;
+                    day = Integer.parseInt(dateParts[2]);
+                }
+                DatePickerDialog dialog = new DatePickerDialog(AddPatientRecord.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
             }
         });
 
@@ -124,8 +134,6 @@ public class AddPatientRecord extends AppCompatActivity {
 
             }
         };
-
-
     }
 
     //show dialog box for seperating fullname (First Name, Last Name and Middle Name)
@@ -230,7 +238,7 @@ public class AddPatientRecord extends AppCompatActivity {
                     boolean duplicatePatient = false;
                     boolean duplicateBarangayPatient = false;
                     boolean yearBeyondCurrent = false;
-                    boolean yearBeyondCurrentEqual = false;
+                    boolean yearBeyondCurrentDate = false;
                     boolean addressAllNumbers = false;
                     boolean addressAllSpecial = false;
                     boolean addressContainsSpecial = false;
@@ -253,10 +261,10 @@ public class AddPatientRecord extends AppCompatActivity {
                             birthdate.setError("Patient’s Birthdate year exceeds the current year");
                         }
 
-                        if (checkBirthdateYearEqual(bdayP) == true) {
-                            yearBeyondCurrentEqual = true;
-                            toastMessage("Patient’s Birthdate Year must not be equal the current year");
-                            birthdate.setError("Patient’s Birthdate Year must not be equal the current year");
+                        if (checkBirthdateEqualCurrentDate(bdayP) == true) {
+                            yearBeyondCurrentDate = true;
+                            toastMessage("Patient’s Birthdate must be below the current date");
+                            birthdate.setError("Patient’s Birthdate must be below the current date");
                         }
 
                         if (checkAddressAllNumbers(addressP[0])) {
@@ -271,7 +279,7 @@ public class AddPatientRecord extends AppCompatActivity {
                         }
 
                         if (yearBeyondCurrent == false &&
-                                yearBeyondCurrentEqual == false &&
+                                yearBeyondCurrentDate == false &&
                                 addressAllNumbers == false &&
                                 addressAllSpecial == false &&
                                 addressContainsSpecial == false) {
@@ -341,12 +349,14 @@ public class AddPatientRecord extends AppCompatActivity {
         return ret;
     }
 
-    public boolean checkBirthdateYearEqual(String bday){
+    public boolean checkBirthdateEqualCurrentDate(String bday){
         boolean ret = false;
-        String age = null;
-        String year = bday.substring(0, 4);
+        String[] date = bday.split("-");
 
-        if(Calendar.getInstance().get(Calendar.YEAR) == Integer.parseInt(year)){
+        int agemonth = (Calendar.getInstance().get(Calendar.MONTH)+1) - Integer.parseInt(date[1]);
+        int ageday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(date[2]);
+
+        if(agemonth < 0 || (agemonth == 0 &&  ageday < 0)){
             ret = true;
         }
 
