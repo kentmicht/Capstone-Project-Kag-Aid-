@@ -278,6 +278,7 @@ public class Logs extends AppCompatActivity {
                         toastMessage("No Match");
                         viewAllLogs();
                     }else {
+                        sortLogs();
                         LogLists adapter = new LogLists(Logs.this, logList);
                         if(adapter.isEmpty()){
                             toastMessage("No Match");
@@ -323,6 +324,7 @@ public class Logs extends AppCompatActivity {
                 if(logList.isEmpty()){
                     logErr.setVisibility(View.VISIBLE);
                 }else{
+                    sortLogs();
                     //making use of the LogLists to set all details in an adapter
                     LogLists adapter = new LogLists(Logs.this, logList);
                     listViewLogs.setAdapter(adapter);
@@ -345,6 +347,27 @@ public class Logs extends AppCompatActivity {
     public void back(View view){
         finish();
         CustomIntent.customType(Logs.this, "fadein-to-fadeout");
+    }
+
+    //sorting logs ascendingly
+    public void sortLogs(){
+        if (logList.size() > 0) {
+            Collections.sort(logList, new Comparator<Log>() {
+
+                @Override
+                public int compare(final Log object1, final Log object2) {
+                    String[] currentDate = currentDateTime().split("(?<=\\d{3})\\s");
+                    String[] log1Date = object1.getLogdatetime().split("(?<=\\d{3})\\s");
+                    String[] log2Date = object2.getLogdatetime().split("(?<=\\d{3})\\s");
+
+                    if(currentDate[0].equals(log1Date[0]) && currentDate[0].equals(log2Date[0])){
+                        return object2.getLogdatetime().compareTo(object1.getLogdatetime());
+                    }else{
+                        return -1;
+                    }
+                }
+            });
+        }
     }
 
 
