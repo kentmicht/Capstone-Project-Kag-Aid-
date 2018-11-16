@@ -304,10 +304,14 @@ public class Logs extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 logList.clear();
+
+                //current date specifically for the given barangay
                 String currentDate[] = currentDateTime().split("(?<=\\d{3})\\s");
                 for(DataSnapshot logsSnapshot: dataSnapshot.getChildren()){
                     Log log = logsSnapshot.getValue(Log.class);
                     String logDate[] = log.getLogdatetime().split("(?<=\\d{3})\\s");
+
+                        //check if this is the current barangay and similar to the date
                         if (currentDate[0].equals(logDate[0])) {
                             if(bId.equals(log.getbId())){
                                 logList.add(log);
