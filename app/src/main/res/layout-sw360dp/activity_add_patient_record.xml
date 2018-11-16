@@ -174,7 +174,7 @@
         android:layout_alignStart="@+id/address"
         android:text="Address"
         android:textColor="@color/textHomepage"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
@@ -185,7 +185,7 @@
         android:layout_alignStart="@+id/address"
         android:text="Gender"
         android:textColor="@color/textHomepage"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <Spinner

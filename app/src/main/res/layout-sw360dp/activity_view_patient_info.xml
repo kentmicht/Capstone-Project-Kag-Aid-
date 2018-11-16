@@ -120,7 +120,7 @@
         android:layout_marginBottom="168dp"
         android:text="Address"
         android:textColor="@color/textHomepage"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="65dp"
@@ -290,7 +290,7 @@
         android:layout_below="@+id/textViewPatientAddress"
         android:text="Barangay"
         android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
