@@ -355,8 +355,9 @@ public class AddPatientRecord extends AppCompatActivity {
 
         int agemonth = (Calendar.getInstance().get(Calendar.MONTH)+1) - Integer.parseInt(date[1]);
         int ageday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(date[2]);
+        int ageyear = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(date[0]);
 
-        if(agemonth < 0 || (agemonth == 0 &&  ageday < 0)){
+        if(ageyear < 0 && (agemonth < 0 || (agemonth == 0 &&  ageday < 0))){
             ret = true;
         }
 

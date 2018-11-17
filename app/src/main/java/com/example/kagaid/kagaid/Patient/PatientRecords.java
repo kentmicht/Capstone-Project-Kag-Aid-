@@ -500,8 +500,9 @@ public class PatientRecords extends AppCompatActivity {
 
         int agemonth = (Calendar.getInstance().get(Calendar.MONTH)+1) - Integer.parseInt(date[1]);
         int ageday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(date[2]);
+        int ageyear = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(date[0]);
 
-        if(agemonth < 0 || (agemonth == 0 &&  ageday < 0)){
+        if(ageyear < 0 && (agemonth < 0 || (agemonth == 0 &&  ageday < 0))){
             ret = true;
         }
 
@@ -648,6 +649,8 @@ public class PatientRecords extends AppCompatActivity {
                     for (DataSnapshot pSnapshot : dataSnapshot.getChildren()){
                         Patient patient = pSnapshot.getValue(Patient.class);
                         String pfullname;
+
+                        //congesting the patient to become the basis of the search
                         if(patient.getMiddlename().equals(" ")){
                             pfullname = patient.getLastname() + ", " + patient.getFirstname() + " " + patient.getMiddlename();
                         }else{
