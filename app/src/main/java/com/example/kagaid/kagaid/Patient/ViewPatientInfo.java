@@ -6,11 +6,13 @@ import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.http.RequestQueue;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -134,6 +136,12 @@ public class ViewPatientInfo extends AppCompatActivity {
     DatabaseReference databaseSkinIllness;
     DatabaseReference databaseScanResult;
 
+    //for Scanning below 60% of the number of loops
+    int numRepetition = 2; //because given transaction per second by Custom Vision is only until 2 --> Prediction operations without storage (Transactions Per Second)
+    double aveIdentified = 0.0;
+    int scoreUnidentified = 0;
+    int scoreIdentified = 0;
+
     User u = new User();
 
     @Override
@@ -232,11 +240,33 @@ public class ViewPatientInfo extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if(requestCode == CAMERA_PIC_REQUEST){
+//            if(requestCode == CAMERA_PIC_REQUEST) {
                 Bundle extras = data.getExtras();
                 imageBitmap = (Bitmap) extras.get("data");
+
                 uploadImage(imageBitmap);
-            }
+//                for(int i =0; i<numRepetition; i++){
+//                    if(i==0){
+//                        uploadImage(flip(imageBitmap, false, true));
+//                    }else if(i==1){
+//                        uploadImage(rotate(imageBitmap, 5));
+//                    }
+//                }
+//                int degree = 0;
+//                for(int i =0; i<numRepetition; i++){
+//                    final int finalDegree = degree;
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            uploadImage(rotate(imageBitmap, finalDegree));
+//                        }
+//                    }, 5000);
+//                    degree+=1;
+//                }
+
+
+
+//            }
         }else if(resultCode == RESULT_CANCELED){
             toastMessage("User cancelled the image capture");
         }else{
@@ -245,50 +275,70 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     }
 
+    private Bitmap rotate(Bitmap bitmap, float degrees) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    private Bitmap flip(Bitmap bitmap, boolean horizontal, boolean vertical) {
+        Matrix matrix = new Matrix();
+        matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
     private void uploadImage(Bitmap picture) {
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         picture.compress(Bitmap.CompressFormat.JPEG, 100, bao);
         byteArray = bao.toByteArray();
-        _bytes64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
         //calling the Custom Vision URL
         new HttpAsyncTask().execute(customVisionURL);
-
     }
 
     public String POST(String url)
     {
         String result = "";
+
+        //(60% * 5) / 100 --> to get the 60% of numRepetition
+        //if score Unidentified == (60*5)/100 --> UNIDENTIFIED
+        //else scoreIdentified++ sum the identified skin illness percentage then divided by the scoreIdentified to get the average
+            //aveIdentified++ then aveIdentified/scoreIdentified (AVERAGE)
+
+        //if not below let's say 40% then store retrieved object to the json.
+
+        //after the loop, check the simmilar skin illnesses, then average the percentage, return the averaged percentage together with the skin illness.
         int responseCode=0;
         try {
-
+            //for(int i = 0; i<numRepetition; i++) {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
 
-                //httpPost Entity
-                httpPost.setEntity(new ByteArrayEntity(byteArray));
+            //httpPost Entity
+            httpPost.setEntity(new ByteArrayEntity(byteArray));
 
-                //set some headers to inform server about the type of the content
-                httpPost.setHeader("Content-Type", "application/octet-stream");
-                httpPost.setHeader("Prediction-Key", predictionKey);
+            //set some headers to inform server about the type of the content
+            httpPost.setHeader("Content-Type", "application/octet-stream");
+            httpPost.setHeader("Prediction-Key", predictionKey);
 
             //3. execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-            Log.e("MINION", "Post request successful");
+            //Log.e("MINION", "Post request successful");
             HttpEntity entity = httpResponse.getEntity();
 
             //4. retrieveing the response of the server api
             String responseText = EntityUtils.toString(entity);
 
             responseCode = httpResponse.getStatusLine().getStatusCode();
-            System.out.println("Response Code: " + responseCode);
-            System.out.println("Response Message: " + responseText);
+//            System.out.println("Response Code: " + responseCode);
+//            System.out.println("Response Message: " + responseText);
 
             //retrieving the json file of the skin illness results
             result = responseText;
+//            System.out.println(result);
         } catch (Exception e) {
             Log.e("InputStream", e.toString());
         }
@@ -327,21 +377,75 @@ public class ViewPatientInfo extends AppCompatActivity {
                 //converting the confidence into a percentage because json is decimal
                 double percentageNum = Double.parseDouble(skinRes.getString("probability")) * 100.00;
 
-                //placing data into the global variables to be accessed by the specific functions (dialog box)
-                String percentage = String.format("%.2f%%", percentageNum);
-                String skinName = skinRes.getString("tagName");
-                scannedResult[0] = percentage;
-                scannedResult[1] = skinName;
-                ///////////////////////////////////////////////////////////////////////////////////////////////
+                if(percentageNum < 30.00){
+                    showDiagnosisNoResults();
+                }else{
+                    //placing data into the global variables to be accessed by the specific functions (dialog box)
+                    String percentage = String.format("%.2f%%", percentageNum);
+                    String skinName = skinRes.getString("tagName");
+                    scannedResult[0] = percentage;
+                    scannedResult[1] = skinName;
+                    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                //popping the dialog box containing the identified skin illness, confidence percentage and three buttons
-                showDiagnosisResults(scannedResult[1], scannedResult[0]);
+                    //popping the dialog box containing the identified skin illness, confidence percentage and three buttons
+                    showDiagnosisResults(scannedResult[1], scannedResult[0]);
+                }
                 pd.dismiss();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
+    }
+
+    private void showDiagnosisNoResults(){
+        dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_no_diagnosis_results_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        //log all details percentage and skin illness identified most especially
+        databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
+        databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
+        databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
+        
+        databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (uId.equals(ds.child("uId").getValue().toString())) {
+                        employeeName = ds.child("firstname").getValue().toString() + " " + ds.child("lastname").getValue().toString();
+                    }
+                }
+                //toastMessage(employeeName);
+                String logId = databaseLogs.push().getKey();
+
+                //after getting the result, log the identified skin illness and percentage be placed in database Logs
+                Log logSingle = new Log(logId, currentDateTime(), pId, uId, pfullname, employeeName, " ", " ", bId);
+                String status = "1";
+                String age = calculateAge(pbday);
+                currentDateTimeStored = currentDateTime();
+
+                //update the patient's last scan
+                Patient patient = new Patient(pId, pfirstname, plastname, pmiddlename, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
+
+                databasePatient.child(pId).setValue(patient);
+                databaseLogs.child(logId).setValue(logSingle);
+                toastMessage("Logged");
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
     //showing the diagnosis result of the identified skin illness
@@ -390,9 +494,9 @@ public class ViewPatientInfo extends AppCompatActivity {
                 //update the patient's last scan
                 Patient patient = new Patient(pId, pfirstname, plastname, pmiddlename, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
 
-                databasePatient.child(pId).setValue(patient);
-                databaseLogs.child(logId).setValue(logSingle);
-                toastMessage("Logged");
+//                databasePatient.child(pId).setValue(patient);
+//                databaseLogs.child(logId).setValue(logSingle);
+//                toastMessage("Logged");
 
 
                 skinIllnessTextName.setText(skinIllness);

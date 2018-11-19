@@ -187,8 +187,16 @@ public class Logs extends AppCompatActivity {
         });
 
         //placing the details on the logs dialog box
-        skinIdentify.setText(skinIllness);
-        percent.setText(percentage);
+        if(skinIllness.equals(" ")){
+            skinIdentify.setText("Unidentified Skin Illness");
+//            TextView logPercentage = (TextView) dialogView.findViewById(R.id.textView37);
+//            logPercentage.setVisibility(View.INVISIBLE);
+//            percent.setVisibility(View.INVISIBLE);
+            percent.setText("Not Available");
+        }else{
+            skinIdentify.setText(skinIllness);
+            percent.setText(percentage);
+        }
         employee.setText(empName);
         dateTime.setText(logDateTime);
 
