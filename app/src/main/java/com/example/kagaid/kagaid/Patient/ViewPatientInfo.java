@@ -409,7 +409,7 @@ public class ViewPatientInfo extends AppCompatActivity {
         databaseLogs = FirebaseDatabase.getInstance().getReference("logs");
         databaseEmployee = FirebaseDatabase.getInstance().getReference("users");
         databasePatient = FirebaseDatabase.getInstance().getReference("person_information");
-        
+
         databaseEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -494,9 +494,9 @@ public class ViewPatientInfo extends AppCompatActivity {
                 //update the patient's last scan
                 Patient patient = new Patient(pId, pfirstname, plastname, pmiddlename, pbday, age, pgender, paddress, currentDateTimeStored, status,  bId);
 
-//                databasePatient.child(pId).setValue(patient);
-//                databaseLogs.child(logId).setValue(logSingle);
-//                toastMessage("Logged");
+                databasePatient.child(pId).setValue(patient);
+                databaseLogs.child(logId).setValue(logSingle);
+                toastMessage("Logged");
 
 
                 skinIllnessTextName.setText(skinIllness);
