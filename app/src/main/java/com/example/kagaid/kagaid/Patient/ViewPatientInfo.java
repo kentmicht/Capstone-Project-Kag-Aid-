@@ -93,8 +93,8 @@ public class ViewPatientInfo extends AppCompatActivity {
 
     //Custom Vision Prediction API
     private static final String predictionKey = "1289ea1f967b43c0ba970bc485e1c869";
-    String customVisionURL =
-            "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image";
+    String customVisionURL;
+            //= "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/c3c28515-756c-42f1-bdae-0a86197064b5/image";
 
 
 
@@ -135,6 +135,7 @@ public class ViewPatientInfo extends AppCompatActivity {
     DatabaseReference databaseEmployee;
     DatabaseReference databaseSkinIllness;
     DatabaseReference databaseScanResult;
+    DatabaseReference CustomVisionCode;
 
     //for Scanning below 60% of the number of loops
     int numRepetition = 2; //because given transaction per second by Custom Vision is only until 2 --> Prediction operations without storage (Transactions Per Second)
@@ -157,6 +158,23 @@ public class ViewPatientInfo extends AppCompatActivity {
         }else {
             toastMessage("No Internet Connection");
         }
+
+        //retrieves custom vision url key for the scanning module
+        CustomVisionCode = FirebaseDatabase.getInstance().getReference("customVision");
+        CustomVisionCode.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if(ds.child("customVisionId").getValue().toString().equals("1")){
+                        customVisionURL = ds.child("url").getValue().toString();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         textViewPatientName = (TextView) findViewById(R.id.textViewPatientName);
         textViewPatientBday = (TextView) findViewById(R.id.textViewPatientBday);
@@ -240,33 +258,12 @@ public class ViewPatientInfo extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-//            if(requestCode == CAMERA_PIC_REQUEST) {
+            if(requestCode == CAMERA_PIC_REQUEST) {
                 Bundle extras = data.getExtras();
                 imageBitmap = (Bitmap) extras.get("data");
 
                 uploadImage(imageBitmap);
-//                for(int i =0; i<numRepetition; i++){
-//                    if(i==0){
-//                        uploadImage(flip(imageBitmap, false, true));
-//                    }else if(i==1){
-//                        uploadImage(rotate(imageBitmap, 5));
-//                    }
-//                }
-//                int degree = 0;
-//                for(int i =0; i<numRepetition; i++){
-//                    final int finalDegree = degree;
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            uploadImage(rotate(imageBitmap, finalDegree));
-//                        }
-//                    }, 5000);
-//                    degree+=1;
-//                }
-
-
-
-//            }
+            }
         }else if(resultCode == RESULT_CANCELED){
             toastMessage("User cancelled the image capture");
         }else{
