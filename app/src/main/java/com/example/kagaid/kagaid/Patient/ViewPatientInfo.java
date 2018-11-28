@@ -165,8 +165,9 @@ public class ViewPatientInfo extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if(ds.child("customVisionId").getValue().toString().equals("1")){
+                    if(ds.child("status").getValue().toString().equals("enabled")){
                         customVisionURL = ds.child("url").getValue().toString();
+//                        toastMessage(customVisionURL);
                     }
                 }
             }
@@ -374,7 +375,7 @@ public class ViewPatientInfo extends AppCompatActivity {
                 //converting the confidence into a percentage because json is decimal
                 double percentageNum = Double.parseDouble(skinRes.getString("probability")) * 100.00;
 
-                if(percentageNum < 30.00){
+                if(percentageNum < 48.00){
                     showDiagnosisNoResults();
                 }else{
                     //placing data into the global variables to be accessed by the specific functions (dialog box)
